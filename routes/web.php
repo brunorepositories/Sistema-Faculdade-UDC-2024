@@ -109,6 +109,6 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-Route::get('/sales', [Sales::class, 'index'])->name('sales.index');
+Route::get('/sales', [Sales::class, 'index'])->name('sales');
 
-Route::get('/sales/test', [Sales::class, 'test'])->name('sales.test');
+Route::get('/sales/test', [Sales::class, 'test'])->name('sales-teste');
