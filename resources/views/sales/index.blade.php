@@ -2,7 +2,7 @@
 
 @section('title', ' Vertical Layouts - Forms')
 
-@section('content')
+{{-- @section('content')
     <div class="content-wrapper">
 
         <!-- Content -->
@@ -1969,5 +1969,1916 @@
         <!--/ Footer-->
         <!-- / Footer -->
         <div class="content-backdrop fade"></div>
+    </div>
+@endsection --}}
+
+{{-- @section('content')
+    <div class="content-wrapper">
+
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <!-- DataTable with Buttons -->
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="card-header flex-column flex-md-row pb-0">
+                            <div class="head-label text-center">
+                                <h5 class="card-title mb-0">DataTable with Buttons</h5>
+                            </div>
+                            <div class="dt-action-buttons text-end pt-6 pt-md-0">
+                                <div class="dt-buttons btn-group flex-wrap">
+                                    <div class="btn-group">
+                                        <button class="btn buttons-collection dropdown-toggle btn-label-primary me-4"
+                                            tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                                            aria-haspopup="dialog" aria-expanded="false">
+
+                                            <span><i class="bx bx-export bx-sm me-sm-2"></i>
+                                                <span class="d-none d-sm-inline-block">Export </span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-secondary create-new btn-primary modal-trigger" tabindex="0"
+                                        aria-controls="DataTables_Table_0" type="button">
+
+                                        <span><i class="bx bx-plus bx-sm me-sm-2"></i>
+                                            <span class="d-none d-sm-inline-block">Add New Record</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select
+                                            name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                            class="form-select">
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="75">75</option>
+                                            <option value="100">100</option>
+                                        </select> entries</label></div>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0">
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input
+                                            type="search" class="form-control" placeholder=""
+                                            aria-controls="DataTables_Table_0"></label></div>
+                            </div>
+                        </div>
+                        <table class="datatables-basic table border-top dataTable no-footer dtr-column"
+                            id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1391px;">
+                            <thead>
+                                <tr>
+                                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1"
+                                        style="width: 0px; display: none;" aria-label=""></th>
+                                    <th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1"
+                                        colspan="1" style="width: 18px;" data-col="1" aria-label=""><input
+                                            type="checkbox" class="form-check-input"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 316px;"
+                                        aria-label="Name: activate to sort column ascending">Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 300px;"
+                                        aria-label="Email: activate to sort column ascending">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 106px;"
+                                        aria-label="Date: activate to sort column ascending">Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 104px;"
+                                        aria-label="Salary: activate to sort column ascending">Salary</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 125px;"
+                                        aria-label="Status: activate to sort column ascending">Status</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 116px;"
+                                        aria-label="Actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><span
+                                                        class="avatar-initial rounded-circle bg-label-success">GG</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Glyn
+                                                    Giacoppo</span><small
+                                                    class="emp_post text-truncate text-muted">Software Test
+                                                    Engineer</small></div>
+                                        </div>
+                                    </td>
+                                    <td>ggiacoppo2r@apache.org</td>
+                                    <td>04/15/2021</td>
+                                    <td>$24973.48</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0" style="">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><img
+                                                        src="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo/assets/img/avatars/10.png"
+                                                        alt="Avatar" class="rounded-circle"></div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span
+                                                    class="emp_name text-truncate">Evangelina Carnock</span><small
+                                                    class="emp_post text-truncate text-muted">Cost Accountant</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>ecarnock2q@washington.edu</td>
+                                    <td>01/26/2021</td>
+                                    <td>$23704.82</td>
+                                    <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><img
+                                                        src="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo/assets/img/avatars/7.png"
+                                                        alt="Avatar" class="rounded-circle"></div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Olivette
+                                                    Gudgin</span><small
+                                                    class="emp_post text-truncate text-muted">Paralegal</small></div>
+                                        </div>
+                                    </td>
+                                    <td>ogudgin2p@gizmodo.com</td>
+                                    <td>04/09/2021</td>
+                                    <td>$15211.60</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><span
+                                                        class="avatar-initial rounded-circle bg-label-danger">RP</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Reina
+                                                    Peckett</span><small class="emp_post text-truncate text-muted">Quality
+                                                    Control Specialist</small></div>
+                                        </div>
+                                    </td>
+                                    <td>rpeckett2o@timesonline.co.uk</td>
+                                    <td>05/20/2021</td>
+                                    <td>$16619.40</td>
+                                    <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><span
+                                                        class="avatar-initial rounded-circle bg-label-danger">AB</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Alaric
+                                                    Beslier</span><small class="emp_post text-truncate text-muted">Tax
+                                                    Accountant</small></div>
+                                        </div>
+                                    </td>
+                                    <td>abeslier2n@zimbio.com</td>
+                                    <td>04/16/2021</td>
+                                    <td>$19366.53</td>
+                                    <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><img
+                                                        src="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo/assets/img/avatars/2.png"
+                                                        alt="Avatar" class="rounded-circle"></div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Edwina
+                                                    Ebsworth</span><small class="emp_post text-truncate text-muted">Human
+                                                    Resources Assistant</small></div>
+                                        </div>
+                                    </td>
+                                    <td>eebsworth2m@sbwire.com</td>
+                                    <td>09/27/2021</td>
+                                    <td>$19586.23</td>
+                                    <td><span class="badge bg-label-primary">Current</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td class="  dt-checkboxes-cell"><input type="checkbox"
+                                            class="dt-checkboxes form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="avatar-wrapper">
+                                                <div class="avatar me-2"><span
+                                                        class="avatar-initial rounded-circle bg-label-danger">RH</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column"><span class="emp_name text-truncate">Ronica
+                                                    Hasted</span><small class="emp_post text-truncate text-muted">Software
+                                                    Consultant</small></div>
+                                        </div>
+                                    </td>
+                                    <td>rhasted2l@hexun.com</td>
+                                    <td>07/04/2021</td>
+                                    <td>$24866.66</td>
+                                    <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li><a href="javascript:;" class="dropdown-item">Details</a></li>
+                                                <li><a href="javascript:;" class="dropdown-item">Archive</a></li>
+                                                <div class="dropdown-divider"></div>
+                                                <li><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a></li>
+                                            </ul>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-md"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                    aria-live="polite">Showing 1 to 7 of 100 entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0"
+                                                aria-disabled="true" role="link" data-dt-idx="previous"
+                                                tabindex="-1" class="page-link"><i
+                                                    class="bx bx-chevron-left bx-18px"></i></a></li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" aria-current="page"
+                                                data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="1"
+                                                tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="2"
+                                                tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="3"
+                                                tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="4"
+                                                tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_0_ellipsis">
+                                            <a aria-controls="DataTables_Table_0" aria-disabled="true" role="link"
+                                                data-dt-idx="ellipsis" tabindex="-1" class="page-link">…</a>
+                                        </li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_0" role="link" data-dt-idx="14"
+                                                tabindex="0" class="page-link">15</a></li>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
+                                                href="#" aria-controls="DataTables_Table_0" role="link"
+                                                data-dt-idx="next" tabindex="0" class="page-link"><i
+                                                    class="bx bx-chevron-right bx-18px"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 1%;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal to add new record -->
+            <div class="offcanvas offcanvas-end" id="add-new-record">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body flex-grow-1">
+                    <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
+                        id="form-add-new-record" onsubmit="return false" novalidate="novalidate">
+                        <div class="col-sm-12 fv-plugins-icon-container">
+                            <label class="form-label" for="basicFullname">Full Name</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                <input type="text" id="basicFullname" class="form-control dt-full-name"
+                                    name="basicFullname" placeholder="John Doe" aria-label="John Doe"
+                                    aria-describedby="basicFullname2">
+                            </div>
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 fv-plugins-icon-container">
+                            <label class="form-label" for="basicPost">Post</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
+                                <input type="text" id="basicPost" name="basicPost" class="form-control dt-post"
+                                    placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2">
+                            </div>
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 fv-plugins-icon-container">
+                            <label class="form-label" for="basicEmail">Email</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email"
+                                    placeholder="john.doe@example.com" aria-label="john.doe@example.com">
+                            </div>
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                            <div class="form-text">
+                                You can use letters, numbers &amp; periods
+                            </div>
+                        </div>
+                        <div class="col-sm-12 fv-plugins-icon-container">
+                            <label class="form-label" for="basicDate">Joining Date</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
+                                <input type="text" class="form-control dt-date flatpickr-input" id="basicDate"
+                                    name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY"
+                                    aria-label="MM/DD/YYYY" readonly="readonly">
+                            </div>
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 fv-plugins-icon-container">
+                            <label class="form-label" for="basicSalary">Salary</label>
+                            <div class="input-group input-group-merge has-validation">
+                                <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span>
+                                <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary"
+                                    placeholder="12000" aria-label="12000" aria-describedby="basicSalary2">
+                            </div>
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary data-submit me-sm-4 me-1">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary"
+                                data-bs-dismiss="offcanvas">Cancel</button>
+                        </div>
+                        <input type="hidden">
+                    </form>
+
+                </div>
+            </div>
+            <!--/ DataTable with Buttons -->
+
+            <hr class="my-12">
+
+            <!-- Complex Headers -->
+            <div class="card">
+                <h5 class="card-header pb-0 text-md-start text-center">Complex Headers</h5>
+                <div class="card-datatable text-nowrap">
+                    <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="DataTables_Table_1_length"><label>Show <select
+                                            name="DataTables_Table_1_length" aria-controls="DataTables_Table_1"
+                                            class="form-select">
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="75">75</option>
+                                            <option value="100">100</option>
+                                        </select> entries</label></div>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0">
+                                <div id="DataTables_Table_1_filter" class="dataTables_filter"><label>Search:<input
+                                            type="search" class="form-control" placeholder=""
+                                            aria-controls="DataTables_Table_1"></label></div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="dt-complex-header table table-bordered dataTable no-footer"
+                                id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                style="width: 1392px;">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="sorting sorting_asc" tabindex="0"
+                                            aria-controls="DataTables_Table_1" colspan="1"
+                                            aria-label="Name: activate to sort column descending" aria-sort="ascending"
+                                            style="width: 166px;">Name</th>
+                                        <th colspan="2" rowspan="1">Contact</th>
+                                        <th colspan="3" rowspan="1">HR Information</th>
+                                        <th rowspan="2" class="sorting_disabled" colspan="1" aria-label="Actions"
+                                            style="width: 88px;">Actions</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1"
+                                            aria-label="E-mail: activate to sort column ascending" style="width: 235px;">
+                                            E-mail</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1"
+                                            aria-label="City: activate to sort column ascending" style="width: 171px;">
+                                            City</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Position: activate to sort column ascending"
+                                            style="width: 235px;">Position</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Salary: activate to sort column ascending" style="width: 76px;">
+                                            Salary</th>
+                                        <th class="border-1 sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Status: activate to sort column ascending" style="width: 103px;">
+                                            Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd">
+                                        <td class="sorting_1">Aila Quailadis</td>
+                                        <td>aquail29@prlog.org</td>
+                                        <td>Shuangchahe</td>
+                                        <td>Technical Writer</td>
+                                        <td>$24137.29</td>
+                                        <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="sorting_1">Aili De Coursey</td>
+                                        <td>adew@etsy.com</td>
+                                        <td>Łazy</td>
+                                        <td>Environmental Specialist</td>
+                                        <td>$14082.44</td>
+                                        <td><span class="badge  bg-label-info">Applied</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="sorting_1">Alaric Beslier</td>
+                                        <td>abeslier2n@zimbio.com</td>
+                                        <td>Ocucaje</td>
+                                        <td>Tax Accountant</td>
+                                        <td>$19366.53</td>
+                                        <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="sorting_1">Aliza MacElholm</td>
+                                        <td>amacelholm20@printfriendly.com</td>
+                                        <td>Sosnovyy Bor</td>
+                                        <td>VP Sales</td>
+                                        <td>$16741.31</td>
+                                        <td><span class="badge  bg-label-success">Professional</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="sorting_1">Allyson Moakler</td>
+                                        <td>amoakler8@shareasale.com</td>
+                                        <td>Mogilany</td>
+                                        <td>Safety Technician</td>
+                                        <td>$11677.32</td>
+                                        <td><span class="badge  bg-label-info">Applied</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class="sorting_1">Alma Harvatt</td>
+                                        <td>aharvatt11@addtoany.com</td>
+                                        <td>Ulundi</td>
+                                        <td>Administrative Assistant</td>
+                                        <td>$21782.82</td>
+                                        <td><span class="badge bg-label-primary">Current</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class="sorting_1">Annetta Glozman</td>
+                                        <td>aglozman1r@storify.com</td>
+                                        <td>Pendawanbaru</td>
+                                        <td>Staff Accountant</td>
+                                        <td>$10745.32</td>
+                                        <td><span class="badge  bg-label-info">Applied</span></td>
+                                        <td>
+                                            <div class="d-inline-block"><a href="javascript:;"
+                                                    class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded bx-md"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                        class="dropdown-item">Details</a><a href="javascript:;"
+                                                        class="dropdown-item">Archive</a>
+                                                    <div class="dropdown-divider"></div><a href="javascript:;"
+                                                        class="dropdown-item text-danger delete-record">Delete</a>
+                                                </div>
+                                            </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                    class="bx bx-edit bx-md"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_info" id="DataTables_Table_1_info" role="status"
+                                    aria-live="polite">Showing 1 to 7 of 100 entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_1_previous"><a aria-controls="DataTables_Table_1"
+                                                aria-disabled="true" role="link" data-dt-idx="previous"
+                                                tabindex="-1" class="page-link"><i
+                                                    class="bx bx-chevron-left bx-18px"></i></a></li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" aria-current="page"
+                                                data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" data-dt-idx="1"
+                                                tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" data-dt-idx="2"
+                                                tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" data-dt-idx="3"
+                                                tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" data-dt-idx="4"
+                                                tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_1_ellipsis">
+                                            <a aria-controls="DataTables_Table_1" aria-disabled="true" role="link"
+                                                data-dt-idx="ellipsis" tabindex="-1" class="page-link">…</a>
+                                        </li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_1" role="link" data-dt-idx="14"
+                                                tabindex="0" class="page-link">15</a></li>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_1_next"><a
+                                                href="#" aria-controls="DataTables_Table_1" role="link"
+                                                data-dt-idx="next" tabindex="0" class="page-link"><i
+                                                    class="bx bx-chevron-right bx-18px"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Complex Headers -->
+
+            <hr class="my-12">
+
+            <!-- Row grouping -->
+            <div class="card">
+                <h5 class="card-header pb-0 text-md-start text-center">Row Grouping</h5>
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap5">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="DataTables_Table_2_length"><label>Show <select
+                                            name="DataTables_Table_2_length" aria-controls="DataTables_Table_2"
+                                            class="form-select">
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="75">75</option>
+                                            <option value="100">100</option>
+                                        </select> entries</label></div>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0">
+                                <div id="DataTables_Table_2_filter" class="dataTables_filter"><label>Search:<input
+                                            type="search" class="form-control" placeholder=""
+                                            aria-controls="DataTables_Table_2"></label></div>
+                            </div>
+                        </div>
+                        <table class="dt-row-grouping table border-top dataTable dtr-column" id="DataTables_Table_2"
+                            aria-describedby="DataTables_Table_2_info" style="width: 1392px;">
+                            <thead>
+                                <tr>
+                                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1"
+                                        style="width: 0px; display: none;" aria-label=""></th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 188px;"
+                                        aria-label="Name: activate to sort column ascending">Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 278px;"
+                                        aria-label="Email: activate to sort column ascending">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 202px;"
+                                        aria-label="City: activate to sort column ascending">City</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 97px;"
+                                        aria-label="Date: activate to sort column ascending">Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 95px;"
+                                        aria-label="Salary: activate to sort column ascending">Salary</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                        colspan="1" style="width: 114px;"
+                                        aria-label="Status: activate to sort column ascending">Status</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 106px;"
+                                        aria-label="Actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="group">
+                                    <td colspan="8">Accountant</td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Carmita Medling</td>
+                                    <td>cmedlingo@hp.com</td>
+                                    <td>Bourges</td>
+                                    <td>07/31/2021</td>
+                                    <td>$13602.24</td>
+                                    <td><span class="badge  bg-label-danger">Rejected</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="group">
+                                    <td colspan="8">Actuary</td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Latashia Lewtey</td>
+                                    <td>llewteyj@sun.com</td>
+                                    <td>Hougong</td>
+                                    <td>08/03/2021</td>
+                                    <td>$18303.87</td>
+                                    <td><span class="badge bg-label-primary">Current</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="group">
+                                    <td colspan="8">Administrative Assistant</td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Wilmar Bourton</td>
+                                    <td>wbourtone@sakura.ne.jp</td>
+                                    <td>Bích Động</td>
+                                    <td>04/25/2021</td>
+                                    <td>$13304.45</td>
+                                    <td><span class="badge  bg-label-info">Applied</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Roxie Huck</td>
+                                    <td>rhucki@ed.gov</td>
+                                    <td>Polýkastro</td>
+                                    <td>04/04/2021</td>
+                                    <td>$19653.56</td>
+                                    <td><span class="badge  bg-label-warning">Resigned</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Alma Harvatt</td>
+                                    <td>aharvatt11@addtoany.com</td>
+                                    <td>Ulundi</td>
+                                    <td>11/04/2021</td>
+                                    <td>$21782.82</td>
+                                    <td><span class="badge bg-label-primary">Current</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="group">
+                                    <td colspan="8">Analog Circuit Design manager</td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Faun Josefsen</td>
+                                    <td>fjosefsenl@samsung.com</td>
+                                    <td>Wengyang</td>
+                                    <td>07/08/2021</td>
+                                    <td>$11209.16</td>
+                                    <td><span class="badge  bg-label-danger">Rejected</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="group">
+                                    <td colspan="8">Analyst Programmer</td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Charlton Chatres</td>
+                                    <td>cchatresx@goo.gl</td>
+                                    <td>Reguengos de Monsaraz</td>
+                                    <td>04/07/2021</td>
+                                    <td>$21386.52</td>
+                                    <td><span class="badge  bg-label-danger">Rejected</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="control dtr-hidden" rowspan="1" colspan="1"
+                                        style="display: none;"></th>
+                                    <th rowspan="1" colspan="1">Name</th>
+                                    <th rowspan="1" colspan="1">Email</th>
+                                    <th rowspan="1" colspan="1">City</th>
+                                    <th rowspan="1" colspan="1">Date</th>
+                                    <th rowspan="1" colspan="1">Salary</th>
+                                    <th rowspan="1" colspan="1">Status</th>
+                                    <th rowspan="1" colspan="1">Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_info" id="DataTables_Table_2_info" role="status"
+                                    aria-live="polite">Showing 1 to 7 of 100 entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_2_previous"><a aria-controls="DataTables_Table_2"
+                                                aria-disabled="true" role="link" data-dt-idx="previous"
+                                                tabindex="-1" class="page-link"><i
+                                                    class="bx bx-chevron-left bx-18px"></i></a></li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" aria-current="page"
+                                                data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" data-dt-idx="1"
+                                                tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" data-dt-idx="2"
+                                                tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" data-dt-idx="3"
+                                                tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" data-dt-idx="4"
+                                                tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_2_ellipsis">
+                                            <a aria-controls="DataTables_Table_2" aria-disabled="true" role="link"
+                                                data-dt-idx="ellipsis" tabindex="-1" class="page-link">…</a>
+                                        </li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_2" role="link" data-dt-idx="14"
+                                                tabindex="0" class="page-link">15</a></li>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_2_next"><a
+                                                href="#" aria-controls="DataTables_Table_2" role="link"
+                                                data-dt-idx="next" tabindex="0" class="page-link"><i
+                                                    class="bx bx-chevron-right bx-18px"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Row grouping -->
+
+            <hr class="my-12">
+
+            <!-- Multilingual -->
+            <div class="card">
+                <h5 class="card-header pb-0 text-md-start text-center">Multilingual</h5>
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_3_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 ps-md-4">
+                                <div class="dataTables_length" id="DataTables_Table_3_length"><label><select
+                                            name="DataTables_Table_3_length" aria-controls="DataTables_Table_3"
+                                            class="form-select">
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="75">75</option>
+                                            <option value="100">100</option>
+                                        </select> Einträge anzeigen</label></div>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0">
+                                <div id="DataTables_Table_3_filter" class="dataTables_filter"><label>Suchen<input
+                                            type="search" class="form-control" placeholder=""
+                                            aria-controls="DataTables_Table_3"></label></div>
+                            </div>
+                        </div>
+                        <table class="dt-multilingual table border-top dataTable no-footer dtr-column"
+                            id="DataTables_Table_3" aria-describedby="DataTables_Table_3_info" style="width: 1392px;">
+                            <thead>
+                                <tr>
+                                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1"
+                                        style="width: 0px; display: none;" aria-label=""></th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 176px;"
+                                        aria-label="Name: aktivieren, um Spalte aufsteigend zu sortieren">Name</th>
+                                    <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 259px;"
+                                        aria-label="Position: aktivieren, um Spalte aufsteigend zu sortieren"
+                                        aria-sort="descending">Position</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 262px;"
+                                        aria-label="Email: aktivieren, um Spalte aufsteigend zu sortieren">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 89px;"
+                                        aria-label="Date: aktivieren, um Spalte aufsteigend zu sortieren">Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 88px;"
+                                        aria-label="Salary: aktivieren, um Spalte aufsteigend zu sortieren">Salary</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_3"
+                                        rowspan="1" colspan="1" style="width: 107px;"
+                                        aria-label="Status: aktivieren, um Spalte aufsteigend zu sortieren">Status</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 99px;"
+                                        aria-label="Actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Titus Hayne</td>
+                                    <td class="sorting_1">Web Designer</td>
+                                    <td>thayneh@kickstarter.com</td>
+                                    <td>05/25/2021</td>
+                                    <td>$16871.48</td>
+                                    <td><span class="badge bg-label-primary">Current</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Pegeen Peasegod</td>
+                                    <td class="sorting_1">Web Designer</td>
+                                    <td>ppeasegod22@slideshare.net</td>
+                                    <td>05/21/2021</td>
+                                    <td>$24014.04</td>
+                                    <td><span class="badge  bg-label-danger">Rejected</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Tammie Wattins</td>
+                                    <td class="sorting_1">Web Designer</td>
+                                    <td>twattins28@statcounter.com</td>
+                                    <td>08/07/2021</td>
+                                    <td>$16049.93</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Silvain Siebert</td>
+                                    <td class="sorting_1">VP Sales</td>
+                                    <td>ssiebert1u@domainmarket.com</td>
+                                    <td>09/23/2021</td>
+                                    <td>$23347.17</td>
+                                    <td><span class="badge  bg-label-info">Applied</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Aliza MacElholm</td>
+                                    <td class="sorting_1">VP Sales</td>
+                                    <td>amacelholm20@printfriendly.com</td>
+                                    <td>11/17/2021</td>
+                                    <td>$16741.31</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Bailie Coulman</td>
+                                    <td class="sorting_1">VP Quality Control</td>
+                                    <td>bcoulman1@yolasite.com</td>
+                                    <td>05/20/2021</td>
+                                    <td>$13633.69</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="  control" tabindex="0" style="display: none;"></td>
+                                    <td>Beatrix Longland</td>
+                                    <td class="sorting_1">VP Quality Control</td>
+                                    <td>blongland12@gizmodo.com</td>
+                                    <td>07/18/2021</td>
+                                    <td>$22794.60</td>
+                                    <td><span class="badge  bg-label-success">Professional</span></td>
+                                    <td>
+                                        <div class="d-inline-block"><a href="javascript:;"
+                                                class="btn btn-icon dropdown-toggle hide-arrow me-1"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded bx-sm"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end m-0"><a href="javascript:;"
+                                                    class="dropdown-item">Details</a><a href="javascript:;"
+                                                    class="dropdown-item">Archive</a>
+                                                <div class="dropdown-divider"></div><a href="javascript:;"
+                                                    class="dropdown-item text-danger delete-record">Delete</a>
+                                            </div>
+                                        </div><a href="javascript:;" class="btn btn-icon item-edit"><i
+                                                class="bx bx-edit bx-sm"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_info" id="DataTables_Table_3_info" role="status"
+                                    aria-live="polite">1 bis 7 von 100 Einträgen</div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_3_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_3_previous"><a aria-controls="DataTables_Table_3"
+                                                aria-disabled="true" role="link" data-dt-idx="previous"
+                                                tabindex="-1" class="page-link"><i
+                                                    class="bx bx-chevron-left bx-18px"></i></a></li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" aria-current="page"
+                                                data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" data-dt-idx="1"
+                                                tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" data-dt-idx="2"
+                                                tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" data-dt-idx="3"
+                                                tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" data-dt-idx="4"
+                                                tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item disabled" id="DataTables_Table_3_ellipsis">
+                                            <a aria-controls="DataTables_Table_3" aria-disabled="true" role="link"
+                                                data-dt-idx="ellipsis" tabindex="-1" class="page-link">…</a>
+                                        </li>
+                                        <li class="paginate_button page-item "><a href="#"
+                                                aria-controls="DataTables_Table_3" role="link" data-dt-idx="14"
+                                                tabindex="0" class="page-link">15</a></li>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_3_next"><a
+                                                href="#" aria-controls="DataTables_Table_3" role="link"
+                                                data-dt-idx="next" tabindex="0" class="page-link"><i
+                                                    class="bx bx-chevron-right bx-18px"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Multilingual -->
+
+        </div>
+        <!-- / Content -->
+
+        <!-- Footer -->
+        <!-- Footer-->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div
+                    class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="text-body">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>2024, made with ❤️ by <a href="https://themeselection.com"
+                            target="_blank" class="footer-link">ThemeSelection</a>
+                    </div>
+                    <div class="d-none d-lg-inline-block">
+                        <a href="https://themeselection.com/license/" class="footer-link me-4"
+                            target="_blank">License</a>
+                        <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/laravel-introduction.html"
+                            target="_blank" class="footer-link me-4">Documentation</a>
+                        <a href="https://themeselection.com/support/" target="_blank"
+                            class="footer-link d-none d-sm-inline-block">Support</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--/ Footer-->
+        <!-- / Footer -->
+        <div class="content-backdrop fade"></div>
+    </div>
+@endsection --}}
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add User</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
+            novalidate="novalidate">
+            <input type="hidden" name="id" id="user_id" value="">
+            <div class="mb-6 fv-plugins-icon-container">
+                <label class="form-label" for="add-user-fullname">Full Name</label>
+                <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe" name="name"
+                    aria-label="John Doe" value="">
+                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+            </div>
+            <div class="mb-6 fv-plugins-icon-container">
+                <label class="form-label" for="add-user-email">Email</label>
+                <input type="text" id="add-user-email" class="form-control" placeholder="john.doe@example.com"
+                    aria-label="john.doe@example.com" name="email" value="">
+                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+            </div>
+            <div class="mb-6 fv-plugins-icon-container">
+                <label class="form-label" for="add-user-contact">Contact</label>
+                <input type="text" id="add-user-contact" class="form-control phone-mask"
+                    placeholder="+1 (609) 988-44-11" aria-label="john.doe@example.com" name="userContact"
+                    value="">
+                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+            </div>
+            <div class="mb-6 fv-plugins-icon-container">
+                <label class="form-label" for="add-user-company">Company</label>
+                <input type="text" id="add-user-company" class="form-control" placeholder="Web Developer"
+                    aria-label="jdoe1" name="company" value="">
+                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+            </div>
+            <div class="mb-6">
+                <label class="form-label" for="country">Country</label>
+                <div class="position-relative"><select id="country"
+                        class="select2 form-select select2-hidden-accessible" data-select2-id="country" tabindex="-1"
+                        aria-hidden="true">
+                        <option value="" data-select2-id="2">Select</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Canada">Canada</option>
+                        <option value="China">China</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Korea">Korea, Republic of</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Russia">Russian Federation</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States">United States</option>
+                    </select><span class="select2 select2-container select2-container--default" dir="ltr"
+                        data-select2-id="1" style="width: 352px;"><span class="selection"><span
+                                class="select2-selection select2-selection--single" role="combobox"
+                                aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false"
+                                aria-labelledby="select2-country-container"><span class="select2-selection__rendered"
+                                    id="select2-country-container" role="textbox" aria-readonly="true"><span
+                                        class="select2-selection__placeholder">Select Country</span></span><span
+                                    class="select2-selection__arrow" role="presentation"><b
+                                        role="presentation"></b></span></span></span><span class="dropdown-wrapper"
+                            aria-hidden="true"></span></span></div>
+            </div>
+            <div class="mb-6">
+                <label class="form-label" for="user-role">User Role</label>
+                <select id="user-role" class="form-select">
+                    <option value="subscriber">Subscriber</option>
+                    <option value="editor">Editor</option>
+                    <option value="maintainer">Maintainer</option>
+                    <option value="author">Author</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label class="form-label" for="user-plan">Select Plan</label>
+                <select id="user-plan" class="form-select">
+                    <option value="basic">Basic</option>
+                    <option value="enterprise">Enterprise</option>
+                    <option value="company">Company</option>
+                    <option value="team">Team</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary me-3 data-submit">Submit</button>
+            <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Cancel</button>
+            <input type="hidden">
+        </form>
+    </div>
+</div>
+
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+        <div class="row g-6 mb-6">
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="content-left">
+                                <span class="text-heading">Users</span>
+                                <div class="d-flex align-items-center my-1">
+                                    <h4 class="mb-0 me-2">5</h4>
+                                    <p class="text-success mb-0">(100%)</p>
+                                </div>
+                                <small class="mb-0">Total Users</small>
+                            </div>
+                            <div class="avatar">
+                                <span class="avatar-initial rounded bg-label-primary">
+                                    <i class="bx bx-user bx-lg"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="content-left">
+                                <span class="text-heading">Verified Users</span>
+                                <div class="d-flex align-items-center my-1">
+                                    <h4 class="mb-0 me-2">0</h4>
+                                    <p class="text-success mb-0">(+95%)</p>
+                                </div>
+                                <small class="mb-0">Recent analytics </small>
+                            </div>
+                            <div class="avatar">
+                                <span class="avatar-initial rounded bg-label-success">
+                                    <i class="bx bx-user-check bx-lg"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="content-left">
+                                <span class="text-heading">Duplicate Users</span>
+                                <div class="d-flex align-items-center my-1">
+                                    <h4 class="mb-0 me-2">0</h4>
+                                    <p class="text-success mb-0">(0%)</p>
+                                </div>
+                                <small class="mb-0">Recent analytics</small>
+                            </div>
+                            <div class="avatar">
+                                <span class="avatar-initial rounded bg-label-danger">
+                                    <i class="bx bx-group bx-lg"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="content-left">
+                                <span class="text-heading">Verification Pending</span>
+                                <div class="d-flex align-items-center my-1">
+                                    <h4 class="mb-0 me-2">5</h4>
+                                    <p class="text-danger mb-0">(+6%)</p>
+                                </div>
+                                <small class="mb-0">Recent analytics</small>
+                            </div>
+                            <div class="avatar">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <i class="bx bx-user-voice bx-lg"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Users List Table -->
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="card-title mb-0">Search Filter</h5>
+            </div>
+            <div class="card-datatable table-responsive">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ms-n2">
+                                <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
+                                            name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                            class="form-select">
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                            <option value="70">70</option>
+                                            <option value="100">100</option>
+                                        </select></label></div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div
+                                class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-6 mb-md-0 mt-n6 mt-md-0">
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input
+                                            type="search" class="form-control" placeholder="Search User"
+                                            aria-controls="DataTables_Table_0"></label></div>
+                                <div class="dt-buttons btn-group flex-wrap">
+                                    <div class="btn-group"><button
+                                            class="btn buttons-collection dropdown-toggle btn-label-secondary mx-4"
+                                            tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                                            aria-haspopup="dialog" aria-expanded="false"><span><i
+                                                    class="bx bx-export me-2 bx-sm"></i>Export</span></button></div>
+                                    <button class="btn btn-secondary add-new btn-primary" tabindex="0"
+                                        aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasAddUser"><span><i
+                                                class="bx bx-plus bx-sm me-0 me-sm-2"></i><span
+                                                class="d-none d-sm-inline-block">Abrir modal</span></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                        id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1391px;">
+                        <thead>
+                            <tr>
+                                <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1"
+                                    style="width: 0px; display: none;" aria-label=""></th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 61px;"
+                                    aria-label="Id">Id</th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 288px;" aria-sort="descending"
+                                    aria-label="User: activate to sort column ascending">User</th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 457px;"
+                                    aria-label="Email: activate to sort column ascending">Email</th>
+                                <th class="text-center sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 154px;"
+                                    aria-label="Verified: activate to sort column ascending">Verified</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 217px;"
+                                    aria-label="Actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+                                <td class="control dtr-hidden" tabindex="0" style="display: none;"></td>
+                                <td><span>1</span></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-4"><span
+                                                    class="avatar-initial rounded-circle bg-label-danger">JD</span></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="text-truncate text-heading"><span class="fw-medium">John
+                                                    Doe</span></a></div>
+                                    </div>
+                                </td>
+                                <td class="" style=""><span class="user-email">johndoe@user.com</span></td>
+                                <td class="text-center" style=""><i class="bx fs-4 bx-shield-x text-danger"></i>
+                                </td>
+                                <td class="" style="">
+                                    <div class="d-flex align-items-center gap-50"><button
+                                            class="btn btn-sm btn-icon edit-record" data-id="215"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><i
+                                                class="bx bx-edit"></i></button><button
+                                            class="btn btn-sm btn-icon delete-record" data-id="215"><i
+                                                class="bx bx-trash"></i></button><button
+                                            class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="dropdown-item">View</a><a href="javascript:;"
+                                                class="dropdown-item">Suspend</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="control dtr-hidden" tabindex="0" style="display: none;"></td>
+                                <td><span>2</span></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-4"><span
+                                                    class="avatar-initial rounded-circle bg-label-success">G</span></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="text-truncate text-heading"><span
+                                                    class="fw-medium">Guest</span></a></div>
+                                    </div>
+                                </td>
+                                <td class="" style=""><span class="user-email">guest@guest.com</span></td>
+                                <td class="text-center" style=""><i class="bx fs-4 bx-shield-x text-danger"></i>
+                                </td>
+                                <td class="" style="">
+                                    <div class="d-flex align-items-center gap-50"><button
+                                            class="btn btn-sm btn-icon edit-record" data-id="214"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><i
+                                                class="bx bx-edit"></i></button><button
+                                            class="btn btn-sm btn-icon delete-record" data-id="214"><i
+                                                class="bx bx-trash"></i></button><button
+                                            class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="dropdown-item">View</a><a href="javascript:;"
+                                                class="dropdown-item">Suspend</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="control dtr-hidden" tabindex="0" style="display: none;"></td>
+                                <td><span>3</span></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-4"><span
+                                                    class="avatar-initial rounded-circle bg-label-success">AS</span></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="text-truncate text-heading"><span class="fw-medium">Ajay
+                                                    Sharma</span></a></div>
+                                    </div>
+                                </td>
+                                <td class="" style=""><span
+                                        class="user-email">panditajaysharma09@gmail.com</span></td>
+                                <td class="text-center" style=""><i class="bx fs-4 bx-shield-x text-danger"></i>
+                                </td>
+                                <td class="" style="">
+                                    <div class="d-flex align-items-center gap-50"><button
+                                            class="btn btn-sm btn-icon edit-record" data-id="210"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><i
+                                                class="bx bx-edit"></i></button><button
+                                            class="btn btn-sm btn-icon delete-record" data-id="210"><i
+                                                class="bx bx-trash"></i></button><button
+                                            class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="dropdown-item">View</a><a href="javascript:;"
+                                                class="dropdown-item">Suspend</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="control dtr-hidden" tabindex="0" style="display: none;"></td>
+                                <td><span>4</span></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-4"><span
+                                                    class="avatar-initial rounded-circle bg-label-warning">A</span></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="text-truncate text-heading"><span
+                                                    class="fw-medium">Admin</span></a></div>
+                                    </div>
+                                </td>
+                                <td class="" style=""><span class="user-email">admin@admin.com</span></td>
+                                <td class="text-center" style=""><i class="bx fs-4 bx-shield-x text-danger"></i>
+                                </td>
+                                <td class="" style="">
+                                    <div class="d-flex align-items-center gap-50"><button
+                                            class="btn btn-sm btn-icon edit-record" data-id="201"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><i
+                                                class="bx bx-edit"></i></button><button
+                                            class="btn btn-sm btn-icon delete-record" data-id="201"><i
+                                                class="bx bx-trash"></i></button><button
+                                            class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="dropdown-item">View</a><a href="javascript:;"
+                                                class="dropdown-item">Suspend</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="control dtr-hidden" tabindex="0" style="display: none;"></td>
+                                <td><span>5</span></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-4"><span
+                                                    class="avatar-initial rounded-circle bg-label-danger">5</span></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="text-truncate text-heading"><span
+                                                    class="fw-medium">56cf456h4599</span></a></div>
+                                    </div>
+                                </td>
+                                <td class="" style=""><span class="user-email">emp1@tridentmeds.com</span>
+                                </td>
+                                <td class="text-center" style=""><i class="bx fs-4 bx-shield-x text-danger"></i>
+                                </td>
+                                <td class="" style="">
+                                    <div class="d-flex align-items-center gap-50"><button
+                                            class="btn btn-sm btn-icon edit-record" data-id="200"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><i
+                                                class="bx bx-edit"></i></button><button
+                                            class="btn btn-sm btn-icon delete-record" data-id="200"><i
+                                                class="bx bx-trash"></i></button><button
+                                            class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-end m-0"><a
+                                                href="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/user/view/account"
+                                                class="dropdown-item">View</a><a href="javascript:;"
+                                                class="dropdown-item">Suspend</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                Displaying 1 to 5 of 5 entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0"
+                                            aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1"
+                                            class="page-link"><i class="bx bx-chevron-left bx-sm"></i></a></li>
+                                    <li class="paginate_button page-item active"><a href="#"
+                                            aria-controls="DataTables_Table_0" role="link" aria-current="page"
+                                            data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                    <li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a
+                                            aria-controls="DataTables_Table_0" aria-disabled="true" role="link"
+                                            data-dt-idx="next" tabindex="-1" class="page-link"><i
+                                                class="bx bx-chevron-right bx-sm"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Offcanvas to add new user -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser"
+                aria-labelledby="offcanvasAddUserLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add User</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+                    <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
+                        novalidate="novalidate">
+                        <input type="hidden" name="id" id="user_id" value="">
+                        <div class="mb-6 fv-plugins-icon-container">
+                            <label class="form-label" for="add-user-fullname">Full Name</label>
+                            <input type="text" class="form-control" id="add-user-fullname" placeholder="John Doe"
+                                name="name" aria-label="John Doe" value="">
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-6 fv-plugins-icon-container">
+                            <label class="form-label" for="add-user-email">Email</label>
+                            <input type="text" id="add-user-email" class="form-control"
+                                placeholder="john.doe@example.com" aria-label="john.doe@example.com" name="email"
+                                value="">
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-6 fv-plugins-icon-container">
+                            <label class="form-label" for="add-user-contact">Contact</label>
+                            <input type="text" id="add-user-contact" class="form-control phone-mask"
+                                placeholder="+1 (609) 988-44-11" aria-label="john.doe@example.com" name="userContact"
+                                value="">
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-6 fv-plugins-icon-container">
+                            <label class="form-label" for="add-user-company">Company</label>
+                            <input type="text" id="add-user-company" class="form-control" placeholder="Web Developer"
+                                aria-label="jdoe1" name="company" value="">
+                            <div
+                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="country">Country</label>
+                            <div class="position-relative"><select id="country"
+                                    class="select2 form-select select2-hidden-accessible" data-select2-id="country"
+                                    tabindex="-1" aria-hidden="true">
+                                    <option value="" data-select2-id="2">Select</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                    <option value="Belarus">Belarus</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="China">China</option>
+                                    <option value="France">France</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="India">India</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Israel">Israel</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Korea">Korea, Republic of</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="Russia">Russian Federation</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Turkey">Turkey</option>
+                                    <option value="Ukraine">Ukraine</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States">United States</option>
+                                </select><span class="select2 select2-container select2-container--default" dir="ltr"
+                                    data-select2-id="1" style="width: 352px;"><span class="selection"><span
+                                            class="select2-selection select2-selection--single" role="combobox"
+                                            aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                            aria-disabled="false" aria-labelledby="select2-country-container"><span
+                                                class="select2-selection__rendered" id="select2-country-container"
+                                                role="textbox" aria-readonly="true"><span
+                                                    class="select2-selection__placeholder">Select
+                                                    Country</span></span><span class="select2-selection__arrow"
+                                                role="presentation"><b role="presentation"></b></span></span></span><span
+                                        class="dropdown-wrapper" aria-hidden="true"></span></span></div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="user-role">User Role</label>
+                            <select id="user-role" class="form-select">
+                                <option value="subscriber">Subscriber</option>
+                                <option value="editor">Editor</option>
+                                <option value="maintainer">Maintainer</option>
+                                <option value="author">Author</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="user-plan">Select Plan</label>
+                            <select id="user-plan" class="form-select">
+                                <option value="basic">Basic</option>
+                                <option value="enterprise">Enterprise</option>
+                                <option value="company">Company</option>
+                                <option value="team">Team</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-3 data-submit">Submit</button>
+                        <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Cancel</button>
+                        <input type="hidden">
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection

@@ -42,13 +42,15 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Sales;
 use App\Http\Controllers\tables\Basic as TablesBasic;
+use App\Models\Product;
 
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
 
-// layout
+// // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
 Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
 Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');
@@ -112,3 +114,6 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 Route::get('/sales', [Sales::class, 'index'])->name('sales');
 
 Route::get('/sales/test', [Sales::class, 'test'])->name('sales-teste');
+
+
+Route::resource('product', ProductController::class);
