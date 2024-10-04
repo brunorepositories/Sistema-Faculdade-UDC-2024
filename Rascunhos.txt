@@ -1,0 +1,11 @@
+
+Tabelas
+Singulas - Plural
+Pais : Country - Countries
+Estado : State - States
+City - Cities
+Product - Products
+Supplier - Suppliers
+Customer - Customers
+Purchase - Purchases
+Sale - Sales

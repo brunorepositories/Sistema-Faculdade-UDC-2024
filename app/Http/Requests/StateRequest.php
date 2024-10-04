@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaisRequest extends FormRequest
+class StateRequest extends FormRequest
 {
 
   public function authorize(): bool
@@ -16,9 +16,9 @@ class PaisRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'nome' => ['required', 'unique:pais'],
-      'sigla' => ['required', 'unique:pais'],
-      'ddi' => ['required', 'integer']
+      'nome' => ['required', 'unique:states'],
+      'uf' => ['required', 'unique:states'],
+      'country_id' => ['required', 'exists:contry, id'],
     ];
   }
 }
