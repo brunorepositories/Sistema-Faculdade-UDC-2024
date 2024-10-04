@@ -10,7 +10,7 @@
             <h4 class="head-label">Produtos</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('product.create') }}"> Cadastrar produto </a>
+                <a class="btn btn-primary" href="{{ route('products.create') }}"> Cadastrar produto </a>
             </div>
         </div>
 
@@ -32,7 +32,8 @@
                                 <td>{{ $product->nome }}</td>
                                 <td>{{ $product->preco }}</td>
                                 <td>
-                                    <a class="btn btn-outline-primary border-0 me-5" href="">
+                                    <a class="btn btn-outline-primary border-0 me-5 "
+                                        href="{{ route('products.edit', $product->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px me-2"></span>
                                         Editar
                                     </a>

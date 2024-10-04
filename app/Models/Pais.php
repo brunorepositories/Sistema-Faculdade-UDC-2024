@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Pais extends Model
 {
   use HasFactory;
 
-  protected $fillable = ["nome", 'preco'];
+  protected $fillable = [
+    'nome',
+    'sigla',
+    'ddi'
+  ];
 }

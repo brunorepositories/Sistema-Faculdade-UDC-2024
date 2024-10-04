@@ -9,11 +9,6 @@
       "menuHeader": "Movimentações"
     },
     {
-      "url": "/sales",
-      "name": "Vendas",
-      "slug": "sales"
-    },
-    {
       "url": "/compras.index",
       "name": "Compras",
       "slug": "compras"
@@ -40,9 +35,30 @@
       "slug": "clientes"
     },
     {
-      "url": "/produtos",
+      "url": "/products",
       "name": "Produtos",
-      "slug": "produtos"
+      "slug": "products.index"
+    },
+    {
+      "name": "Config. Geral",
+      "slug": "pais",
+      "submenu": [
+        {
+          "url": "/pais",
+          "name": "Pais",
+          "slug": "pais.index"
+        },
+        {
+          "url": "pages/account-settings-notifications",
+          "name": "Notifications",
+          "slug": "pages-account-settings-notifications"
+        },
+        {
+          "url": "pages/account-settings-connections",
+          "name": "Connections",
+          "slug": "pages-account-settings-connections"
+        }
+      ]
     },
     {
       "menuHeader": "Config. geral"
@@ -71,6 +87,65 @@
       "url": "/pais",
       "name": "Pais",
       "slug": "pais"
+    },
+    {
+      "menuHeader": "Config. geral"
+    },
+    {
+      "url": "/pais",
+      "name": "Pais",
+      "slug": "dashboard",
+      "badge": [
+        "danger",
+        "5"
+      ],
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Analytics",
+          "slug": "dashboard-analytics"
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/dashboard/crm",
+          "name": "CRM",
+          "slug": "dashboard-crm",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/ecommerce/dashboard",
+          "name": "eCommerce",
+          "slug": "app-ecommerce-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/logistics/dashboard",
+          "name": "Logistics",
+          "slug": "app-logistics-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        },
+        {
+          "url": "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo-1/app/academy/dashboard",
+          "name": "Academy",
+          "slug": "app-academy-dashboard",
+          "target": "_blank",
+          "badge": [
+            "label-primary fs-tiny",
+            "Pro"
+          ]
+        }
+      ]
     },
     {
       "menuHeader": "MENU DO TEMA"

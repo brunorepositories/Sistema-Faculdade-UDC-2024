@@ -42,8 +42,7 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Sales;
+use App\Http\Controllers\PaisController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Models\Product;
 
@@ -111,9 +110,4 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-Route::get('/sales', [Sales::class, 'index'])->name('sales');
-
-Route::get('/sales/test', [Sales::class, 'test'])->name('sales-teste');
-
-
-Route::resource('product', ProductController::class);
+Route::resource('pais', PaisController::class);
