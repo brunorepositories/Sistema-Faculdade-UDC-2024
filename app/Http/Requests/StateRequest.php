@@ -18,7 +18,7 @@ class StateRequest extends FormRequest
     return [
       'nome' => ['required', 'unique:states'],
       'uf' => ['required', 'unique:states'],
-      'country_id' => ['required', 'exists:contry, id'],
+      'country_id' => ['required', 'exists:countries,id'],
     ];
   }
 }

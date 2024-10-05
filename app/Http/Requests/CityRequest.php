@@ -16,9 +16,9 @@ class CityRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'nome' => ['required', 'unique:state'],
-      'ddd' => ['required', 'unique:state'],
-      'state_id' => ['required', 'exists:state, id'],
+      'nome' => ['required', 'unique:cities'],
+      'ddd' => ['required', 'unique:cities'],
+      'state_id' => ['required', 'exists:states,id'],
     ];
   }
 }

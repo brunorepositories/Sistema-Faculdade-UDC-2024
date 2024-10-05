@@ -21,7 +21,7 @@
                 <div class="col-8">
                     <label
                         class="form-label"
-                        for="nome">Nome do País</label>
+                        for="nome">Nome do país</label>
                     <input
                         required
                         name="nome"

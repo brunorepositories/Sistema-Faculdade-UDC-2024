@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CityRequest; // Supondo que exista uma CityRequest para validações
 use App\Models\City;
-use App\Models\State; // Adicionando o modelo de State
+use App\Models\State;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +15,9 @@ class CityController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(City $city)
+  public function index()
   {
-    $cities = $city->with('state')->get(); // Incluindo o relacionamento com o State
+    $cities = City::with(['state'])->get(); // Incluindo o relacionamento com o State
     return view('content.city.index', compact('cities'));
   }
 
@@ -35,6 +35,8 @@ class CityController extends Controller
    */
   public function store(CityRequest $request)
   {
+
+    // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
         City::create($request->all());
@@ -53,7 +55,7 @@ class CityController extends Controller
    */
   public function show(City $city)
   {
-    //
+    // Este método pode ser implementado conforme necessário
   }
 
   /**

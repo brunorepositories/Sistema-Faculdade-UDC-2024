@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\State;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
       $table->string('nome');
       $table->string('ddd')->nullable();
 
-      $table->foreignId('state_id')->constrained()->onDelete('cascade');
+      $table->foreignIdFor(State::class)->constrained()->onDelete('cascade');
     });
   }
 

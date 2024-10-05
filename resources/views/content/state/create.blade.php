@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Cadastrar Estado')
+@section('title', 'Cadastrar estado')
 
 @section('content')
     <div class="card mb-10">
@@ -21,7 +21,7 @@
                 <div class="col-8">
                     <label
                         class="form-label"
-                        for="nome">Nome do Estado</label>
+                        for="nome">Nome do estado</label>
                     <input
                         required
                         name="nome"

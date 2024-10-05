@@ -15,13 +15,13 @@
 
         <div class="card-body">
 
-            @include('components.sucessMessage')
+            @include('components.feedbackMessage')
 
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Código</th>
                             <th>Nome</th>
                             <th>Sigla</th>
                             <th>DDI</th>

@@ -16,6 +16,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\cards\CardBasic;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\user_interface\Accordion;
 use App\Http\Controllers\user_interface\Alerts;
@@ -114,3 +115,5 @@ Route::get('/', [CountryController::class, 'index'])->name('country.index');
 Route::resource('country', CountryController::class);
 
 Route::resource('state', StateController::class);
+
+Route::resource('city', CityController::class);

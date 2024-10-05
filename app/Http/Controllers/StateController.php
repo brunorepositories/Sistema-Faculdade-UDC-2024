@@ -15,9 +15,10 @@ class StateController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(State $state)
+  public function index()
   {
-    $states = $state->with('country')->get(); // Incluindo o relacionamento com o Country
+    $states = State::with(['country'])->get(); // Incluindo o relacionamento com o Country
+
     return view('content.state.index', compact('states'));
   }
 
@@ -37,14 +38,16 @@ class StateController extends Controller
   {
     try {
       DB::transaction(function () use ($request) {
+
         State::create($request->all());
       });
 
-      return to_route('content.state.index')->with('success', "Estado cadastrado com sucesso.");
+      return to_route('state.index')->with('success', "Estado cadastrado com sucesso.");
     } catch (QueryException $ex) {
+
       Log::debug('Warning - Erro ao executar query >>> ' . $ex);
 
-      return to_route('content.state.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+      return to_route('state.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
@@ -73,7 +76,7 @@ class StateController extends Controller
     $state->fill($request->all());
     $state->save();
 
-    return to_route('content.state.index')->with('success', "Estado alterado com sucesso.");
+    return to_route('state.index')->with('success', "Estado alterado com sucesso.");
   }
 
   /**
@@ -83,6 +86,6 @@ class StateController extends Controller
   {
     $state->delete();
 
-    return to_route('content.state.index')->with('success', "Estado excluído com sucesso.");
+    return to_route('state.index')->with('success', "Estado excluído com sucesso.");
   }
 }
