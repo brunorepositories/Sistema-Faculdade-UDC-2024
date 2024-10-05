@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Editar país')
+@section('title', 'Editar Estado')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Editar país</h4>
+        <h4 class="card-header">Editar estado</h4>
 
         <div class="card-body">
 
@@ -12,7 +12,7 @@
 
             <form
                 class="needs-validation row @if ($errors->any()) was-validated @endif"
-                action="{{ route('country.update', $country->id) }}"
+                action="{{ route('state.update', $state->id) }}"
                 method="POST"
                 novalidate="">
 
@@ -22,60 +22,64 @@
                 <div class="col-8">
                     <label
                         class="form-label"
-                        for="nome">Nome do País</label>
+                        for="nome">Nome do estado</label>
                     <input
                         required
                         name="nome"
                         type="text"
                         class="form-control"
                         id="nome"
-                        placeholder="Informe o nome do país"
+                        placeholder="Informe o nome do estado"
                         maxlength="50"
-                        value="{{ old('nome', $country->nome) }}">
+                        value="{{ old('nome', $state->nome) }}">
                     @error('nome')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-2">
+                <div class="col-1">
                     <label
                         class="form-label"
-                        for="sigla">Sigla</label>
+                        for="uf">UF</label>
                     <input
                         required
-                        name="sigla"
+                        name="uf"
                         type="text"
                         class="form-control"
-                        id="sigla"
-                        placeholder="Informe a sigla do país"
-                        maxlength="3"
-                        value="{{ old('sigla', $country->sigla) }}">
-                    @error('sigla')
+                        id="uf"
+                        placeholder="Informe a sigla UF"
+                        maxlength="2"
+                        value="{{ old('uf', $state->uf) }}">
+                    @error('uf')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-2">
+                <div class="col-3">
                     <label
                         class="form-label"
-                        for="ddi">DDI</label>
-                    <input
+                        for="country_id">País</label>
+                    <select
                         required
-                        name="ddi"
-                        type="number"
+                        name="country_id"
                         class="form-control"
-                        id="ddi"
-                        placeholder="Informe o código DDI"
-                        maxlength="5"
-                        value="{{ old('ddi', $country->ddi) }}">
-                    @error('ddi')
+                        id="country_id">
+                        <option value="" disabled>Selecione o país</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country->id }}"
+                                {{ old('country_id', $state->country_id) == $country->id ? 'selected' : '' }}>
+                                {{ $country->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('country_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="d-flex justify-content-end mt-10">
                     <a
-                        href="{{ route('country.index') }}"
+                        href="{{ route('state.index') }}"
                         class="btn btn-outline-primary me-4">Cancelar</a>
                     <button
                         type="submit"
