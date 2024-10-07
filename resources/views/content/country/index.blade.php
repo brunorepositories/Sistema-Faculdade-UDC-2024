@@ -36,13 +36,13 @@
                                 <td>{{ $country->sigla }}</td>
                                 <td>{{ $country->ddi }}</td>
                                 <td style="width: 150px">
-                                    <a class="btn btn-outline-primary border-0"
+                                    <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('country.edit', $country->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
-                                    <button type="button" class="btn btn-outline-danger border-0"
+                                    <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $country->id }}">
                                         <span class="tf-icons bx bx-trash bx-22px"></span>

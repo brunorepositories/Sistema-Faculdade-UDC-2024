@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Editar Cidade')
+@section('title', 'Alterar cidade')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Editar cidade</h4>
+        <h4 class="card-header">Alterar cidade</h4>
 
         <div class="card-body">
 
@@ -56,22 +56,33 @@
                 </div>
 
                 <div class="col-3">
-                    <label
-                        class="form-label"
-                        for="state_id">Estado</label>
-                    <select
-                        required
-                        name="state_id"
-                        class="form-control"
-                        id="state_id">
-                        <option value="" disabled>Selecione o estado</option>
-                        @foreach ($states as $state)
-                            <option value="{{ $state->id }}"
-                                {{ old('state_id', $city->state_id) == $state->id ? 'selected' : '' }}>
-                                {{ $state->nome }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label class="form-label" for="state_id">País</label>
+                    <div class="input-group">
+                        <select
+                            required
+                            name="state_id"
+                            class="form-select"
+                            id="state_id">
+                            <option value="" disabled>Selecione o país</option>
+                            @foreach ($states as $state)
+                                <option value="{{ $state->id }}"
+                                    {{ old('state_id', $state->state_id) == $state->id ? 'selected' : '' }}>
+                                    {{ $state->nome }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        {{-- Botão de ação do modal de selecionar pais --}}
+                        <button class="btn btn-outline-secondary"
+                            style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#stateModal">
+                            <span class="tf-icons bx bx-search bx-18px"></span>
+                        </button>
+                        {{-- End Button --}}
+
+                    </div>
                     @error('state_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -80,12 +91,15 @@
                 <div class="d-flex justify-content-end mt-10">
                     <a
                         href="{{ route('city.index') }}"
-                        class="btn btn-outline-primary me-4">Cancelar</a>
+                        class="btn btn-outline-secondary me-4">Cancelar</a>
                     <button
                         type="submit"
-                        class="btn btn-primary">Salvar</button>
+                        class="btn btn-success">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Modal Selecionar pais + Cadastrar pais -->
+    @include('content.city.modal.selectState')
 @endsection

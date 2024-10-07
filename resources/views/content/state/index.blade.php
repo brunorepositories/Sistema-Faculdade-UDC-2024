@@ -36,16 +36,16 @@
                                 <td>{{ $state->uf }}</td>
                                 <td>{{ $state->country->nome }}</td> <!-- Nome do país associado -->
                                 <td style="width: 150px">
-                                    <a class="btn btn-outline-primary border-0"
+                                    <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('state.edit', $state->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
-                                    <button type="button" class="btn btn-outline-danger border-0"
+                                    <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $state->id }}">
-                                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                                        <i class='bx bx-trash'></i>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->

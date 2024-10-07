@@ -11,7 +11,7 @@
                 Tem certeza que deseja excluir <strong>{{ $objNome }}</strong>?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary me-4" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-secondary me-4" data-bs-dismiss="modal">Cancelar</button>
 
                 <form action="{{ route($action, $objId) }}" method="POST">
                     @csrf

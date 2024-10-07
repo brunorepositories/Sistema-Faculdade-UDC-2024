@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Cadastrar país')
+@section('title', 'Novo país')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Cadastrar país</h4>
+        <h4 class="card-header">Novo país</h4>
 
         <div class="card-body">
 
@@ -30,7 +30,7 @@
                         id="nome"
                         placeholder="Informe o nome do país"
                         maxlength="50"
-                        value="{{ old('nome') }}">
+                        value="{{ Str::upper(old('nome')) }}">
                     @error('nome')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -48,7 +48,7 @@
                         id="sigla"
                         placeholder="Informe a sigla do país"
                         maxlength="3"
-                        value="{{ old('sigla') }}">
+                        value="{{ Str::upper(old('sigla')) }}">
                     @error('sigla')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -66,7 +66,7 @@
                         id="ddi"
                         placeholder="Informe o código DDI"
                         maxlength="5"
-                        value="{{ old('ddi') }}">
+                        value="{{ Str::upper(old('ddi')) }}">
                     @error('ddi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -75,10 +75,10 @@
                 <div class="d-flex justify-content-end mt-10">
                     <a
                         href="{{ route('country.index') }}"
-                        class="btn btn-outline-primary me-4">Cancelar</a>
+                        class="btn btn-outline-secondary me-4">Cancelar</a>
                     <button
                         type="submit"
-                        class="btn btn-primary">Salvar</button>
+                        class="btn btn-success">Cadastrar</button>
                 </div>
             </form>
         </div>

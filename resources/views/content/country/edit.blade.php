@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Editar país')
+@section('title', 'Alterar país')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Editar país</h4>
+        <h4 class="card-header">Alterar país</h4>
 
         <div class="card-body">
 
@@ -76,10 +76,10 @@
                 <div class="d-flex justify-content-end mt-10">
                     <a
                         href="{{ route('country.index') }}"
-                        class="btn btn-outline-primary me-4">Cancelar</a>
+                        class="btn btn-outline-secondary me-4">Cancelar</a>
                     <button
                         type="submit"
-                        class="btn btn-primary">Salvar</button>
+                        class="btn btn-success">Salvar</button>
                 </div>
             </form>
         </div>

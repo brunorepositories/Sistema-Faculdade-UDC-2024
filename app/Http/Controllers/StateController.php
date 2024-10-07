@@ -73,6 +73,8 @@ class StateController extends Controller
    */
   public function update(Request $request, State $state)
   {
+
+    // dd($state);
     $state->fill($request->all());
     $state->save();
 

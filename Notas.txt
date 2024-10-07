@@ -1,0 +1,24 @@
+
+Tabelas em inglês (Singulas > Plural)
+
+Pais        : Country > Countries
+Estado      : State   > States
+Cidade      : City > Cities
+Produto     : Product > Products
+Fornecedor  : Supplier > Suppliers
+Cliente     : Customer > Customers
+Compra      : Purchase > Purchases
+Venda       : Sale > Sales
+Funcionario : Employee > Employees
+
+
+
+Fazer:
+
+1. Criar os cadastros
+    > Cliente
+    > Fornecedor
+    > Funcionario
+    > Produto
+
+2. Resolver como vai ser gerenciado o multi modal das telas de cadastro

@@ -10,28 +10,25 @@
 
             @include('components.errorMessage')
 
-            <form
-                class="needs-validation row @if ($errors->any()) was-validated @endif"
+            <form id="stateEditForm" class="needs-validation row @if ($errors->any()) was-validated @endif"
                 action="{{ route('state.update', $state->id) }}"
-                method="POST"
-                novalidate="">
+                method="POST">
 
                 @csrf
-                @method('PUT') <!-- Usando PUT para a edição -->
+                @method('PUT')
 
                 <div class="col-8">
                     <label
                         class="form-label"
                         for="nome">Nome do estado</label>
-                    <input
-                        required
+                    <input required
                         name="nome"
                         type="text"
                         class="form-control"
                         id="nome"
                         placeholder="Informe o nome do estado"
                         maxlength="50"
-                        value="{{ old('nome', $state->nome) }}">
+                        value="{{ Str::upper(old('nome', $state->nome)) }}">
                     @error('nome')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -49,43 +46,55 @@
                         id="uf"
                         placeholder="Informe a sigla UF"
                         maxlength="2"
-                        value="{{ old('uf', $state->uf) }}">
+                        value="{{ Str::upper(old('uf', $state->uf)) }}">
                     @error('uf')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-3">
-                    <label
-                        class="form-label"
-                        for="country_id">País</label>
-                    <select
-                        required
-                        name="country_id"
-                        class="form-control"
-                        id="country_id">
-                        <option value="" disabled>Selecione o país</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}"
-                                {{ old('country_id', $state->country_id) == $country->id ? 'selected' : '' }}>
-                                {{ $country->nome }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label class="form-label" for="country_id">País</label>
+                    <div class="input-group">
+                        <select
+                            required
+                            name="country_id"
+                            class="form-select"
+                            id="country_id">
+                            <option value="" disabled>Selecione o país</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}"
+                                    {{ old('country_id', $state->country_id) == $country->id ? 'selected' : '' }}>
+                                    {{ $country->nome }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        {{-- Botão de ação do modal de selecionar pais --}}
+                        <button class="btn btn-outline-secondary"
+                            style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#countryModal">
+                            <span class="tf-icons bx bx-search bx-18px"></span>
+                        </button>
+                        {{-- End Button --}}
+
+                    </div>
                     @error('country_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
                 <div class="d-flex justify-content-end mt-10">
-                    <a
-                        href="{{ route('state.index') }}"
-                        class="btn btn-outline-primary me-4">Cancelar</a>
+                    <a href="{{ route('state.index') }}"
+                        class="btn btn-outline-secondary me-4">Cancelar</a>
                     <button
                         type="submit"
-                        class="btn btn-primary">Salvar</button>
+                        class="btn btn-success">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Modal Selecionar pais + Cadastrar pais -->
+    @include('content.state.modal.selectCountry')
 @endsection
