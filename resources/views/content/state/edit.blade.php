@@ -84,12 +84,23 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="d-flex justify-content-end mt-10">
-                    <a href="{{ route('state.index') }}"
-                        class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button
-                        type="submit"
-                        class="btn btn-success">Salvar</button>
+
+
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                            {{ date('d/m/Y H:i', strtotime($state->created_at)) }}</span>
+                        <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                            {{ date('d/m/Y H:i', strtotime($state->updated_at)) }}</span>
+                    </div>
+                    <div>
+
+                        <a href="{{ route('state.index') }}"
+                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                        <button
+                            type="submit"
+                            class="btn btn-success">Salvar</button>
+                    </div>
                 </div>
             </form>
         </div>

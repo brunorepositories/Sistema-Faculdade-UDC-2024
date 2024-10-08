@@ -73,15 +73,22 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a
-                        href="{{ route('country.index') }}"
-                        class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button
-                        type="submit"
-                        class="btn btn-success">Salvar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                            {{ date('d/m/Y H:i', strtotime($country->created_at)) }}</span>
+                        <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                            {{ date('d/m/Y H:i', strtotime($country->updated_at)) }}</span>
+                    </div>
+                    <div>
+                        <a href="{{ route('country.index') }}"
+                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                        <button type="submit"
+                            class="btn btn-success">Salvar</button>
+                    </div>
                 </div>
-            </form>
         </div>
+        </form>
+    </div>
     </div>
 @endsection

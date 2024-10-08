@@ -1,38 +1,46 @@
 {
   "menu": [
     {
-      "url": "/home",
-      "name": "Inicio",
-      "slug": "Inicio"
+      "menuHeader": "Trabalhando aqui"
     },
     {
-      "menuHeader": "Movimentações"
+      "url": "/sale.create",
+      "name": "Registrar Venda",
+      "slug": "sale.create"
     },
     {
-      "url": "/compras.index",
+      "menuHeader": "Registros"
+    },
+    {
+      "url": "/sale.index",
+      "name": "Vendas",
+      "slug": "sale.index"
+    },
+    {
+      "url": "/purchase.index",
       "name": "Compras",
-      "slug": "compras"
+      "slug": "purchase.index"
     },
     {
-      "menuHeader": "Financeiro"
+      "menuHeader": "Contábil"
     },
     {
-      "url": "/contas-receber",
-      "name": "Contas a receber",
-      "slug": "contas-receber"
+      "url": "/accountsReceivable.index",
+      "name": "Contas a Receber",
+      "slug": "accountsReceivable.index"
     },
     {
-      "url": "/contas-pagar",
-      "name": "Contas a pagar",
-      "slug": "contas-pagar"
+      "url": "/accountsPayable.index",
+      "name": "Contas a Pagar",
+      "slug": "accountsPayable.index"
     },
     {
       "menuHeader": "Cadastros"
     },
     {
-      "url": "/clientes",
+      "url": "/customer.index",
       "name": "Clientes",
-      "slug": "clientes"
+      "slug": "customer.index"
     },
     {
       "url": "/products",
@@ -40,13 +48,18 @@
       "slug": "products.index"
     },
     {
-      "name": "Cadastros",
-      "slug": "pais",
+      "url": "/employee.index",
+      "name": "Funcionários",
+      "slug": "employee.index"
+    },
+    {
+      "name": "Localização",
+      "slug": "localizacao",
       "submenu": [
         {
-          "url": "/country",
-          "name": "Pais",
-          "slug": "country.index"
+          "url": "/city",
+          "name": "Cidade",
+          "slug": "city.index"
         },
         {
           "url": "/state",
@@ -54,9 +67,9 @@
           "slug": "state.index"
         },
         {
-          "url": "/city",
-          "name": "Cidade",
-          "slug": "city.index"
+          "url": "/country",
+          "name": "Pais",
+          "slug": "country.index"
         }
       ]
     }

@@ -26,8 +26,9 @@ class CountryController extends Controller
   /**
    * Show the form for creating a new resource.
    */
-  public function create()
+  public function create(Country $country)
   {
+    // dd($country);
     return view('content.country.create');
   }
 
