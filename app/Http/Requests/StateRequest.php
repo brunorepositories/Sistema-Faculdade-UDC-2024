@@ -16,8 +16,8 @@ class StateRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'nome' => ['required', 'unique:states'],
-      'uf' => ['required', 'unique:states'],
+      'nome' => ['required', 'unique:states,nome', 'max:50'],
+      'uf' => ['required', 'unique:states,uf', 'max:2'],
       'country_id' => ['required', 'exists:countries,id'],
     ];
   }

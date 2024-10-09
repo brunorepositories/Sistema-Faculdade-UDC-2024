@@ -1,3 +1,25 @@
+ANOTAÇÕES
+
+> Parei logo depois de incluir o campo "Cadastrado" e "Última alteração"
+    - Verificar se está em Pais, Estado e Cidade
+> Logo depois ir para criação da Measure e Product
+
+
+Código para Transaction
+
+  try {
+      DB::transaction(function () use ($request) {
+        Measure::create($request->all());
+      });
+      return to_route('measure.index')->with('success', "Medida cadastrada com sucesso.");
+  } catch (QueryException $ex) {
+    Log::error('Erro ao executar query >>> ' . $ex->getMessage());
+    return to_route('measure.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+  }
+
+------------------
+ACOMPANHAMENTO DO PROJETO
+
 
 Tabelas em inglês (Singulas > Plural)
 
@@ -14,12 +36,33 @@ Funcionario : Employee > Employees
 Contas a receber : accounts receivable
 Contas a pagar   : accounts payable
 
-Fazer:
+
+Atividades:
+
+Difinições de UI:
+> Toda tela "Alterar ..." deve ter os campos "Criação" e "Última alteração"
+> Todos os inputs devem ter maxLenght de acordo com o dado no DB
+> Cores dos botões:
+    - Salvar: Success
+    - Cancelar: Outline Secondary
+    - Excluir: Danger
+    - Fechar: Outline Secondary
+    - Cadastrar/Adicionar : Primary
+
 
 1. Criar os cadastros
-    > Cliente
-    > Fornecedor
-    > Funcionario
-    > Produto
+[] Unidade de Medida
+[] Produto
+[] Funcionario
+[] Fornecedor
+[] Cliente
 
 2. Resolver como vai ser gerenciado o multi modal das telas de cadastro
+
+
+
+
+
+
+---------------------
+FEITO

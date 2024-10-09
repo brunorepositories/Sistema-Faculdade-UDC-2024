@@ -2,64 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MeasureRequest;
 use App\Models\Measure;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MeasureController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+  /**
+   * Display a listing of the resource.
+   */
+  public function index()
+  {
+    // Inclui o relacionamento com Products ao carregar as medidas
+    $measures = Measure::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    return view('content.measure.index', compact('measures'));
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   */
+  public function create()
+  {
+    return view('content.measure.create');
+  }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Measure $measure)
-    {
-        //
-    }
+  /**
+   * Store a newly created resource in storage.
+   */
+  public function store(MeasureRequest $request)
+  {
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Measure $measure)
-    {
-        //
-    }
+    try {
+      DB::transaction(function () use ($request) {
+        Measure::create($request->all());
+      });
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Measure $measure)
-    {
-        //
-    }
+      return to_route('measure.index')->with('success', "Medida cadastrada com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao executar query >>> ' . $ex->getMessage());
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Measure $measure)
-    {
-        //
+      return to_route('measure.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
+  }
+
+  /**
+   * Display the specified resource.
+   */
+  public function show(Measure $measure)
+  {
+    // Detalhamento da medida, se necessário
+    return view('content.measure.show', compact('measure'));
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   */
+  public function edit(Measure $measure)
+  {
+    return view('content.measure.edit', compact('measure'));
+  }
+
+  /**
+   * Update the specified resource in storage.
+   */
+  public function update(MeasureRequest $request, Measure $measure)
+  {
+
+    try {
+      $measure->fill($request->all());
+      $measure->save();
+      return to_route('measure.index')->with('success', "Medida alterada com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao atualizar medida >>> ' . $ex->getMessage());
+
+      return to_route('measure.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+    }
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   */
+  public function destroy(Measure $measure)
+  {
+    try {
+      $measure->delete();
+
+      return to_route('measure.index')->with('success', "Medida excluída com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao excluir medida >>> ' . $ex->getMessage());
+
+      return to_route('measure.index')->with('failed', 'Ops, algo deu errado ao tentar excluir.');
+    }
+  }
 }

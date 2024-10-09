@@ -15,9 +15,9 @@ return new class extends Migration
       $table->id();
       $table->timestamps();
 
-      $table->string('nome');
-      $table->string('sigla')->nullable();
-      $table->unsignedSmallInteger('ddi')->nullable();
+      $table->string('nome', 50);
+      $table->char('sigla', 3);
+      $table->unsignedSmallInteger('ddi');
     });
   }
 

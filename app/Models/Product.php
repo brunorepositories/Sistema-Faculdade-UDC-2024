@@ -18,6 +18,7 @@ class Product extends Model
     'precoVenda',
     'precoUltimaVenda',
     'dtUltimaVenda',
+    'measure_id'
   ];
 
   public function measure()

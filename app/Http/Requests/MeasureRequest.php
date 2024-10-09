@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CountryRequest extends FormRequest
+class MeasureRequest extends FormRequest
 {
 
   public function authorize(): bool
@@ -16,9 +16,8 @@ class CountryRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'nome' => ['required', 'unique:countries,nome', 'max:50'],
-      'sigla' => ['required', 'unique:countries,sigla', 'max:3'],
-      'ddi' => ['required', 'max:3']
+      'nome' => ['required', 'unique:measures,nome', 'max:50'],
+      'sigla' => ['required', 'unique:measures,sigla', 'max:3']
     ];
   }
 }

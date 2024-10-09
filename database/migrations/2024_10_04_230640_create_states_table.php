@@ -16,10 +16,10 @@ return new class extends Migration
       $table->id();
       $table->timestamps();
 
-      $table->string('nome');
-      $table->string('uf')->nullable();
+      $table->string('nome', 50);
+      $table->char('uf', 2);
 
-      $table->foreignIdFor(Country::class)->constrained()->onDelete('cascade');
+      $table->foreignIdFor(Country::class, 'country_id')->constrained()->onDelete('Cascade');
     });
   }
 

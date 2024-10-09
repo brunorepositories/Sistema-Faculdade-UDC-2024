@@ -78,7 +78,7 @@
                         <span class="badge bg-label-secondary rounded-pill">Cadastro:
                             {{ date('d/m/Y H:i', strtotime($country->created_at)) }}</span>
                         <span class="badge bg-label-secondary rounded-pill">Última alteração:
-                            {{ date('d/m/Y H:i', strtotime($country->updated_at)) }}</span>
+                            {{ $country->updated_at->format('d/m/Y H:i') }}</span>
                     </div>
                     <div>
                         <a href="{{ route('country.index') }}"

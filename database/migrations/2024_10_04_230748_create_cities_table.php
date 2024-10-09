@@ -16,10 +16,10 @@ return new class extends Migration
       $table->id();
       $table->timestamps();
 
-      $table->string('nome');
-      $table->string('ddd')->nullable();
+      $table->string('nome', 50);
+      $table->unsignedSmallInteger('ddd');
 
-      $table->foreignIdFor(State::class)->constrained()->onDelete('cascade');
+      $table->foreignIdFor(State::class, 'state_id')->constrained()->onDelete('Cascade');
     });
   }
 

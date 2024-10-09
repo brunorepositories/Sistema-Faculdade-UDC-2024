@@ -65,7 +65,7 @@
                         class="form-control"
                         id="ddi"
                         placeholder="Informe o código DDI"
-                        maxlength="5"
+                        maxlength="3"
                         value="{{ Str::upper(old('ddi')) }}">
                     @error('ddi')
                         <div class="invalid-feedback">{{ $message }}</div>

@@ -1,15 +1,7 @@
 {
   "menu": [
     {
-      "menuHeader": "Trabalhando aqui"
-    },
-    {
-      "url": "/sale.create",
-      "name": "Registrar Venda",
-      "slug": "sale.create"
-    },
-    {
-      "menuHeader": "Registros"
+      "menuHeader": "Movimentações"
     },
     {
       "url": "/sale.index",
@@ -43,9 +35,14 @@
       "slug": "customer.index"
     },
     {
-      "url": "/products",
+      "url": "/product",
       "name": "Produtos",
-      "slug": "products.index"
+      "slug": "product.index"
+    },
+    {
+      "url": "/measure",
+      "name": "Unid. Medida",
+      "slug": "measure.index"
     },
     {
       "url": "/employee.index",
