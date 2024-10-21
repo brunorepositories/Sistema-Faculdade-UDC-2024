@@ -13,9 +13,4 @@ class Measure extends Model
     'nome',
     'sigla'
   ];
-
-  public function products()
-  {
-    return $this->hasMany(Product::class, 'product_id');
-  }
 }

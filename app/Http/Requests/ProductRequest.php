@@ -13,10 +13,21 @@ class ProductRequest extends FormRequest
 
   public function rules(): array
   {
+
+    if ($this->route('product')) {
+      $createOrUpdate = [
+        'nome' => "unique:products,nome," . $this->route('product')->id,
+      ];
+    } else {
+      $createOrUpdate = [
+        'nome' => "unique:products,nome",
+      ];
+    }
+
     return [
-      'nome' => ['required',  'max:50'],
+      'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
       'estoque' => ['required', 'min:0'],
-      'precoCusto' => ['required', 'min:0'],
+      'precoCusto' => ['nullable', 'min:0'],
       'custoUltimaCompra' => ['nullable', 'min:0'],
       'dtUltimaCompra' => ['nullable', 'date'],
       'precoVenda' => ['required', 'min:0'],

@@ -12,12 +12,24 @@ class CountryRequest extends FormRequest
     return true;
   }
 
-
   public function rules(): array
   {
+
+    if ($this->route('country')) {
+      $createOrUpdate = [
+        'nome' => "unique:countries,nome," . $this->route('country')->id,
+        'sigla' => "unique:countries,sigla," . $this->route('country')->id,
+      ];
+    } else {
+      $createOrUpdate = [
+        'nome' => "unique:countries,nome",
+        'sigla' => "unique:countries,sigla",
+      ];
+    }
+
     return [
-      'nome' => ['required', 'unique:countries,nome', 'max:50'],
-      'sigla' => ['required', 'unique:countries,sigla', 'max:3'],
+      'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
+      'sigla' => ['required', $createOrUpdate['sigla'], 'max:3'],
       'ddi' => ['required', 'max:3']
     ];
   }

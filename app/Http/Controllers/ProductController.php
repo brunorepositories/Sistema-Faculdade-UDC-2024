@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FormatData;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Measure;
@@ -17,7 +18,7 @@ class ProductController extends Controller
   public function index()
   {
     // Recupera todos os produtos junto com a relação com Measure
-    $products = Product::with('measure')->get();
+    $products = Product::with(['measure'])->get();
 
     return view('content.product.index', compact('products'));
   }
@@ -40,7 +41,10 @@ class ProductController extends Controller
   {
     try {
       DB::transaction(function () use ($request) {
-        Product::create($request->validated()); // Cria o produto com dados validados
+
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
+
+        Product::create($upperCasedData); // Cria o produto com dados validados
       });
 
       return to_route('product.index')->with('success', 'Produto cadastrado com sucesso.');
@@ -78,7 +82,9 @@ class ProductController extends Controller
   {
     try {
       DB::transaction(function () use ($request, $product) {
-        $product->update($request->all()); // Atualiza o produto com dados validados
+
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
+        $product->update($upperCasedData); // Atualiza o produto com dados validados
       });
 
       return to_route('product.index')->with('success', 'Produto atualizado com sucesso.');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FormatData;
 use App\Http\Requests\CityRequest; // Supondo que exista uma CityRequest para validações
 use App\Models\City;
 use App\Models\State;
@@ -39,7 +40,9 @@ class CityController extends Controller
     // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
-        City::create($request->all());
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
+
+        City::create($upperCasedData);
       });
 
       return to_route('city.index')->with('success', "Cidade cadastrada com sucesso.");
@@ -72,10 +75,19 @@ class CityController extends Controller
    */
   public function update(Request $request, City $city)
   {
-    $city->fill($request->all());
-    $city->save();
 
-    return to_route('city.index')->with('success', "Cidade alterada com sucesso.");
+    try {
+      //code...
+      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
+
+      $city->update($upperCasedData);
+
+      return to_route('city.index')->with('success', "Cidade alterada com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao atualizar medida >>> ' . $ex->getMessage());
+
+      return to_route('state.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+    }
   }
 
   /**

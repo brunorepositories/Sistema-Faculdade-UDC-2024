@@ -18,7 +18,7 @@ return new class extends Migration
 
       $table->string('nome', 50);
       $table->integer('estoque');
-      $table->decimal('precoCusto', 10, 2);
+      $table->decimal('precoCusto', 10, 2)->nullable();
       $table->decimal('custoUltimaCompra', 10, 2)->nullable();
       $table->dateTime('dtUltimaCompra')->nullable();
       $table->decimal('precoVenda', 10, 2);

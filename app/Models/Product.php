@@ -23,7 +23,7 @@ class Product extends Model
 
   public function measure()
   {
-    return $this->hasOne(Measure::class, 'measure_id');
+    return $this->hasOne(Measure::class, 'id');
   }
 
   // public function productsPursache()

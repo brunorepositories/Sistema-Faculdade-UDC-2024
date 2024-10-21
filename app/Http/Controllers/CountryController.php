@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CountryRequest;
 use App\Models\Country;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Helpers\FormatData;
 
 class CountryController extends Controller
 {
@@ -26,7 +25,7 @@ class CountryController extends Controller
   /**
    * Show the form for creating a new resource.
    */
-  public function create(Country $country)
+  public function create()
   {
     // dd($country);
     return view('content.country.create');
@@ -40,13 +39,14 @@ class CountryController extends Controller
 
     try {
       DB::transaction(function () use ($request) {
+        // Converte todos os campos para uppercase que são strings
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
 
-        Country::create($request->all());
+        Country::create($upperCasedData);
       });
 
-      return to_route('country.index')->with('success', "Pais cadastrado com sucesso.");
+      return to_route('country.index')->with('success', "País cadastrado com sucesso.");
     } catch (QueryException $ex) {
-
       Log::debug('Warning - Erro ao executar query >>> ' . $ex);
 
       return to_route('country.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
@@ -72,12 +72,19 @@ class CountryController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, Country $country)
+  public function update(CountryRequest $request, Country $country)
   {
-    $country->fill($request->all());
-    $country->save();
 
-    return to_route('country.index')->with('success', "Pais alterado com sucesso.");
+    try {
+      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
+      $country->update($upperCasedData);
+
+      return to_route('country.index')->with('success', "Pais alterado com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao atualizar medida >>> ' . $ex->getMessage());
+
+      return to_route('country.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+    }
   }
 
   /**

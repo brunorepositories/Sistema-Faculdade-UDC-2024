@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FormatData;
 use App\Http\Requests\StateRequest; // Supondo que exista uma StateRequest para validações
 use App\Models\State;
 use App\Models\Country; // Adicionando o modelo de Country
@@ -39,7 +40,10 @@ class StateController extends Controller
     try {
       DB::transaction(function () use ($request) {
 
-        State::create($request->all());
+
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'uf']);
+
+        State::create($upperCasedData);
       });
 
       return to_route('state.index')->with('success', "Estado cadastrado com sucesso.");
@@ -74,11 +78,18 @@ class StateController extends Controller
   public function update(Request $request, State $state)
   {
 
-    // dd($state);
-    $state->fill($request->all());
-    $state->save();
+    try {
+      //code...
+      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'uf']);
 
-    return to_route('state.index')->with('success', "Estado alterado com sucesso.");
+      $state->update($upperCasedData);
+
+      return to_route('state.index')->with('success', "Estado alterado com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao atualizar medida >>> ' . $ex->getMessage());
+
+      return to_route('state.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+    }
   }
 
   /**

@@ -1,5 +1,9 @@
 @extends('layouts/contentNavbarLayout')
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @section('title', 'Novo país')
 
 @section('content')
@@ -26,7 +30,7 @@
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
                         placeholder="Informe o nome do país"
                         maxlength="50"
@@ -44,11 +48,11 @@
                         required
                         name="sigla"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="sigla"
                         placeholder="Informe a sigla do país"
                         maxlength="3"
-                        value="{{ Str::upper(old('sigla')) }}">
+                        value="{{ old('sigla') }}">
                     @error('sigla')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -66,7 +70,7 @@
                         id="ddi"
                         placeholder="Informe o código DDI"
                         maxlength="3"
-                        value="{{ Str::upper(old('ddi')) }}">
+                        value="{{ old('ddi') }}">
                     @error('ddi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

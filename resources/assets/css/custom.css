@@ -6,6 +6,6 @@
   width: 150px;
 }
 
-.novo-teste {
-  background-color: brown;
+.toUpperCase {
+  text-transform: uppercase;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FormatData;
 use App\Http\Requests\MeasureRequest;
 use App\Models\Measure;
 use Illuminate\Database\QueryException;
@@ -37,7 +38,10 @@ class MeasureController extends Controller
 
     try {
       DB::transaction(function () use ($request) {
-        Measure::create($request->all());
+
+        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
+
+        Measure::create($upperCasedData);
       });
 
       return to_route('measure.index')->with('success', "Medida cadastrada com sucesso.");
@@ -72,8 +76,11 @@ class MeasureController extends Controller
   {
 
     try {
-      $measure->fill($request->all());
-      $measure->save();
+
+      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
+
+      $measure->update($upperCasedData);
+
       return to_route('measure.index')->with('success', "Medida alterada com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao atualizar medida >>> ' . $ex->getMessage());

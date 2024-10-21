@@ -16,7 +16,7 @@ return new class extends Migration
       $table->timestamps();
 
       $table->string('nome', 50);
-      $table->char('sigla', 3);
+      $table->char('sigla', 6);
     });
   }
 

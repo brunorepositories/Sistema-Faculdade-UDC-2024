@@ -25,7 +25,7 @@
                             <th>Nome</th>
                             <th>UF</th>
                             <th>País</th> <!-- Nome do país relacionado -->
-                            <th style="width: 150px" class="centered-text">Ações</th>
+                            <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -35,7 +35,7 @@
                                 <td>{{ $state->nome }}</td>
                                 <td>{{ $state->uf }}</td>
                                 <td>{{ $state->country->nome }}</td> <!-- Nome do país associado -->
-                                <td style="width: 150px">
+                                <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('state.edit', $state->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>

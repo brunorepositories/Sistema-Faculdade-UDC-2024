@@ -50,8 +50,8 @@
       "slug": "employee.index"
     },
     {
-      "name": "Localização",
-      "slug": "localizacao",
+      "name": "Localidade",
+      "slug": "Localidade",
       "submenu": [
         {
           "url": "/city",

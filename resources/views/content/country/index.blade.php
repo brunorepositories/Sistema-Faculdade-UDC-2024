@@ -25,7 +25,7 @@
                             <th>Nome</th>
                             <th>Sigla</th>
                             <th>DDI</th>
-                            <th style="width: 150px" class="centered-text">Ações</th>
+                            <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -35,8 +35,8 @@
                                 <td>{{ $country->nome }}</td>
                                 <td>{{ $country->sigla }}</td>
                                 <td>{{ $country->ddi }}</td>
-                                <td style="width: 150px">
-                                    <a class="btn btn-outline-primary rounded-pill border-0"
+                                <td class="size-col-action">
+                                    <a class="btn btn-outline-primary rounded-pill border-0 "
                                         href="{{ route('country.edit', $country->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>
                                     </a>

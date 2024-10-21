@@ -27,7 +27,7 @@
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
                         placeholder="Informe o nome do país"
                         maxlength="50"
@@ -45,7 +45,7 @@
                         required
                         name="sigla"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="sigla"
                         placeholder="Informe a sigla do país"
                         maxlength="3"

@@ -29,7 +29,7 @@
                             <th>Preço de Venda</th>
                             <th>Última Compra</th>
                             <th>Última Venda</th>
-                            <th style="width: 150px" class="centered-text">Ações</th>
+                            <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -44,7 +44,7 @@
                                 <td>{{ $product->dtUltimaCompra ? $product->dtUltimaCompra->format('d/m/Y H:i') : '-' }}
                                 </td>
                                 <td>{{ $product->dtUltimaVenda ? $product->dtUltimaVenda->format('d/m/Y H:i') : '-' }}</td>
-                                <td style="width: 150px">
+                                <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('product.edit', $product->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>

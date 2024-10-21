@@ -15,9 +15,22 @@ class MeasureRequest extends FormRequest
 
   public function rules(): array
   {
+
+    if ($this->route('measure')) {
+      $createOrUpdate = [
+        'nome' => "unique:measures,nome," . $this->route('measure')->id,
+        'sigla' => "unique:measures,sigla," . $this->route('measure')->id,
+      ];
+    } else {
+      $createOrUpdate = [
+        'nome' => "unique:measures,nome",
+        'sigla' => "unique:measures,sigla",
+      ];
+    }
+
     return [
-      'nome' => ['required', 'unique:measures,nome', 'max:50'],
-      'sigla' => ['required', 'unique:measures,sigla', 'max:3']
+      'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
+      'sigla' => ['required', $createOrUpdate['sigla'], 'max:6']
     ];
   }
 }

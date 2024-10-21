@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Novo Produto</h4>
+        <h4 class="card-header">Novo produto</h4>
 
         <div class="card-body">
             @include('components.errorMessage')
@@ -18,7 +18,7 @@
                 @csrf
 
                 <div class="col-7">
-                    <label class="form-label" for="nome">Nome do Produto</label>
+                    <label class="form-label" for="nome">Nome do produto</label>
                     <input
                         required
                         name="nome"
