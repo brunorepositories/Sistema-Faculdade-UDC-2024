@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     }
 
     return [
-      'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
+      'nome' => ['required', $createOrUpdate['nome'], 'max:150'],
       'estoque' => ['required', 'min:0'],
       'precoCusto' => ['nullable', 'min:0'],
       'custoUltimaCompra' => ['nullable', 'min:0'],
