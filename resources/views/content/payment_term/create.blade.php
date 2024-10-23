@@ -40,10 +40,10 @@
                         required
                         name="multa"
                         type="number"
-                        step="0.001"
+                        step="0,001"
                         class="form-control"
                         id="multa"
-                        placeholder="0.00"
+                        placeholder="0,00"
                         min="0"
                         value="{{ old('multa') }}">
                     @error('multa')
@@ -57,11 +57,11 @@
                         required
                         name="juro"
                         type="number"
-                        step="0.001"
+                        step="0,001"
                         class="form-control"
                         id="juro"
                         min="0"
-                        placeholder="0.00"
+                        placeholder="0,00"
                         value="{{ old('juro') }}">
                     @error('juro')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -74,20 +74,20 @@
                         required
                         name="desconto"
                         type="number"
-                        step="0.001"
+                        step="0,001"
                         class="form-control"
                         id="desconto"
                         min="0"
-                        placeholder="0.00"
+                        placeholder="0,00"
                         value="{{ old('desconto') }}">
                     @error('desconto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mt-8">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex">
-                            <div class="col-2 me-6">
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div class="row flex-grow-1">
+                            <div class="col-2">
                                 <label class="form-label" for="numParcela">Parcela</label>
                                 <input
                                     required
@@ -97,7 +97,7 @@
                                     min="0"
                                     placeholder="0">
                             </div>
-                            <div class="col-2 me-6 ">
+                            <div class="col-2">
                                 <label class="form-label" for="diasParcela">Dias (corridos)</label>
                                 <input
                                     required
@@ -107,7 +107,7 @@
                                     min="0"
                                     placeholder="0">
                             </div>
-                            <div class="col-2 me-6">
+                            <div class="col-2">
                                 <label class="form-label" for="percentualParcela">Percentual (%)</label>
                                 <input
                                     required
@@ -116,21 +116,19 @@
                                     id="percentualParcela"
                                     min="0"
                                     max="100"
-                                    placeholder="0.00">
+                                    placeholder="0,00">
                             </div>
-                            <div class="col-2 me-6">
+                            <div class="col-2">
                                 <label class="form-label" for="percentualTotal">Percentual total (%)</label>
                                 <input
                                     disabled
                                     type="number"
                                     class="form-control"
                                     id="percentualTotal"
-                                    placeholder="0.00">
+                                    placeholder="0,00">
                             </div>
-                            <div class="flex-grow-1">
-                                <label
-                                    class="form-label"
-                                    for="payment_form_id">Forma de Pagamento</label>
+                            <div class="col flex-grow-1">
+                                <label class="form-label" for="payment_form_id">Forma de Pagamento</label>
                                 <div class="input-group">
                                     <select
                                         required
@@ -161,11 +159,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="d-flex align-items-end">
+
+                        <div class="ms-6">
                             <button type="button" class="btn btn-primary" id="add-parcela">Adicionar</button>
                         </div>
-
-
                     </div>
 
                     <div id="parcelas-container" class="mt-3">
@@ -185,6 +182,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <div class="d-flex justify-content-end mt-10">
                     <a
