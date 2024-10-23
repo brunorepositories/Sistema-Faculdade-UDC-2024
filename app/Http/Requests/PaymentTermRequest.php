@@ -28,10 +28,10 @@ class PaymentTermRequest extends FormRequest
     }
 
     return [
-      'condicaoPagamento' => ['required', $createOrUpdate['nome'], 'max:100'],
-      'multa' => ['required', $createOrUpdate['uf'], 'min:0'],
-      'juro' => ['required', $createOrUpdate['uf'], 'min:0'],
-      'desconto' => ['required', $createOrUpdate['uf'], 'min:0', 'max:100'],
+      'condicaoPagamento' => ['required', $createOrUpdate['condicaoPagamento'], 'max:100'],
+      'multa' => ['required', 'min:0'],
+      'juro' => ['required', 'min:0'],
+      'desconto' => ['required', 'min:0', 'max:100'],
       'parcelas' => new CheckArray
     ];
   }

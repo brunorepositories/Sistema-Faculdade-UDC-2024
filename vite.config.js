@@ -55,5 +55,10 @@ export default defineConfig({
       refresh: true
     }),
     html()
-  ]
+  ],
+  resolve: {
+    alias: {
+      $: 'jQuery'
+    }
+  }
 });

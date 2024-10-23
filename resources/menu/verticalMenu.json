@@ -50,6 +50,16 @@
       "slug": "employee.index"
     },
     {
+      "url": "/payment_term",
+      "name": "Condição de Pagamento",
+      "slug": "payment_term.index"
+    },
+    {
+      "url": "/payment_form",
+      "name": "Forma de Pagamento",
+      "slug": "payment_form.index"
+    },
+    {
       "name": "Localidade",
       "slug": "Localidade",
       "submenu": [

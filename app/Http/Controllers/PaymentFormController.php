@@ -11,12 +11,12 @@ class PaymentFormController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(PaymentFormRequest $request)
+  public function index(PaymentForm $payments)
   {
-    $searchTerm = $request->input('search') ?? '';
-    $payment_form = PaymentForm::search($searchTerm)->paginate(10);
+    // $searchTerm = $request->input('search') ?? '';
+    $paymentForms = $payments->paginate(10);
 
-    return view('content.payment_form.index', compact('payment_form'));
+    return view('content.payment_form.index', compact('paymentForms'));
   }
 
   /**
@@ -41,7 +41,7 @@ class PaymentFormController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(PaymentForm $payment_form)
+  public function show(PaymentForm $paymentForm)
   {
     return view('content.payment_form.show', compact('payment_form'));
   }
@@ -49,21 +49,18 @@ class PaymentFormController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(PaymentForm $payment_form)
+  public function edit(PaymentForm $paymentForm)
   {
-    return view('content.payment_form.edit', compact('payment_form'));
+    return view('content.payment_form.edit', compact('paymentForm'));
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(PaymentFormRequest $request, PaymentForm $payment_form)
+  public function update(PaymentFormRequest $request, PaymentForm $paymentForm)
   {
-    $request->validate([
-      'forma_pagamento' => 'required|unique:payment_forms|max:255',
-    ]);
 
-    $payment_form->update($request->all());
+    $paymentForm->update($request->all());
 
     return to_route('payment_form.index')->with('success', 'Forma de Pagamento atualizado com sucesso.');
   }
@@ -71,18 +68,18 @@ class PaymentFormController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(PaymentForm $payment_form)
+  public function destroy(PaymentForm $paymentForm)
   {
-    $payment_form->delete();
+    $paymentForm->delete();
 
     return to_route('payment_form.index')->with('success', 'Forma de Pagamento excluído com sucesso.');
   }
 
   public function buscar(Request $request)
   {
-    $payment_form = $request->input('search') ?? '';
-    $payment_form = PaymentForm::search($payment_form)->paginate(10);
+    $paymentForm = $request->input('search') ?? '';
+    $paymentForm = PaymentForm::search($paymentForm)->paginate(10);
 
-    return response()->json($payment_form);
+    return response()->json($paymentForm);
   }
 }

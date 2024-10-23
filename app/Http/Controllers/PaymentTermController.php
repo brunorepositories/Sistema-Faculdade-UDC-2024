@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\FormatData;
 use App\Http\Requests\PaymentTermRequest;
 use App\Models\Installment;
+use App\Models\PaymentForm;
 use App\Models\PaymentTerm;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -15,12 +17,12 @@ class PaymentTermController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(PaymentTermRequest $request)
+  public function index(PaymentTerm $payments)
   {
-    $searchTerm = $request->input('search') ?? '';
-    $paymentTerms = PaymentTerm::search($searchTerm)->paginate(10);
+    // $searchTerm = $request->input('search') ?? '';
+    $paymentTerms = $payments->paginate(10);
 
-    return view('content.payment_terms.index', compact('paymentTerms'));
+    return view('content.payment_term.index', compact('paymentTerms'));
   }
 
   /**
@@ -28,7 +30,10 @@ class PaymentTermController extends Controller
    */
   public function create()
   {
-    return view('content.payment_terms.create');
+
+    $paymentForms = PaymentForm::all();
+
+    return view('content.payment_term.create', compact('paymentForms'));
   }
 
   /**
@@ -55,7 +60,7 @@ class PaymentTermController extends Controller
       });
 
       return to_route('payment_term.index')->with('success', "Condição de Pagamento cadastrada com sucesso.");
-    } catch (\Throwable $th) {
+    } catch (QueryException $th) {
       Log::debug('Warning - Erro ao executar query >>> ' . $th); // Corrigido para usar $th
 
       return to_route('payment_term.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
@@ -67,7 +72,7 @@ class PaymentTermController extends Controller
    */
   public function show(PaymentTerm $payment_term)
   {
-    return view('content.payment_terms.show', compact('payment_term'));
+    return view('content.payment_term.show', compact('payment_term'));
   }
 
   /**
@@ -75,7 +80,7 @@ class PaymentTermController extends Controller
    */
   public function edit(PaymentTerm $payment_term)
   {
-    return view('content.payment_terms.edit', compact('payment_term'));
+    return view('content.payment_term.edit', compact('payment_term'));
   }
 
   /**
