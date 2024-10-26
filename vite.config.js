@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import html from '@rollup/plugin-html';
 import { glob } from 'glob';
+import browserSync from 'browser-sync';
 
 /**
  * Get Files from a directory
@@ -53,6 +54,11 @@ export default defineConfig({
         ...FontsScssFiles
       ],
       refresh: true
+    }),
+    browserSync({
+      proxy: 'http://localhost:8000',
+      files: ['resources/views/**/*.blade.php'],
+      notify: false
     }),
     html()
   ],

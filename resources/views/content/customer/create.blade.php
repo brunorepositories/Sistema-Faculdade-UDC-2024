@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Novo Fornecedor')
+@section('title', 'Novo Cliente')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Novo Fornecedor</h4>
+        <h4 class="card-header">Novo Cliente</h4>
 
         <div class="card-body">
 
@@ -12,7 +12,7 @@
 
             <form
                 class="needs-validation row @if ($errors->any()) was-validated @endif"
-                action="{{ route('supplier.store') }}"
+                action="{{ route('customer.store') }}"
                 method="POST"
                 novalidate>
 
@@ -26,8 +26,8 @@
                         class="form-select"
                         id="tipoPessoa"
                         onchange="toggleFields()">
-                        <option value="J" selected>Jurídica</option>
-                        <option value="F">Física</option>
+                        <option value="F" selected>Física</option>
+                        <option value="J">Jurídica</option>
                     </select>
                     @error('tipoPessoa')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -36,16 +36,16 @@
 
                 <!-- Campos para Pessoa Física -->
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label" for="fornecedor">Fornecedor</label>
+                    <label class="form-label" for="cliente">Cliente</label>
                     <input
-                        name="fornecedor"
+                        name="cliente"
                         type="text"
                         class="form-control"
-                        id="fornecedor"
-                        placeholder="Informe o nome do fornecedor"
+                        id="cliente"
+                        placeholder="Informe o nome do cliente"
                         maxlength="100"
-                        value="{{ old('fornecedor') }}">
-                    @error('fornecedor')
+                        value="{{ old('cliente') }}">
+                    @error('cliente')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -104,7 +104,6 @@
                     @enderror
                 </div>
 
-
                 <div class="col-md-4 mb-3 fisica-fields">
                     <label class="form-label" for="rg">RG</label>
                     <input
@@ -119,22 +118,19 @@
                     @enderror
                 </div>
 
-
-
-
                 <!-- Campos para Pessoa Jurídica -->
                 <div class="col-md-5 mb-3 juridica-fields">
-                    <label class="form-label" for="fornecedorRazaoSocial">Razão Social</label>
+                    <label class="form-label" for="clienteRazaoSocial">Razão Social</label>
                     <input
                         required
-                        name="fornecedorRazaoSocial"
+                        name="clienteRazaoSocial"
                         type="text"
                         class="form-control"
-                        id="fornecedorRazaoSocial"
+                        id="clienteRazaoSocial"
                         placeholder="Informe a razão social"
                         maxlength="100"
-                        value="{{ old('fornecedorRazaoSocial') }}">
-                    @error('fornecedorRazaoSocial')
+                        value="{{ old('clienteRazaoSocial') }}">
+                    @error('clienteRazaoSocial')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -195,12 +191,11 @@
                     @enderror
                 </div>
 
-
                 <div class="col-12 mt-6 mb-2">
                     <h5>Contato</h5>
                 </div>
 
-                <div class="col-md-4 mb-3 juridica-fields">
+                <div class="col-md-3 mb-3 juridica-fields">
                     <label class="form-label" for="nomeContato">Nome para Contato</label>
                     <input
                         required
@@ -208,14 +203,14 @@
                         type="text"
                         class="form-control"
                         id="nomeContato"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o nome para contato"
                         value="{{ old('nomeContato') }}">
                     @error('nomeContato')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-md-2 mb-3">
+                <div class="col-md-3 mb-3">
                     <label class="form-label" for="celular">Celular</label>
                     <input
                         required
@@ -223,9 +218,24 @@
                         type="text"
                         class="form-control"
                         id="celular"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o celular"
                         value="{{ old('celular') }}">
                     @error('celular')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-3 mb-3 fisica-fields">
+                    <label class="form-label" for="instagram">Instagram</label>
+                    <input
+                        required
+                        name="instagram"
+                        type="text"
+                        class="form-control"
+                        id="instagram"
+                        placeholder="Informe o instagram"
+                        value="{{ old('instagram') }}">
+                    @error('instagram')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -238,13 +248,12 @@
                         type="text"
                         class="form-control"
                         id="telefone"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o telefone"
                         value="{{ old('telefone') }}">
                     @error('telefone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
 
                 <div class="col-md-4 mb-3">
                     <label class="form-label" for="email">E-mail</label>
@@ -254,7 +263,7 @@
                         type="text"
                         class="form-control"
                         id="email"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o e-mail"
                         value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -273,7 +282,7 @@
                         type="text"
                         class="form-control"
                         id="logradouro"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o logradouro"
                         value="{{ old('logradouro') }}">
                     @error('logradouro')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -296,6 +305,20 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
+                    <label class="form-label" for="complemento">Complemento</label>
+                    <input
+                        name="complemento"
+                        type="text"
+                        class="form-control"
+                        id="complemento"
+                        placeholder="Informe o complemento"
+                        value="{{ old('complemento') }}">
+                    @error('complemento')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-3">
                     <label class="form-label" for="bairro">Bairro</label>
                     <input
                         required
@@ -310,7 +333,22 @@
                     @enderror
                 </div>
 
-                <div class="col-md-2 mb-3">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label" for="city">city</label>
+                    <select required name="city" class="form-select" id="city">
+                        <option value="" disabled selected>Selecione</option>
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>
+                                {{ $city->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('city')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-3">
                     <label class="form-label" for="cep">CEP</label>
                     <input
                         required
@@ -324,21 +362,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label" for="complemento">Complemento</label>
-                    <input
-                        name="complemento"
-                        type="text"
-                        class="form-control"
-                        id="complemento"
-                        placeholder="Informe o complemento"
-                        value="{{ old('complemento') }}">
-                    @error('complemento')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
 
                 <div class="col-12 mt-6 mb-2">
                     <h5>Condição de Pagamento</h5>
@@ -378,11 +401,20 @@
                     @enderror
                 </div>
 
+                {{-- <div class="col-md-12 mb-3">
+                    <label class="form-label" for="observacao">Observação</label>
+                    <textarea
+                        name="observacao"
+                        class="form-control"
+                        id="observacao"
+                        rows="3">{{ old('observacao') }}</textarea>
+                </div> --}}
+
                 <!-- Demais campos do formulário continuam aqui... -->
 
                 <div class="d-flex justify-content-end mt-10">
                     <a
-                        href="{{ route('supplier.index') }}"
+                        href="{{ route('customer.index') }}"
                         class="btn btn-outline-secondary me-4">Cancelar</a>
                     <button
                         type="submit"
@@ -408,8 +440,7 @@
             }
         }
 
-        $(document).ready(function() {
-            toggleFields();
-        });
+        // Inicializa os campos com base na seleção atual
+        document.addEventListener('DOMContentLoaded', toggleFields);
     </script>
 @endsection

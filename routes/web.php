@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PaymentFormController;
 use App\Http\Controllers\PaymentTermController;
@@ -19,7 +20,7 @@ Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
 
 
 // Clientes
-// Route::resource('client', ClientController::class);
+Route::resource('customer', CustomerController::class);
 
 
 // Fornecedores
