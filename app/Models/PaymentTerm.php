@@ -9,12 +9,15 @@ class PaymentTerm extends Model
 {
   use HasFactory;
 
+  protected $table = 'payment_terms';
+
   protected $fillable = [
     'condicaoPagamento',
     'multa',
-    'juro',
+    'juros',
     'desconto',
     'qtdParcelas',
+    'payment_forms_id',
   ];
 
   public function installments()

@@ -39,21 +39,63 @@ class PaymentTermController extends Controller
   /**
    * Store a newly created resource in storage.
    */
+  // public function store(PaymentTermRequest $request)
+  // {
+  //   try {
+  //     DB::transaction(function () use ($request) {
+  //       // Converte todos os campos para uppercase que são strings
+  //       // (Supondo que você tenha lógica para converter os campos para uppercase aqui)
+
+  //       $paymentTermObj = PaymentTerm::create($request->all());
+
+  //       foreach ($paymentTermObj->qtdParcelas as $parcela) { // Use [] ao invés de -> para acessar array
+  //         Installment::create([
+  //           'payment_term_id' => $paymentTermObj->id, // Certifique-se de que esse ID está correto
+  //           'payment_form_id' => $parcela['payment_form_id'],
+  //           'parcela' => $parcela['parcela'],
+  //           'dias' => $parcela['dias'],
+  //           'percentual' => $parcela['percentual'],
+  //         ]);
+  //       }
+  //     });
+
+  //     return to_route('payment_term.index')->with('success', "Condição de Pagamento cadastrada com sucesso.");
+  //   } catch (QueryException $th) {
+  //     Log::debug('Warning - Erro ao executar query >>> ' . $th); // Corrigido para usar $th
+
+  //     return to_route('payment_term.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+  //   }
+  // }
+
   public function store(PaymentTermRequest $request)
   {
+
+    // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
-        // Converte todos os campos para uppercase que são strings
-        // (Supondo que você tenha lógica para converter os campos para uppercase aqui)
 
-        $paymentTermObj = PaymentTerm::create($request->all());
+        $paymentTermObj = $request->only([
+          'condicaoPagamento',
+          'multa',
+          'juros',
+          'desconto'
+        ]);
 
-        foreach ($paymentTermObj->qtdParcelas as $parcela) { // Use [] ao invés de -> para acessar array
+        // Adiciona 'qtdParcelas' ao array $paymentTermObj
+        $paymentTermObj['qtdParcelas'] = count($request->parcelas);
+
+        // Cria a condição de pagamento
+        $paymentTerm = PaymentTerm::create($paymentTermObj);
+
+        // dd($request->parcelas);
+
+        // Itera sobre as parcelas recebidas do request
+        foreach ($request->parcelas as $parcela) {
           Installment::create([
-            'payment_term_id' => $paymentTermObj->id, // Certifique-se de que esse ID está correto
+            'payment_term_id' => $paymentTerm->id,
             'payment_form_id' => $parcela['payment_form_id'],
-            'parcela' => $parcela['parcela'],
-            'dias' => $parcela['dias'],
+            'parcela' => $parcela['num'],
+            'dias' => $parcela['dias'],  // Alterado de `multa` para `dias`
             'percentual' => $parcela['percentual'],
           ]);
         }
@@ -61,11 +103,12 @@ class PaymentTermController extends Controller
 
       return to_route('payment_term.index')->with('success', "Condição de Pagamento cadastrada com sucesso.");
     } catch (QueryException $th) {
-      Log::debug('Warning - Erro ao executar query >>> ' . $th); // Corrigido para usar $th
+      Log::error('Erro ao cadastrar condição de pagamento: ' . $th->getMessage());
 
       return to_route('payment_term.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
+
 
   /**
    * Display the specified resource.
@@ -90,7 +133,7 @@ class PaymentTermController extends Controller
   {
     $payment_term->condicao_pagamento = $request->get('condicao_pagamento');
     $payment_term->multa = $request->get('multa');
-    $payment_term->juro = $request->get('juro');
+    $payment_term->juros = $request->get('juros');
     $payment_term->desconto = $request->get('desconto');
     $payment_term->qtd_parcelas = $request->get('qtd_parcelas');
 

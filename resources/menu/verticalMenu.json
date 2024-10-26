@@ -22,7 +22,7 @@
       "slug": "accountsReceivable.index"
     },
     {
-      "url": "/accountsPayable.index",
+      "url": "/accountsPayable",
       "name": "Contas a Pagar",
       "slug": "accountsPayable.index"
     },
@@ -30,9 +30,19 @@
       "menuHeader": "Cadastros"
     },
     {
-      "url": "/customer.index",
+      "url": "/customer",
       "name": "Clientes",
       "slug": "customer.index"
+    },
+    {
+      "url": "/supplier",
+      "name": "Fornecedores",
+      "slug": "supplier.index"
+    },
+    {
+      "url": "/employee",
+      "name": "Funcionários",
+      "slug": "employee.index"
     },
     {
       "url": "/product",
@@ -40,14 +50,7 @@
       "slug": "product.index"
     },
     {
-      "url": "/measure",
-      "name": "Unid. Medida",
-      "slug": "measure.index"
-    },
-    {
-      "url": "/employee.index",
-      "name": "Funcionários",
-      "slug": "employee.index"
+      "menuHeader": "Cadastros básicos"
     },
     {
       "url": "/payment_term",
@@ -58,6 +61,11 @@
       "url": "/payment_form",
       "name": "Forma de Pagamento",
       "slug": "payment_form.index"
+    },
+    {
+      "url": "/measure",
+      "name": "Unid. Medida",
+      "slug": "measure.index"
     },
     {
       "name": "Localidade",

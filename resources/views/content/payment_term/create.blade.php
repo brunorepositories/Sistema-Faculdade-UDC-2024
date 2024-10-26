@@ -52,18 +52,18 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label" for="juro">Juro (%)</label>
+                    <label class="form-label" for="juros">Juros (%)</label>
                     <input
                         required
-                        name="juro"
+                        name="juros"
                         type="number"
                         step="0,001"
                         class="form-control"
-                        id="juro"
+                        id="juros"
                         min="0"
                         placeholder="0,00"
-                        value="{{ old('juro') }}">
-                    @error('juro')
+                        value="{{ old('juros') }}">
+                    @error('juros')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -88,32 +88,32 @@
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="row flex-grow-1">
                             <div class="col-2">
-                                <label class="form-label" for="numParcela">Parcela</label>
+                                <label class="form-label" for="num">Parcela</label>
                                 <input
                                     required
                                     type="number"
                                     class="form-control"
-                                    id="numParcela"
+                                    id="num"
                                     min="0"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
-                                <label class="form-label" for="diasParcela">Dias (corridos)</label>
+                                <label class="form-label" for="dias">Dias (corridos)</label>
                                 <input
                                     required
                                     type="number"
                                     class="form-control"
-                                    id="diasParcela"
+                                    id="dias"
                                     min="0"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
-                                <label class="form-label" for="percentualParcela">Percentual (%)</label>
+                                <label class="form-label" for="percentual">Percentual (%)</label>
                                 <input
                                     required
                                     type="number"
                                     class="form-control"
-                                    id="percentualParcela"
+                                    id="percentual"
                                     min="0"
                                     max="100"
                                     placeholder="0,00">
@@ -138,6 +138,7 @@
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($paymentForms as $paymentForm)
                                             <option value="{{ $paymentForm->id }}">
+                                                {{ $paymentForm->id }} -
                                                 {{ $paymentForm->formaPagamento }}
                                             </option>
                                         @endforeach
@@ -154,6 +155,7 @@
                                     {{-- End Button --}}
                                 </div>
 
+
                                 @error('payment_form_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -167,6 +169,7 @@
 
                     <div id="parcelas-container" class="mt-3">
                         <div class="table-responsive text-nowrap">
+
                             <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr>
@@ -208,10 +211,11 @@
 
     $(document).ready(function() {
         $('#add-parcela').on('click', function() {
+
             // Recupera os valores dos campos
-            const numParcela = $('#numParcela').val();
-            const diasParcela = $('#diasParcela').val();
-            const percentualParcela = $('#percentualParcela').val();
+            const numParcela = $('#num').val();
+            const diasParcela = $('#dias').val();
+            const percentualParcela = $('#percentual').val();
             const payment_form_id = $('#payment_form_id').val();
             const formaPagamentoText = $('#payment_form_id option:selected').text();
 
@@ -243,16 +247,16 @@
                                                 <span class="tf-icons bx bx-trash bx-22px"></span>
                                             </button>
                                         </td>
-                                        <input type="hidden" name="parcelas[${parcelaCount}][numParcela]" value="${numParcela}">
-                                        <input type="hidden" name="parcelas[${parcelaCount}][multa]" value="${diasParcela}">
+                                        <input type="hidden" name="parcelas[${parcelaCount}][num]" value="${numParcela}">
+                                        <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
-                                        <input type="hidden" name="parcelas[${parcelaCount}][formaPagamento]" value="${payment_form_id}">
+                                        <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
                                     </tr> `);
 
             // Limpar os campos após adicionar a parcela
-            $('#numParcela').val('');
-            $('#diasParcela').val('');
-            $('#percentualParcela').val('');
+            $('#num').val('');
+            $('#dias').val('');
+            $('#percentual').val('');
             $('#payment_form_id').val('');
 
             // Atualiza o percentual total

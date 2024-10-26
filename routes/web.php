@@ -8,10 +8,22 @@ use App\Http\Controllers\PaymentFormController;
 use App\Http\Controllers\PaymentTermController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StateController;
-
+use App\Http\Controllers\SupplierController;
 
 // Main Page Route
-Route::get('/', [CountryController::class, 'index'])->name('country.index');
+Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
+
+
+// Funcionários
+// Route::resource('employee', EmployeeController::class);
+
+
+// Clientes
+// Route::resource('client', ClientController::class);
+
+
+// Fornecedores
+Route::resource('supplier', SupplierController::class);
 
 
 // Condição de Pagamento
@@ -22,6 +34,7 @@ Route::resource('payment_form', PaymentFormController::class);
 
 // Produtos
 Route::resource('product', ProductController::class);
+// Unidade de Medida
 Route::resource('measure', MeasureController::class);
 
 

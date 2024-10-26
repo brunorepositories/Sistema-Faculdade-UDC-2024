@@ -17,30 +17,22 @@ class PaymentTermRequest extends FormRequest
   public function rules(): array
   {
 
-    if ($this->route('payment_term')) {
+    if ($this->route('payment_terms')) {
       $createOrUpdate = [
-        'condicaoPagamento' => "unique:payment_term,condicaoPagamento," . $this->route('payment_term')->id,
+        'condicaoPagamento' => "unique:payment_terms,condicaoPagamento," . $this->route('payment_terms')->id,
       ];
     } else {
       $createOrUpdate = [
-        'condicaoPagamento' => "unique:payment_term,condicaoPagamento",
+        'condicaoPagamento' => "unique:payment_terms,condicaoPagamento",
       ];
     }
 
     return [
       'condicaoPagamento' => ['required', $createOrUpdate['condicaoPagamento'], 'max:100'],
       'multa' => ['required', 'min:0'],
-      'juro' => ['required', 'min:0'],
+      'juros' => ['required', 'min:0'],
       'desconto' => ['required', 'min:0', 'max:100'],
       'parcelas' => new CheckArray
     ];
   }
-
-  // public function messages(): array
-  // {
-  //   return [
-  //     'country_id.required' => 'Selecione um país para prosseguir.',
-  //     'country_id.exists' => 'O país selecionado não é válido.',
-  //   ];
-  // }
 }

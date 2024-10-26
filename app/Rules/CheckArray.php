@@ -14,7 +14,15 @@ class CheckArray implements ValidationRule
    */
   public function validate(string $attribute, mixed $value, Closure $fail): void
   {
-    $decodedArray = json_decode($value, true);
+
+    // dd($value);
+    // Verifica se o valor já é um array
+    if (is_array($value)) {
+      $decodedArray = $value;
+    } else {
+      // Tenta decodificar o valor como JSON
+      $decodedArray = json_decode($value, true);
+    }
 
     if (! is_array($decodedArray)) {
       $fail("O campo {$attribute} precisa ser um array válido.");
