@@ -15,7 +15,15 @@
 
         <div class="card-body">
 
-            @include('components.feedbackMessage')
+        @include('components.feedbackMessage')
+
+            <!-- Formulário de busca -->
+            <form method="GET" action="{{ route('product.index') }}" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Buscar por nome do produto" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
 
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
@@ -37,13 +45,12 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>{{ $product->nome }}</td>
-                                <td>{{ $product->measure->nome }}</td> <!-- Nome da medida associada -->
+                                <td>{{ $product->measure->nome}} ({{$product->measure->sigla}}) </td> <!-- Nome da medida associada -->
                                 <td>{{ $product->estoque }}</td>
-                                <td>R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
-                                <td>R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td>
-                                <td>{{ $product->dtUltimaCompra ? $product->dtUltimaCompra->format('d/m/Y H:i') : '-' }}
-                                </td>
-                                <td>{{ $product->dtUltimaVenda ? $product->dtUltimaVenda->format('d/m/Y H:i') : '-' }}</td>
+                                <td> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td> <!-- Formatação para R$ -->
+                                <td> R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td> <!-- Formatação para R$ -->
+                                <td>{{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}</td>
+                                <td>{{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('product.edit', $product->id) }}">
@@ -69,6 +76,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-center">
+                {{ $products->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

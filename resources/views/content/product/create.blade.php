@@ -173,4 +173,14 @@
 
     <!-- Modal Selecionar Medida -->
     @include('content.product.modal.selectMeasure')
+    <script>
+        document.querySelectorAll('.preco').forEach(function (input) {
+            input.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2).replace('.', ',');
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                e.target.value = 'R$ ' + value;
+            });
+        });
+    </script>
 @endsection

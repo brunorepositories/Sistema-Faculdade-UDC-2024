@@ -16,15 +16,15 @@ class Product extends Model
     'custoUltimaCompra',
     'dtUltimaCompra',
     'precoVenda',
-    'precoUltimaVenda',
+    'custoUltimaVenda',
     'dtUltimaVenda',
     'measure_id'
   ];
 
   public function measure()
-  {
-    return $this->hasOne(Measure::class, 'id');
-  }
+    {
+        return $this->belongsTo(Measure::class, 'measure_id');  // Alterado para belongsTo
+    }
 
   // public function productsPursache()
   // {

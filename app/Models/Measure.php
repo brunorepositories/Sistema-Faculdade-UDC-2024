@@ -13,4 +13,9 @@ class Measure extends Model
     'nome',
     'sigla'
   ];
+
+  public function product()
+    {
+        return $this->belongsTo(Product::class, 'measure_id');
+    }
 }
