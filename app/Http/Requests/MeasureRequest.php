@@ -33,4 +33,11 @@ class MeasureRequest extends FormRequest
       'sigla' => ['required', $createOrUpdate['sigla'], 'max:6']
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'nome' => strtoupper($this->nome),
+    ]);
+  }
 }

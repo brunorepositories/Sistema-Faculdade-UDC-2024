@@ -53,4 +53,11 @@ class SupplierRequest extends FormRequest
       'payment_term_id' => ['required', 'exists:payment_terms,id'], // Verifica se o termo de pagamento existe
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'fornecedorRazaoSocial' => strtoupper($this->nome),
+    ]);
+  }
 }

@@ -31,4 +31,10 @@ class PaymentFormRequest extends FormRequest
       'formaPagamento' => ['required', $createOrUpdate['formaPagamento'], 'max:50'],
     ];
   }
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'formaPagamento' => strtoupper($this->nome),
+    ]);
+  }
 }

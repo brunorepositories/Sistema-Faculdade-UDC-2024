@@ -33,4 +33,11 @@ class CityRequest extends FormRequest
       'state_id' => ['required', 'exists:states,id'],
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'nome' => strtoupper($this->nome),
+    ]);
+  }
 }

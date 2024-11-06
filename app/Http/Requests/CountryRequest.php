@@ -33,4 +33,11 @@ class CountryRequest extends FormRequest
       'ddi' => ['required', 'max:3']
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'nome' => strtoupper($this->nome),
+    ]);
+  }
 }

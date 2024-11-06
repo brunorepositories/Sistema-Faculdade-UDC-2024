@@ -35,4 +35,11 @@ class PaymentTermRequest extends FormRequest
       'parcelas' => new CheckArray
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'condicaoPagamento' => strtoupper($this->nome),
+    ]);
+  }
 }
