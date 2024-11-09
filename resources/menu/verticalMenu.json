@@ -5,6 +5,19 @@
     },
     {
       "url": "/sale.index",
+      "name": "Registrar venda",
+      "slug": "sale.index"
+    },
+    {
+      "url": "/purchase.index",
+      "name": "Registrar compra",
+      "slug": "purchase.index"
+    },
+    {
+      "menuHeader": "Financeiro"
+    },
+    {
+      "url": "/sale.index",
       "name": "Vendas",
       "slug": "sale.index"
     },
@@ -12,9 +25,6 @@
       "url": "/purchase.index",
       "name": "Compras",
       "slug": "purchase.index"
-    },
-    {
-      "menuHeader": "Contábil"
     },
     {
       "url": "/accountsReceivable.index",
@@ -28,6 +38,11 @@
     },
     {
       "menuHeader": "Cadastros"
+    },
+    {
+      "url": "/product",
+      "name": "Produtos",
+      "slug": "product.index"
     },
     {
       "url": "/customer",
@@ -45,32 +60,24 @@
       "slug": "employee.index"
     },
     {
-      "url": "/product",
-      "name": "Produtos",
-      "slug": "product.index"
-    },
-    {
-      "menuHeader": "Cadastros básicos"
-    },
-    {
-      "url": "/payment_term",
-      "name": "Condição de Pagamento",
-      "slug": "payment_term.index"
-    },
-    {
-      "url": "/payment_form",
-      "name": "Forma de Pagamento",
-      "slug": "payment_form.index"
-    },
-    {
-      "url": "/measure",
-      "name": "Unid. Medida",
-      "slug": "measure.index"
-    },
-    {
-      "name": "Localidade",
-      "slug": "Localidade",
+      "name": "Cadastros básicos",
+      "slug": "Cadastros básicos",
       "submenu": [
+        {
+          "url": "/payment_term",
+          "name": "Condição de Pagamento",
+          "slug": "payment_term.index"
+        },
+        {
+          "url": "/payment_form",
+          "name": "Forma de Pagamento",
+          "slug": "payment_form.index"
+        },
+        {
+          "url": "/measure",
+          "name": "Unid. Medida",
+          "slug": "measure.index"
+        },
         {
           "url": "/city",
           "name": "Cidade",
