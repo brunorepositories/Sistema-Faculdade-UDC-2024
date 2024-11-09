@@ -26,6 +26,8 @@ class ProductController extends Controller
 
     $products = $query->with('measure')->paginate(10);
 
+    // dd($products);
+
     return view('content.product.index', compact('products'));
   }
 
@@ -48,12 +50,15 @@ class ProductController extends Controller
     try {
       DB::transaction(function () use ($request) {
 
+
         $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
 
-        Product::create($upperCasedData); // Cria o produto com dados validados
-      });
+        // dd($upperCasedData);
 
-      return to_route('product.index')->with('success', 'Produto cadastrado com sucesso.');
+        Product::create($upperCasedData); // Cria o produto com dados validados
+
+        return to_route('product.index')->with('success', 'Produto cadastrado com sucesso.');
+      });
     } catch (QueryException $ex) {
       Log::error('Erro ao cadastrar produto: ' . $ex->getMessage());
 
