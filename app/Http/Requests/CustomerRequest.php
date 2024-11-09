@@ -48,6 +48,7 @@ class CustomerRequest extends FormRequest
       'cnpj' => ['max:18', $uniqueCnpj], // Adicionando a regra de unicidade
       'ie' => ['max:20'],
       'rg' => ['max:20'],
+      'ativo' => ['required', 'boolean'],
       'city_id' => ['required', 'exists:cities,id'], // Verifica se a cidade existe
       'payment_term_id' => ['required', 'exists:payment_terms,id'], // Verifica se o termo de pagamento existe
     ];
@@ -56,7 +57,7 @@ class CustomerRequest extends FormRequest
   public function prepareForValidation()
   {
     $this->merge([
-      'clienteRazaoSocial' => strtoupper($this->nome),
+      'clienteRazaoSocial' => strtoupper($this->clienteRazaoSocial),
     ]);
   }
 }

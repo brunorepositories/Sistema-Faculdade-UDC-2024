@@ -49,10 +49,24 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a href="{{ route('measure.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="ativo"
+                            value="1"
+                            disabled
+                            checked>
+                        <label class="form-check-label" for="ativo">Ativo</label>
+                    </div>
+                    <div>
+                        <a href="{{ route('measure.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>

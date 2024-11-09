@@ -30,7 +30,8 @@ class CountryRequest extends FormRequest
     return [
       'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
       'sigla' => ['required', $createOrUpdate['sigla'], 'max:3'],
-      'ddi' => ['required', 'max:3']
+      'ddi' => ['required', 'max:3'],
+      'ativo' => ['required', 'boolean']
     ];
   }
 

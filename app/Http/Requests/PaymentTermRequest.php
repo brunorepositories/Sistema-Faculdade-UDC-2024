@@ -32,14 +32,15 @@ class PaymentTermRequest extends FormRequest
       'multa' => ['required', 'min:0'],
       'juros' => ['required', 'min:0'],
       'desconto' => ['required', 'min:0', 'max:100'],
-      'parcelas' => new CheckArray
+      'parcelas' => new CheckArray,
+      'ativo' => ['required', 'boolean'],
     ];
   }
 
   public function prepareForValidation()
   {
     $this->merge([
-      'condicaoPagamento' => strtoupper($this->nome),
+      'condicaoPagamento' => strtoupper($this->condicaoPagamento),
     ]);
   }
 }

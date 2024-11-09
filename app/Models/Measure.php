@@ -12,11 +12,11 @@ class Measure extends Model
   protected $fillable = [
     'nome',
     'sigla',
-    // 'ativo'
+    'ativo',
   ];
 
-  // public function product()
-  // {
-  //   return $this->belongsTo(Product::class, 'measure_id');
-  // }
+  public function products()
+  {
+    return $this->hasMany(Product::class, 'product_id');
+  }
 }

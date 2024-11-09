@@ -18,7 +18,7 @@ class Installment extends Model
     'payment_form_id',
     'parcela',
     'dias',
-    'percentual'
+    'percentual',
   ];
 
   public function paymentForm()

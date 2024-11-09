@@ -69,13 +69,15 @@ class StateController extends Controller
   public function edit(State $state)
   {
     $countries = Country::all(); // Para popular a seleção de países na edição
+
+    // dd($state->country); // Verificando se o relacionamento está funcionando
     return view('content.state.edit', compact('state', 'countries'));
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, State $state)
+  public function update(StateRequest $request, State $state)
   {
 
     try {
@@ -83,6 +85,8 @@ class StateController extends Controller
       $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'uf']);
 
       $state->update($upperCasedData);
+
+      // dd($state);
 
       return to_route('state.index')->with('success', "Estado alterado com sucesso.");
     } catch (QueryException $ex) {

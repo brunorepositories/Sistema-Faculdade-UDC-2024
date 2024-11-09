@@ -4,7 +4,18 @@
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Alterar cidade</h4>
+        <div class="card-header d-flex justify-content-between">
+            <h4>Alterar cidade</h4>
+
+            <div>
+                <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                    {{ date('d/m/Y H:i', strtotime($city->created_at)) }}
+                </span>
+                <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                    {{ $city->updated_at->format('d/m/Y H:i') }}
+                </span>
+            </div>
+        </div>
 
         <div class="card-body">
 
@@ -19,7 +30,20 @@
                 @csrf
                 @method('PUT') <!-- Usando PUT para a edição -->
 
-                <div class="col-8">
+                <div class="col-1">
+                    <label
+                        class="form-label"
+                        for="id">Código</label>
+                    <input
+                        required
+                        name="id"
+                        class="form-control"
+                        id="id"
+                        disabled
+                        value="{{ old('id', $city->id) }}">
+                </div>
+
+                <div class="col-7">
                     <label
                         class="form-label"
                         for="nome">Nome da cidade</label>
@@ -90,10 +114,16 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
-                        <span class="badge bg-label-secondary rounded-pill">Cadastro:
-                            {{ date('d/m/Y H:i', strtotime($city->created_at)) }}</span>
-                        <span class="badge bg-label-secondary rounded-pill">Última alteração:
-                            {{ date('d/m/Y H:i', strtotime($city->updated_at)) }}</span>
+                        <input type="hidden" name="ativo" value="0">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="defaultCheck1"
+                            value="1"
+                            {{ old('ativo', $city->ativo) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
                     </div>
                     <div>
                         <a

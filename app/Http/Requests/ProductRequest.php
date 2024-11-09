@@ -32,7 +32,8 @@ class ProductRequest extends FormRequest
       'precoVenda' => ['required', 'min:0'],
       'custoUltimaVenda' => ['nullable', 'min:0'],
       'dtUltimaVenda' => ['nullable', 'date'],
-      'measure_id' => ['required', 'exists:measures,id'], // Garantir que a medida exista
+      'measure_id' => ['required', 'exists:measures,id'], // Garantir que a medida exista,
+      'ativo' => ['required', 'boolean'],
     ];
   }
 

@@ -18,8 +18,9 @@ return new class extends Migration
 
       $table->string('nome', 50);
       $table->unsignedSmallInteger('ddd');
+      $table->boolean('ativo')->default(true);
 
-      $table->foreignIdFor(State::class, 'state_id')->constrained()->onDelete('Cascade');
+      $table->foreignIdFor(State::class, 'state_id')->constrained()->onDelete('restrict');
     });
   }
 

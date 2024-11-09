@@ -28,11 +28,11 @@ class StateRequest extends FormRequest
       ];
     }
 
-
     return [
       'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
       'uf' => ['required', $createOrUpdate['uf'], 'max:2'],
       'country_id' => ['required', 'exists:countries,id'],
+      'ativo' => ['required', 'boolean'],
     ];
   }
 

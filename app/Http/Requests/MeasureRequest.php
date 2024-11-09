@@ -30,7 +30,8 @@ class MeasureRequest extends FormRequest
 
     return [
       'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
-      'sigla' => ['required', $createOrUpdate['sigla'], 'max:6']
+      'sigla' => ['required', $createOrUpdate['sigla'], 'max:6'],
+      'ativo' => ['required', 'boolean'],
     ];
   }
 

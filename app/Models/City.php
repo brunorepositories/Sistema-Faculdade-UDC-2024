@@ -13,20 +13,11 @@ class City extends Model
     'nome',
     'ddd',
     'state_id',
+    'ativo',
   ];
 
   public function state()
   {
     return $this->belongsTo(State::class);
   }
-
-  // public function suppliers()
-  // {
-  //   return $this->belongsTo(Suplier::class);
-  // }
-
-  // public function customers()
-  // {
-  //   return $this->belongsTo(Customer::class);
-  // }
 }
