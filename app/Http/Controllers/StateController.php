@@ -18,7 +18,7 @@ class StateController extends Controller
    */
   public function index()
   {
-    $states = State::with(['country'])->get(); // Incluindo o relacionamento com o Country
+    $states = State::with('country');
 
     return view('content.state.index', compact('states'));
   }
@@ -28,7 +28,7 @@ class StateController extends Controller
    */
   public function create()
   {
-    $countries = Country::all(); // Puxando os países para o dropdown de seleção
+    $countries = Country::where('ativo', true)->get(); // Puxando os países para o dropdown de seleção
     return view('content.state.create', compact('countries'));
   }
 

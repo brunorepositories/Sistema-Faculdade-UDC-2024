@@ -18,6 +18,7 @@ return new class extends Migration
       $table->string('nome', 50);
       $table->char('sigla', 3);
       $table->unsignedSmallInteger('ddi');
+      $table->boolean('ativo')->default(true);
     });
   }
 

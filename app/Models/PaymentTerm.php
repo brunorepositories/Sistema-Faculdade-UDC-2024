@@ -18,6 +18,7 @@ class PaymentTerm extends Model
     'desconto',
     'qtdParcelas',
     'payment_forms_id',
+    'ativo'
   ];
 
   public function installments()

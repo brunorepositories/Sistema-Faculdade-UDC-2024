@@ -13,6 +13,7 @@ class State extends Model
     'nome',
     'uf',
     'country_id',
+    'ativo'
   ];
 
   public function country()

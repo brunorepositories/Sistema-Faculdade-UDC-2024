@@ -334,7 +334,7 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="city">city</label>
+                    <label class="form-label" for="city">Cidade</label>
                     <select required name="city" class="form-select" id="city">
                         <option value="" disabled selected>Selecione</option>
                         @foreach ($cities as $city)

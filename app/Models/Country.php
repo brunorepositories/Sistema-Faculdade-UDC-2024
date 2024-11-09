@@ -17,7 +17,8 @@ class Country extends Model
   protected $fillable = [
     'nome',
     'sigla',
-    'ddi'
+    'ddi',
+    'ativo'
   ];
 
 

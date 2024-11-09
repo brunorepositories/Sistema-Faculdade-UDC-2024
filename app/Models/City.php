@@ -13,6 +13,7 @@ class City extends Model
     'nome',
     'ddd',
     'state_id',
+    'ativo'
   ];
 
   public function state()

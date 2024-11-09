@@ -20,6 +20,7 @@ return new class extends Migration
       $table->double('juros', 8, 2);
       $table->double('desconto', 8, 2);
       $table->integer('qtdParcelas');
+      $table->boolean('ativo')->default(true);
     });
   }
 
