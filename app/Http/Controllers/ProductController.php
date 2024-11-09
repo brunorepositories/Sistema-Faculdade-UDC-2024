@@ -6,8 +6,8 @@ use App\Http\Helpers\FormatData;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Measure;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
