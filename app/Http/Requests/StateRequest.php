@@ -35,4 +35,11 @@ class StateRequest extends FormRequest
       'country_id' => ['required', 'exists:countries,id'],
     ];
   }
+
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'nome' => strtoupper($this->nome),
+    ]);
+  }
 }

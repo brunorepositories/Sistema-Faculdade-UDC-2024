@@ -61,13 +61,11 @@
                             @foreach ($measures as $measure)
                                 <option value="{{ $measure->id }}"
                                     {{ $measure->id == $product->measure_id ? 'selected' : '' }}>
-                                    <!-- Seleciona a medida atual -->
                                     {{ $measure->nome }}
                                 </option>
                             @endforeach
                         </select>
 
-                        {{-- Botão que abre o modal de selecionar medida --}}
                         <button class="btn btn-outline-secondary"
                             style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
                             type="button"
@@ -81,6 +79,7 @@
                     @enderror
                 </div>
 
+                <!-- Preço de Custo -->
                 <div class="col-3 mt-4">
                     <label class="form-label" for="precoCusto">Preço de Custo</label>
                     <input
@@ -90,12 +89,13 @@
                         class="form-control preco"
                         id="precoCusto"
                         placeholder="R$ 0,00"
-                        value="{{ old('precoCusto', $product->precoCusto) }}"> <!-- Preenchendo com o valor atual -->
+                        value="{{ old('precoCusto', 'R$ ' . number_format($product->precoCusto, 2, ',', '.')) }}">
                     @error('precoCusto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- Preço de Venda -->
                 <div class="col-3 mt-4">
                     <label class="form-label" for="precoVenda">Preço de Venda</label>
                     <input
@@ -105,12 +105,13 @@
                         class="form-control preco"
                         id="precoVenda"
                         placeholder="R$ 0,00"
-                        value="{{ old('precoVenda', $product->precoVenda) }}"> <!-- Preenchendo com o valor atual -->
+                        value="{{ old('precoVenda', 'R$ ' . number_format($product->precoVenda, 2, ',', '.')) }}">
                     @error('precoVenda')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- Custo da Última Compra -->
                 <div class="col-3 mt-4">
                     <label class="form-label" for="custoUltimaCompra">Custo da Última Compra</label>
                     <input
@@ -119,13 +120,13 @@
                         class="form-control preco"
                         id="custoUltimaCompra"
                         placeholder="R$ 0,00"
-                        value="{{ old('custoUltimaCompra', $product->custoUltimaCompra) }}">
-                    <!-- Preenchendo com o valor atual -->
+                        value="{{ old('custoUltimaCompra', 'R$ ' . number_format($product->custoUltimaCompra, 2, ',', '.')) }}">
                     @error('custoUltimaCompra')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- Custo da Última Venda -->
                 <div class="col-3 mt-4">
                     <label class="form-label" for="custoUltimaVenda">Custo da Última Venda</label>
                     <input
@@ -134,13 +135,13 @@
                         class="form-control preco"
                         id="custoUltimaVenda"
                         placeholder="R$ 0,00"
-                        value="{{ old('custoUltimaVenda', $product->custoUltimaVenda) }}">
-                    <!-- Preenchendo com o valor atual -->
+                        value="{{ old('custoUltimaVenda', 'R$ ' . number_format($product->custoUltimaVenda, 2, ',', '.')) }}">
                     @error('custoUltimaVenda')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- Data da Última Compra -->
                 <div class="col-6 mt-4">
                     <label class="form-label" for="dtUltimaCompra">Data da Última Compra</label>
                     <input
@@ -148,13 +149,13 @@
                         type="datetime-local"
                         class="form-control"
                         id="dtUltimaCompra"
-                        value="{{ old('dtUltimaCompra', optional($product->dtUltimaCompra)->format('Y-m-d\TH:i')) }}">
-                    <!-- Preenchendo com o valor atual -->
+                        value="{{ old('dtUltimaCompra', $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('Y-m-d\TH:i') : '') }}">
                     @error('dtUltimaCompra')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- Data da Última Venda -->
                 <div class="col-6 mt-4">
                     <label class="form-label" for="dtUltimaVenda">Data da Última Venda</label>
                     <input
@@ -162,8 +163,7 @@
                         type="datetime-local"
                         class="form-control"
                         id="dtUltimaVenda"
-                        value="{{ old('dtUltimaVenda', optional($product->dtUltimaVenda)->format('Y-m-d\TH:i')) }}">
-                    <!-- Preenchendo com o valor atual -->
+                        value="{{ old('dtUltimaVenda', $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('Y-m-d\TH:i') : '') }}">
                     @error('dtUltimaVenda')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -179,17 +179,18 @@
 
     <!-- Modal Selecionar Medida -->
     @include('content.product.modal.selectMeasure')
-@endsection
 
-<!-- Carregar bibliotecas jQuery e jQuery Mask corretamente -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-<script>
-    $(document).ready(function($) {
-        // Aplicar a máscara de preço
-        $('.preco').mask('R$ 000.000.000,00', {
-            reverse: true
+    <script>
+        document.querySelectorAll('.preco').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja número
+                value = (value / 100).toFixed(2).replace('.',
+                ','); // Converte para valor com 2 casas decimais
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona o separador de milhar
+                e.target.value = 'R$ ' + value; // Formata o valor
+            });
         });
-    });
-</script>
+    </script>
+
+@endsection

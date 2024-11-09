@@ -48,6 +48,7 @@
                     @enderror
                 </div>
 
+
                 <div class="col-3">
                     <label class="form-label" for="measure_id">Medida</label>
                     <div class="input-group">
@@ -78,24 +79,8 @@
                     @enderror
                 </div>
 
-
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="precoCusto">Preço de Custo</label>
-                    <input
-                        required
-                        name="precoCusto"
-                        type="text"
-                        class="form-control preco"
-                        id="precoCusto"
-                        placeholder="R$ 0,00"
-                        value="{{ old('precoCusto') }}">
-                    @error('precoCusto')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="precoVenda">Preço de Venda</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label preco" for="precoVenda">Preço de Venda</label>
                     <input
                         required
                         name="precoVenda"
@@ -109,9 +94,22 @@
                     @enderror
                 </div>
 
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="custoUltimaCompra">Custo da Última Compra</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label preco" for="precoCusto">Preço de Custo</label>
                     <input
+                        disabled
+                        name="precoCusto"
+                        type="text"
+                        class="form-control preco"
+                        id="precoCusto"
+                        placeholder="R$ 0,00"
+                        value="{{ old('precoCusto') }}">
+                </div>
+
+                <div class="col-2 mt-4">
+                    <label class="form-label preco" for="custoUltimaCompra">Custo da Última Compra</label>
+                    <input
+                        disabled
                         name="custoUltimaCompra"
                         type="text"
                         class="form-control preco"
@@ -123,9 +121,10 @@
                     @enderror
                 </div>
 
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="custoUltimaVenda">Custo da Última Venda</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label preco" for="custoUltimaVenda">Preço da Última Venda</label>
                     <input
+                        disabled
                         name="custoUltimaVenda"
                         type="text"
                         class="form-control preco"
@@ -137,9 +136,10 @@
                     @enderror
                 </div>
 
-                <div class="col-6 mt-4">
+                <div class="col-2 mt-4">
                     <label class="form-label" for="dtUltimaCompra">Data da Última Compra</label>
                     <input
+                        disabled
                         name="dtUltimaCompra"
                         type="datetime-local"
                         class="form-control"
@@ -150,9 +150,10 @@
                     @enderror
                 </div>
 
-                <div class="col-6 mt-4">
+                <div class="col-2 mt-4">
                     <label class="form-label" for="dtUltimaVenda">Data da Última Venda</label>
                     <input
+                        disabled
                         name="dtUltimaVenda"
                         type="datetime-local"
                         class="form-control"
@@ -173,4 +174,15 @@
 
     <!-- Modal Selecionar Medida -->
     @include('content.product.modal.selectMeasure')
+
+    <script>
+        document.querySelectorAll('.preco').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2).replace('.', ',');
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                e.target.value = 'R$ ' + value;
+            });
+        });
+    </script>
 @endsection

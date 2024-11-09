@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Measure;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -15,10 +16,15 @@ class ProductController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    // Recupera todos os produtos junto com a relação com Measure
-    $products = Product::with(['measure'])->get();
+    $query = Product::query();
+
+    if ($search = $request->input('search')) {
+      $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($search) . '%']);
+    }
+
+    $products = $query->with('measure')->paginate(10);
 
     return view('content.product.index', compact('products'));
   }

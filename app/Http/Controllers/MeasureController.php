@@ -35,19 +35,37 @@ class MeasureController extends Controller
    */
   public function store(MeasureRequest $request)
   {
-
+    $isApiRequest = $request->has('from_api') && $request->input('from_api') == true;
+    $measure = null;
     try {
-      DB::transaction(function () use ($request) {
+      DB::transaction(function () use ($request, &$measure) {
 
         $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
 
-        Measure::create($upperCasedData);
+        $measure = Measure::create($upperCasedData);
       });
+
+      // if ($isApiRequest) {
+      //   return response()->json([
+      //     'success' => true,
+      //     'message' => 'Medida cadastrada com sucesso.',
+      //     'measure' => [
+      //       'id' => $measure->id,
+      //       'nome' => $measure->nome
+      //     ]
+      //   ]);
+      // }
 
       return to_route('measure.index')->with('success', "Medida cadastrada com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao executar query >>> ' . $ex->getMessage());
 
+      if ($isApiRequest) {
+        return response()->json([
+          'success' => false,
+          'message' => 'Ops, algo deu errado, tente novamente.'
+        ], 500);
+      }
       return to_route('measure.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
