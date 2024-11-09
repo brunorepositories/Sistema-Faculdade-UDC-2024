@@ -13,6 +13,7 @@ class PaymentForm extends Model
 
   protected $fillable = [
     'formaPagamento',
+    'ativo'
   ];
 
   // public function toSearchableArray()

@@ -24,6 +24,7 @@ return new class extends Migration
       $table->decimal('precoVenda', 10, 2);
       $table->decimal('custoUltimaVenda', 10, 2)->nullable();
       $table->dateTime('dtUltimaVenda')->nullable();
+      $table->boolean('ativo')->default(true);
 
       $table->foreignIdFor(Measure::class, 'measure_id')
         ->constrained() // Cria a chave estrangeira para a tabela 'measures'

@@ -17,6 +17,7 @@ return new class extends Migration
 
       $table->string('nome', 50);
       $table->char('sigla', 6);
+      $table->boolean('ativo')->default(true);
     });
   }
 

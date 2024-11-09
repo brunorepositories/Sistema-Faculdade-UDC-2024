@@ -17,7 +17,7 @@ class CountryController extends Controller
   public function index(Country $country)
   {
 
-    $countries = $country->all();
+    $countries =  $country->orderBy('updated_at', 'desc')->get();
 
     return view('content.country.index', compact('countries'));
   }
@@ -39,6 +39,7 @@ class CountryController extends Controller
 
     try {
       DB::transaction(function () use ($request) {
+        // dd($request->all());
         // Converte todos os campos para uppercase que são strings
         $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
 
@@ -77,6 +78,7 @@ class CountryController extends Controller
 
     try {
       $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
+      // dd($upperCasedData);
       $country->update($upperCasedData);
 
       return to_route('country.index')->with('success', "Pais alterado com sucesso.");

@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Listar paises')
+@section('title', 'Listar países')
 
 @section('content')
 
@@ -25,6 +25,7 @@
                             <th>Nome</th>
                             <th>Sigla</th>
                             <th>DDI</th>
+                            <th>Ativo</th> <!-- Nova coluna Ativo -->
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
@@ -35,8 +36,15 @@
                                 <td>{{ $country->nome }}</td>
                                 <td>{{ $country->sigla }}</td>
                                 <td>{{ $country->ddi }}</td>
+
+                                <!-- Coluna Ativo com checkbox -->
+                                <td>
+                                    <input class="form-check-input" type="checkbox" disabled
+                                        {{ $country->ativo ? 'checked' : '' }}>
+                                </td>
+
                                 <td class="size-col-action">
-                                    <a class="btn btn-outline-primary rounded-pill border-0 "
+                                    <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('country.edit', $country->id) }}">
                                         <span class="tf-icons bx bx-edit bx-22px"></span>
                                     </a>

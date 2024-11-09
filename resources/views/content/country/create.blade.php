@@ -34,7 +34,7 @@
                         id="nome"
                         placeholder="Informe o nome do país"
                         maxlength="50"
-                        value="{{ Str::upper(old('nome')) }}">
+                        value="{{ old('nome') }}">
                     @error('nome')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -66,7 +66,7 @@
                         required
                         name="ddi"
                         type="number"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="ddi"
                         placeholder="Informe o código DDI"
                         maxlength="3"
@@ -76,13 +76,28 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a
-                        href="{{ route('country.index') }}"
-                        class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button
-                        type="submit"
-                        class="btn btn-success">Cadastrar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div class="form-check">
+                        <!-- Campo hidden para garantir que o valor "0" seja enviado se o checkbox estiver desmarcado -->
+                        <input type="hidden" name="ativo" value="0">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="defaultCheck1"
+                            value="1"
+                            checked>
+                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
+                    </div>
+                    <div>
+                        <a
+                            href="{{ route('country.index') }}"
+                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                        <button
+                            type="submit"
+                            class="btn btn-success">Cadastrar</button>
+                    </div>
                 </div>
             </form>
         </div>

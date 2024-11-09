@@ -11,7 +11,8 @@ class Measure extends Model
 
   protected $fillable = [
     'nome',
-    'sigla'
+    'sigla',
+    'ativo'
   ];
 
   public function product()

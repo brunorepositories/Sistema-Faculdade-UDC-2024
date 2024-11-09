@@ -18,7 +18,8 @@ class Product extends Model
     'precoVenda',
     'custoUltimaVenda',
     'dtUltimaVenda',
-    'measure_id'
+    'measure_id',
+    'ativo'
   ];
 
   public function measure()
