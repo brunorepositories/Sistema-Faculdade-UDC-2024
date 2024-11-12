@@ -35,7 +35,9 @@ class ProductController extends Controller
   public function create()
   {
     // Recupera todas as medidas (Measure) para o dropdown
-    $measures = Measure::all();
+    $measures = Measure::where('ativo', true)
+      ->orderBy('id')
+      ->get();;
 
     return view('content.product.create', compact('measures'));
   }
@@ -76,7 +78,9 @@ class ProductController extends Controller
   public function edit(Product $product)
   {
     // Recupera todas as medidas para a edição do produto
-    $measures = Measure::all();
+    $measures = Measure::where('ativo', true)
+      ->orderBy('id')
+      ->get();;
 
     return view('content.product.edit', compact('product', 'measures'));
   }

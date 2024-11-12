@@ -89,12 +89,12 @@
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="row flex-grow-1">
                             <div class="col-2">
-                                <label class="form-label toUpperCase" for="num">Parcela</label>
+                                <label class="form-label toUpperCase" for="parcela">Parcela</label>
                                 <input
                                     required
                                     type="number"
                                     class="form-control toUpperCase"
-                                    id="num"
+                                    id="parcela"
                                     min="0"
                                     placeholder="0">
                             </div>
@@ -117,15 +117,6 @@
                                     id="percentual"
                                     min="0"
                                     max="100"
-                                    placeholder="0,00">
-                            </div>
-                            <div class="col-2">
-                                <label class="form-label toUpperCase" for="percentualTotal">Percentual total (%)</label>
-                                <input
-                                    disabled
-                                    type="number"
-                                    class="form-control toUpperCase"
-                                    id="percentualTotal"
                                     placeholder="0,00">
                             </div>
                             <div class="col flex-grow-1">
@@ -160,6 +151,16 @@
                                 @error('payment_form_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="col-2">
+                                <label class="form-label toUpperCase" for="percentualTotal">Percentual total (%)</label>
+                                <input
+                                    disabled
+                                    type="number"
+                                    class="form-control toUpperCase"
+                                    id="percentualTotal"
+                                    placeholder="0,00">
                             </div>
                         </div>
 
@@ -228,7 +229,7 @@
         $('#add-parcela').on('click', function() {
 
             // Recupera os valores dos campos
-            const numParcela = $('#num').val();
+            const numParcela = $('#parcela').val();
             const diasParcela = $('#dias').val();
             const percentualParcela = $('#percentual').val();
             const payment_form_id = $('#payment_form_id').val();
@@ -262,14 +263,14 @@
                                                 <span class="tf-icons bx bx-trash bx-22px"></span>
                                             </button>
                                         </td>
-                                        <input type="hidden" name="parcelas[${parcelaCount}][num]" value="${numParcela}">
+                                        <input type="hidden" name="parcelas[${parcelaCount}][parcela]" value="${numParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
                                     </tr> `);
 
             // Limpar os campos após adicionar a parcela
-            $('#num').val('');
+            $('#parcela').val('');
             $('#dias').val('');
             $('#percentual').val('');
             $('#payment_form_id').val('');

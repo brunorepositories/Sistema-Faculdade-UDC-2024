@@ -55,10 +55,27 @@ class SupplierRequest extends FormRequest
     ];
   }
 
-  public function prepareForValidation()
+  protected function prepareForValidation()
   {
     $this->merge([
+      'tipoPessoa' => strtoupper($this->tipoPessoa),
       'fornecedorRazaoSocial' => strtoupper($this->fornecedorRazaoSocial),
+      'apelidoNomeFantasia' => strtoupper($this->apelidoNomeFantasia),
+      'endereco' => strtoupper($this->endereco),
+      'bairro' => strtoupper($this->bairro),
+      'numero' => strtoupper($this->numero),
+      'cep' => strtoupper($this->cep),
+      'complemento' => $this->complemento ? strtoupper($this->complemento) : null,
+      'sexo' => $this->sexo ? strtoupper($this->sexo) : null,
+      'email' => $this->email ? strtoupper($this->email) : null,
+      'usuario' => $this->usuario ? strtoupper($this->usuario) : null,
+      'telefone' => $this->telefone ? strtoupper($this->telefone) : null,
+      'celular' => $this->celular ? strtoupper($this->celular) : null,
+      'nomeContato' => $this->nomeContato ? strtoupper($this->nomeContato) : null,
+      'cpf' => $this->cpf ? strtoupper($this->cpf) : null,
+      'cnpj' => $this->cnpj ? strtoupper($this->cnpj) : null,
+      'ie' => $this->ie ? strtoupper($this->ie) : null,
+      'rg' => $this->rg ? strtoupper($this->rg) : null,
     ]);
   }
 }

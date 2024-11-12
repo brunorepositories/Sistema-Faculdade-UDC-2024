@@ -34,8 +34,12 @@ class CustomerController extends Controller
    */
   public function create(City $cities, PaymentTerm $paymentTerms)
   {
-    $cities = City::all();
-    $paymentTerms = PaymentTerm::all();
+    $cities = City::where('ativo', true)
+      ->orderBy('id')
+      ->get();
+    $paymentTerms = PaymentTerm::where('ativo', true)
+      ->orderBy('id')
+      ->get();
 
     return view('content.customer.create', compact('cities', 'paymentTerms'));
   }

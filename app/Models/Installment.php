@@ -14,6 +14,7 @@ class Installment extends Model
   public $incrementing = false;
 
   protected $fillable = [
+    'id',
     'payment_term_id',
     'payment_form_id',
     'parcela',

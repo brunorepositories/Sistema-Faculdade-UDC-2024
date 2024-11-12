@@ -12,6 +12,7 @@ class PaymentForm extends Model
   protected $table = 'payment_forms';
 
   protected $fillable = [
+    'id',
     'formaPagamento',
     'ativo',
   ];

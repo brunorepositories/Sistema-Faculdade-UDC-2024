@@ -40,6 +40,7 @@ class StateRequest extends FormRequest
   {
     $this->merge([
       'nome' => strtoupper($this->nome),
+      'uf' => strtoupper($this->uf),
     ]);
   }
 }

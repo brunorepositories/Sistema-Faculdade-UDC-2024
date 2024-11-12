@@ -17,15 +17,16 @@ class PaymentTermRequest extends FormRequest
   public function rules(): array
   {
 
-    if ($this->route('payment_terms')) {
+    if ($this->route('payment_term')) {
       $createOrUpdate = [
-        'condicaoPagamento' => "unique:payment_terms,condicaoPagamento," . $this->route('payment_terms')->id,
+        'condicaoPagamento' => "unique:payment_terms,condicaoPagamento," . $this->route('payment_term')->id,
       ];
     } else {
       $createOrUpdate = [
         'condicaoPagamento' => "unique:payment_terms,condicaoPagamento",
       ];
     }
+
 
     return [
       'condicaoPagamento' => ['required', $createOrUpdate['condicaoPagamento'], 'max:100'],

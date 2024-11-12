@@ -28,7 +28,9 @@ class StateController extends Controller
    */
   public function create()
   {
-    $countries = Country::all(); // Puxando os países para o dropdown de seleção
+    $countries = Country::where('ativo', true)
+      ->orderBy('id')
+      ->get(); // Puxando os países para o dropdown de seleção
     return view('content.state.create', compact('countries'));
   }
 
@@ -68,7 +70,9 @@ class StateController extends Controller
    */
   public function edit(State $state)
   {
-    $countries = Country::all(); // Para popular a seleção de países na edição
+    $countries = Country::where('ativo', true)
+      ->orderBy('id')
+      ->get(); // Para popular a seleção de países na edição
 
     // dd($state->country); // Verificando se o relacionamento está funcionando
     return view('content.state.edit', compact('state', 'countries'));

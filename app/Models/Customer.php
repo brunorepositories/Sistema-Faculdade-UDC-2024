@@ -14,6 +14,7 @@ class Customer extends Model
 
   // Atributos que podem ser preenchidos em massa
   protected $fillable = [
+    'id',
     'tipoPessoa',
     'clienteRazaoSocial',
     'apelidoNomeFantasia',

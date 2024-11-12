@@ -39,6 +39,7 @@ class MeasureRequest extends FormRequest
   {
     $this->merge([
       'nome' => strtoupper($this->nome),
+      'sigla' => strtoupper($this->sigla),
     ]);
   }
 }

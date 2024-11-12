@@ -7,6 +7,7 @@ use App\Http\Requests\PaymentTermRequest;
 use App\Models\Installment;
 use App\Models\PaymentForm;
 use App\Models\PaymentTerm;
+use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,41 +37,8 @@ class PaymentTermController extends Controller
     return view('content.payment_term.create', compact('paymentForms'));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   */
-  // public function store(PaymentTermRequest $request)
-  // {
-  //   try {
-  //     DB::transaction(function () use ($request) {
-  //       // Converte todos os campos para uppercase que são strings
-  //       // (Supondo que você tenha lógica para converter os campos para uppercase aqui)
-
-  //       $paymentTermObj = PaymentTerm::create($request->all());
-
-  //       foreach ($paymentTermObj->qtdParcelas as $parcela) { // Use [] ao invés de -> para acessar array
-  //         Installment::create([
-  //           'payment_term_id' => $paymentTermObj->id, // Certifique-se de que esse ID está correto
-  //           'payment_form_id' => $parcela['payment_form_id'],
-  //           'parcela' => $parcela['parcela'],
-  //           'dias' => $parcela['dias'],
-  //           'percentual' => $parcela['percentual'],
-  //         ]);
-  //       }
-  //     });
-
-  //     return to_route('payment_term.index')->with('success', "Condição de Pagamento cadastrada com sucesso.");
-  //   } catch (QueryException $th) {
-  //     Log::debug('Warning - Erro ao executar query >>> ' . $th); // Corrigido para usar $th
-
-  //     return to_route('payment_term.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
-  //   }
-  // }
-
   public function store(PaymentTermRequest $request)
   {
-
-    // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
 
@@ -94,7 +62,7 @@ class PaymentTermController extends Controller
           Installment::create([
             'payment_term_id' => $paymentTerm->id,
             'payment_form_id' => $parcela['payment_form_id'],
-            'parcela' => $parcela['num'],
+            'parcela' => $parcela['parcela'],
             'dias' => $parcela['dias'],  // Alterado de `multa` para `dias`
             'percentual' => $parcela['percentual'],
           ]);
@@ -115,32 +83,81 @@ class PaymentTermController extends Controller
    */
   public function show(PaymentTerm $payment_term)
   {
-    return view('content.payment_term.show', compact('payment_term'));
+    return view('content.payment_term.show', compact('paymentTerm'));
+  }
+
+
+  public function edit(PaymentTerm $paymentTerm)
+  {
+    try {
+
+      $paymentTerm = PaymentTerm::with('installments')->findOrFail($paymentTerm->id);
+
+      // dd($paymentTerm);
+
+      // Busca todas as formas de pagamento ativas para o select
+      $paymentForms = PaymentForm::where('ativo', true)
+        ->orderBy('id')
+        ->get();
+
+
+      return view('content.payment_term.edit', compact('paymentTerm', 'paymentForms'));
+    } catch (QueryException $th) {
+      Log::error('Erro ao carregar condição de pagamento para edição: ' . $th->getMessage());
+      return to_route('payment_term.index')
+        ->with('failed', 'Ops, algo deu errado ao carregar os dados para edição, tente novamente.');
+    }
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * Função de atualização (update)
    */
-  public function edit(PaymentTerm $payment_term)
+  public function update(PaymentTermRequest $request, PaymentTerm $paymentTerm)
   {
-    return view('content.payment_term.edit', compact('payment_term'));
+    try {
+      DB::transaction(function () use ($request, $paymentTerm) {
+        // Atualiza os campos principais da condição de pagamento
+        $paymentTermObj = $request->only([
+          'condicaoPagamento',
+          'multa',
+          'juros',
+          'desconto',
+          'ativo'
+        ]);
+
+        // Atualiza a quantidade de parcelas com base na entrada
+        $paymentTermObj['qtdParcelas'] = count($request->parcelas);
+
+        // Salva as alterações na condição de pagamento
+        $paymentTerm->update($paymentTermObj);
+
+        // Limpa as parcelas antigas associadas a essa condição de pagamento
+        $paymentTerm->installments()->delete();
+
+        // Cria as novas parcelas
+        foreach ($request->parcelas as $parcela) {
+          // Aqui garantimos que os dados são passados corretamente para criar uma nova parcela
+          Installment::create([
+            'payment_term_id' => $paymentTerm->id, // Associando a parcela à condição de pagamento
+            'payment_form_id' => $parcela['payment_form_id'], // Forma de pagamento da parcela
+            'parcela' => $parcela['parcela'], // Número da parcela
+            'dias' => $parcela['dias'], // Número de dias para o vencimento da parcela
+            'percentual' => $parcela['percentual'], // Percentual da parcela
+          ]);
+        }
+      });
+
+      // Retorna a resposta de sucesso
+      return to_route('payment_term.index')->with('success', "Condição de pagamento atualizada com sucesso.");
+    } catch (QueryException $th) {
+      // Em caso de erro, loga o erro e retorna uma resposta de falha
+      Log::error('Erro ao atualizar condição de pagamento: ' . $th->getMessage());
+
+      return to_route('payment_term.index')->with('failed', 'Ops, algo deu errado. Tente novamente.');
+    }
   }
 
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(PaymentTermRequest $request, PaymentTerm $payment_term)
-  {
-    $payment_term->condicao_pagamento = $request->get('condicao_pagamento');
-    $payment_term->multa = $request->get('multa');
-    $payment_term->juros = $request->get('juros');
-    $payment_term->desconto = $request->get('desconto');
-    $payment_term->qtd_parcelas = $request->get('qtd_parcelas');
 
-    $payment_term->save();
-
-    return to_route('payment_term.index')->with('success', 'Condição de Pagamento atualizado com sucesso.');
-  }
 
   /**
    * Remove the specified resource from storage.
