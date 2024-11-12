@@ -4,7 +4,18 @@
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Alterar Condição de Pagamento</h4>
+        <div class="card-header d-flex justify-content-between">
+            <h4>Alterar Condição de Pagamento</h4>
+
+            <div>
+                <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                    {{ date('d/m/Y H:i', strtotime($paymentTerm->created_at)) }}
+                </span>
+                <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                    {{ $paymentTerm->updated_at->format('d/m/Y H:i') }}
+                </span>
+            </div>
+        </div>
 
         <div class="card-body">
 
@@ -20,7 +31,7 @@
                 @method('PUT')
 
                 <div class="col-1">
-                    <label class="form-label" for="id">Código</label>
+                    <label class="form-label toUpperCase" for="id">Código</label>
                     <input
                         required
                         name="id"
