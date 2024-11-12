@@ -55,11 +55,6 @@
       "slug": "supplier.index"
     },
     {
-      "url": "/employee",
-      "name": "Funcionários",
-      "slug": "employee.index"
-    },
-    {
       "name": "Cadastros básicos",
       "slug": "Cadastros básicos",
       "submenu": [

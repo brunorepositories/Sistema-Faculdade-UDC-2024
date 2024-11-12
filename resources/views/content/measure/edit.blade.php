@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Alterar Medida')
+@section('title', 'Alterar Unidade de Medida')
 
 @section('content')
     <div class="card mb-10">
@@ -30,15 +30,28 @@
                 @csrf
                 @method('PUT') <!-- Usando PUT para a edição -->
 
-                <div class="col-10">
+                <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
+                        for="id">Código</label>
+                    <input
+                        required
+                        name="id"
+                        class="form-control toUpperCase"
+                        id="id"
+                        disabled
+                        value="{{ old('id', $measure->id) }}">
+                </div>
+
+                <div class="col-9">
+                    <label
+                        class="form-label toUpperCase"
                         for="nome">Nome da Medida</label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
                         placeholder="Informe o nome da medida"
                         maxlength="50"
@@ -50,13 +63,13 @@
 
                 <div class="col-2">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="sigla">Sigla</label>
                     <input
                         required
                         name="sigla"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="sigla"
                         placeholder="Informe a sigla da medida"
                         maxlength="5"
@@ -77,13 +90,13 @@
                             id="defaultCheck1"
                             value="1"
                             {{ old('ativo', $measure->ativo) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
+                        <label class="form-check-label toUpperCase" for="defaultCheck1">Ativo</label>
                     </div>
                     <div>
                         <a href="{{ route('measure.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button type="submit"
-                            class="btn btn-success">Salvar</button>
+                            class="btn btn-success toUpperCase">Salvar</button>
                     </div>
                 </div>
             </form>

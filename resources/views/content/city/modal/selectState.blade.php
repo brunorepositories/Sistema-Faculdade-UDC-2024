@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title" id="stateModalLabel">Selecione um Estado</h5>
+                <h5 class="modal-title" id="stateModalLabel">Selecione o Estado</h5>
             </div>
             <div class="modal-body">
                 <div class="table-responsive text-nowrap">
@@ -36,7 +36,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-outline-secondary toUpperCase"
+                    data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

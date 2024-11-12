@@ -16,9 +16,16 @@ class CustomerController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    $customers = Customer::paginate(10);
+    $query = Customer::query();
+
+    if ($search = $request->input('search')) {
+      $query->whereRaw('LOWER(clienteRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
+    }
+
+    $customers = $query->paginate(10);
+
     return view('content.customer.index', compact('customers'));
   }
 

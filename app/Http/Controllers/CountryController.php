@@ -39,10 +39,8 @@ class CountryController extends Controller
 
     try {
       DB::transaction(function () use ($request) {
-        // Converte todos os campos para uppercase que são strings
-        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
 
-        Country::create($upperCasedData);
+        Country::create($request->all());
       });
 
       return to_route('country.index')->with('success', "País cadastrado com sucesso.");
@@ -78,8 +76,10 @@ class CountryController extends Controller
   {
 
     try {
-      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
-      $country->update($upperCasedData);
+
+      DB::transaction(function () use ($request, $country) {
+        $country->update($request->all());
+      });
 
       return to_route('country.index')->with('success', "Pais alterado com sucesso.");
     } catch (QueryException $ex) {

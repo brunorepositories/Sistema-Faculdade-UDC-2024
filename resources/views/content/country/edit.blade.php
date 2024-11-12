@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Alterar país')
+@section('title', 'Alterar País')
 
 @section('content')
     <div class="card mb-10">
@@ -34,12 +34,12 @@
 
                 <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="id">Código</label>
                     <input
                         required
                         name="id"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="id"
                         disabled
                         value="{{ old('id', $country->id) }}">
@@ -47,7 +47,7 @@
 
                 <div class="col-7">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="nome">Nome do País</label>
                     <input
                         required
@@ -65,7 +65,7 @@
 
                 <div class="col-2">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="sigla">Sigla</label>
                     <input
                         required
@@ -83,13 +83,13 @@
 
                 <div class="col-2">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="ddi">DDI</label>
                     <input
                         required
                         name="ddi"
                         type="number"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="ddi"
                         placeholder="Informe o código DDI"
                         maxlength="5"
@@ -110,13 +110,13 @@
                             id="defaultCheck1"
                             value="1"
                             {{ $country->ativo ? 'checked' : '' }}>
-                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
+                        <label class="form-check-label toUpperCase" for="defaultCheck1">Ativo</label>
                     </div>
                     <div>
                         <a href="{{ route('country.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button type="submit"
-                            class="btn btn-success">Salvar</button>
+                            class="btn btn-success toUpperCase">Salvar</button>
                     </div>
                 </div>
             </form>

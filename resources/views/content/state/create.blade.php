@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Novo estado')
+@section('title', 'Cadastrar Estado')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Novo Estado</h4>
+        <h4 class="card-header">Cadastrar Estado</h4>
 
         <div class="card-body">
 
@@ -20,15 +20,15 @@
 
                 <div class="col-8">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="nome">Nome do estado</label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
-                        placeholder="Informe o nome do estado"
+                        placeholder="Nome do estado"
                         maxlength="50"
                         value="{{ Str::upper(old('nome')) }}">
                     @error('nome')
@@ -44,9 +44,9 @@
                         required
                         name="uf"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="uf"
-                        placeholder="Informe a sigla UF"
+                        placeholder="Sigla"
                         maxlength="2"
                         value="{{ Str::upper(old('uf')) }}">
                     @error('uf')
@@ -55,14 +55,14 @@
                 </div>
 
                 <div class="col-3">
-                    <label class="form-label" for="country_id">País</label>
+                    <label class="form-label toUpperCase" for="country_id">País</label>
                     <div class="input-group">
                         <select
                             required
                             name="country_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="country_id">
-                            <option value="" disabled selected>Selecione o país</option>
+                            <option value="" disabled selected>Selecione</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}">
                                     {{ $country->nome }}
@@ -88,6 +88,7 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
+                        <input type="hidden" name="ativo" value="1">
                         <input
                             class="form-check-input"
                             type="checkbox"
@@ -96,15 +97,15 @@
                             value="1"
                             disabled
                             checked>
-                        <label class="form-check-label" for="ativo">Ativo</label>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
                     </div>
                     <div>
                         <a
                             href="{{ route('state.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button
                             type="submit"
-                            class="btn btn-success">Salvar</button>
+                            class="btn btn-success toUpperCase">Cadastrar</button>
                     </div>
                 </div>
             </form>

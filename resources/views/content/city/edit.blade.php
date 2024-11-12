@@ -5,7 +5,7 @@
 @section('content')
     <div class="card mb-10">
         <div class="card-header d-flex justify-content-between">
-            <h4>Alterar cidade</h4>
+            <h4>Alterar Cidade</h4>
 
             <div>
                 <span class="badge bg-label-secondary rounded-pill">Cadastro:
@@ -32,12 +32,12 @@
 
                 <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="id">Código</label>
                     <input
                         required
                         name="id"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="id"
                         disabled
                         value="{{ old('id', $city->id) }}">
@@ -45,13 +45,13 @@
 
                 <div class="col-7">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="nome">Nome da cidade</label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
                         placeholder="Informe o nome da cidade"
                         maxlength="50"
@@ -63,13 +63,13 @@
 
                 <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="ddd">DDD</label>
                     <input
                         required
                         name="ddd"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="ddd"
                         placeholder="Informe o DDD"
                         maxlength="3"
@@ -80,14 +80,14 @@
                 </div>
 
                 <div class="col-3">
-                    <label class="form-label" for="state_id">País</label>
+                    <label class="form-label toUpperCase" for="state_id">Estado</label>
                     <div class="input-group">
                         <select
                             required
                             name="state_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="state_id">
-                            <option value="" disabled>Selecione o país</option>
+                            <option value="" disabled>Selecione</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}"
                                     {{ old('state_id', $state->state_id) == $state->id ? 'selected' : '' }}>
@@ -128,10 +128,10 @@
                     <div>
                         <a
                             href="{{ route('city.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button
                             type="submit"
-                            class="btn btn-success">Salvar</button>
+                            class="btn btn-success toUpperCase">Salvar</button>
 
                     </div>
                 </div>

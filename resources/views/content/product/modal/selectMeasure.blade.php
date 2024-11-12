@@ -32,7 +32,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-outline-secondary toUpperCase"
+                    data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

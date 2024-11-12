@@ -4,11 +4,11 @@
     use Illuminate\Support\Str;
 @endphp
 
-@section('title', 'Novo país')
+@section('title', 'Cadastrar País')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Novo país</h4>
+        <h4 class="card-header">Cadastrar País</h4>
 
         <div class="card-body">
 
@@ -24,7 +24,7 @@
 
                 <div class="col-8">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="nome">Nome do país</label>
                     <input
                         required
@@ -32,7 +32,7 @@
                         type="text"
                         class="form-control toUpperCase"
                         id="nome"
-                        placeholder="Informe o nome do país"
+                        placeholder="Nome do país"
                         maxlength="50"
                         value="{{ Str::upper(old('nome')) }}">
                     @error('nome')
@@ -42,7 +42,7 @@
 
                 <div class="col-2">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="sigla">Sigla</label>
                     <input
                         required
@@ -50,7 +50,7 @@
                         type="text"
                         class="form-control toUpperCase"
                         id="sigla"
-                        placeholder="Informe a sigla do país"
+                        placeholder="sigla"
                         maxlength="3"
                         value="{{ old('sigla') }}">
                     @error('sigla')
@@ -60,7 +60,7 @@
 
                 <div class="col-2">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="ddi">DDI</label>
                     <input
                         required
@@ -68,7 +68,7 @@
                         type="number"
                         class="form-control"
                         id="ddi"
-                        placeholder="Informe o código DDI"
+                        placeholder="código DDI"
                         maxlength="3"
                         value="{{ old('ddi') }}">
                     @error('ddi')
@@ -78,21 +78,21 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
+                        <input type="hidden" name="ativo" value="1">
                         <input
                             class="form-check-input"
                             type="checkbox"
                             name="ativo"
                             id="ativo"
-                            value="1"
                             disabled
                             checked>
-                        <label class="form-check-label" for="ativo">Ativo</label>
+                        <label class="form-label toUpperCase form-check-label" for="ativo">Ativo</label>
                     </div>
                     <div>
                         <a href="{{ route('country.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button type="submit"
-                            class="btn btn-success">Cadastrar</button>
+                            class="btn btn-success toUpperCase">Cadastrar</button>
                     </div>
                 </div>
             </form>

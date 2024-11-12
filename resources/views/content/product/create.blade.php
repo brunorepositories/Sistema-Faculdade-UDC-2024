@@ -166,6 +166,7 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
+                        <input type="hidden" name="ativo" value="1">
                         <input
                             class="form-check-input"
                             type="checkbox"

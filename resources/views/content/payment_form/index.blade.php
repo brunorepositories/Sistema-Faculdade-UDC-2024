@@ -9,7 +9,8 @@
             <h4 class="head-label">Formas de Pagamento</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('payment_form.create') }}">Cadastrar Forma de Pagamento</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('payment_form.create') }}">Cadastrar Forma de
+                    Pagamento</a>
             </div>
         </div>
 
