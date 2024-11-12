@@ -9,7 +9,7 @@
             <h4 class="head-label">Países</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('country.create') }}">Cadastrar país</a>
+                <a class="btn btn-primary" href="{{ route('country.create') }}">CADASTRAR PAÍS</a>
             </div>
         </div>
 

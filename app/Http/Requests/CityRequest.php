@@ -31,6 +31,7 @@ class CityRequest extends FormRequest
       'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
       'ddd' => ['required', 'max:3'],
       'state_id' => ['required', 'exists:states,id'],
+      'ativo' => ['required', 'boolean'],
     ];
   }
 

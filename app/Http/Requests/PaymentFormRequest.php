@@ -26,15 +26,18 @@ class PaymentFormRequest extends FormRequest
       ];
     }
 
+    // dd($this);
 
     return [
       'formaPagamento' => ['required', $createOrUpdate['formaPagamento'], 'max:50'],
+      'ativo' => ['required', 'boolean'],
     ];
   }
+
   public function prepareForValidation()
   {
     $this->merge([
-      'formaPagamento' => strtoupper($this->nome),
+      'formaPagamento' => strtoupper($this->formaPagamento),
     ]);
   }
 }

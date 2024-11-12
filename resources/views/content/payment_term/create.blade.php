@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Nova Condição de Pagamento')
+@section('title', 'Cadastrar Condição de Pagamento')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Nova Condição de Pagamento</h4>
+        <h4 class="card-header">Cadastrar Condição de Pagamento</h4>
 
         <div class="card-body">
 
@@ -19,12 +19,12 @@
                 @csrf
 
                 <div class="col-6">
-                    <label class="form-label" for="condicaoPagamento">Condição de Pagamento</label>
+                    <label class="form-label toUpperCase" for="condicaoPagamento">Condição de Pagamento</label>
                     <input
                         required
                         name="condicaoPagamento"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="condicaoPagamento"
                         placeholder="Informe a condição de pagamento"
                         maxlength="50"
@@ -35,13 +35,13 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label" for="multa">Multa (%)</label>
+                    <label class="form-label toUpperCase" for="multa">Multa (%)</label>
                     <input
                         required
                         name="multa"
                         type="number"
                         step="0,001"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="multa"
                         placeholder="0,00"
                         min="0"
@@ -52,13 +52,13 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label" for="juros">Juros (%)</label>
+                    <label class="form-label toUpperCase" for="juros">Juros (%)</label>
                     <input
                         required
                         name="juros"
                         type="number"
                         step="0,001"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="juros"
                         min="0"
                         placeholder="0,00"
@@ -69,13 +69,13 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label" for="desconto">Desconto (%)</label>
+                    <label class="form-label toUpperCase" for="desconto">Desconto (%)</label>
                     <input
                         required
                         name="desconto"
                         type="number"
                         step="0,001"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="desconto"
                         min="0"
                         placeholder="0,00"
@@ -84,51 +84,43 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
                 <div class="mt-8">
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="row flex-grow-1">
                             <div class="col-2">
-                                <label class="form-label" for="num">Parcela</label>
+                                <label class="form-label toUpperCase" for="parcela">Parcela</label>
                                 <input
                                     required
                                     type="number"
-                                    class="form-control"
-                                    id="num"
+                                    class="form-control toUpperCase"
+                                    id="parcela"
                                     min="0"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
-                                <label class="form-label" for="dias">Dias (corridos)</label>
+                                <label class="form-label toUpperCase" for="dias">Dias (corridos)</label>
                                 <input
                                     required
                                     type="number"
-                                    class="form-control"
+                                    class="form-control toUpperCase"
                                     id="dias"
                                     min="0"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
-                                <label class="form-label" for="percentual">Percentual (%)</label>
+                                <label class="form-label toUpperCase" for="percentual">Percentual (%)</label>
                                 <input
                                     required
                                     type="number"
-                                    class="form-control"
+                                    class="form-control toUpperCase"
                                     id="percentual"
                                     min="0"
                                     max="100"
                                     placeholder="0,00">
                             </div>
-                            <div class="col-2">
-                                <label class="form-label" for="percentualTotal">Percentual total (%)</label>
-                                <input
-                                    disabled
-                                    type="number"
-                                    class="form-control"
-                                    id="percentualTotal"
-                                    placeholder="0,00">
-                            </div>
                             <div class="col flex-grow-1">
-                                <label class="form-label" for="payment_form_id">Forma de Pagamento</label>
+                                <label class="form-label toUpperCase" for="payment_form_id">Forma de Pagamento</label>
                                 <div class="input-group">
                                     <select
                                         required
@@ -160,6 +152,16 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-2">
+                                <label class="form-label toUpperCase" for="percentualTotal">Percentual total (%)</label>
+                                <input
+                                    disabled
+                                    type="number"
+                                    class="form-control toUpperCase"
+                                    id="percentualTotal"
+                                    placeholder="0,00">
+                            </div>
                         </div>
 
                         <div class="ms-6">
@@ -186,15 +188,29 @@
                     </div>
                 </div>
 
-
-                <div class="d-flex justify-content-end mt-10">
-                    <a
-                        href="{{ route('payment_term.index') }}"
-                        class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button
-                        type="submit"
-                        class="btn btn-success">Cadastrar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <input type="hidden" name="ativo" value="1">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="ativo"
+                            value="1"
+                            disabled
+                            checked>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
+                    </div>
+                    <div>
+                        <a
+                            href="{{ route('payment_term.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                        <button
+                            type="submit"
+                            class="btn btn-success toUpperCase">Cadastrar</button>
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -213,7 +229,7 @@
         $('#add-parcela').on('click', function() {
 
             // Recupera os valores dos campos
-            const numParcela = $('#num').val();
+            const numParcela = $('#parcela').val();
             const diasParcela = $('#dias').val();
             const percentualParcela = $('#percentual').val();
             const payment_form_id = $('#payment_form_id').val();
@@ -247,14 +263,14 @@
                                                 <span class="tf-icons bx bx-trash bx-22px"></span>
                                             </button>
                                         </td>
-                                        <input type="hidden" name="parcelas[${parcelaCount}][num]" value="${numParcela}">
+                                        <input type="hidden" name="parcelas[${parcelaCount}][parcela]" value="${numParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
                                         <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
                                     </tr> `);
 
             // Limpar os campos após adicionar a parcela
-            $('#num').val('');
+            $('#parcela').val('');
             $('#dias').val('');
             $('#percentual').val('');
             $('#payment_form_id').val('');

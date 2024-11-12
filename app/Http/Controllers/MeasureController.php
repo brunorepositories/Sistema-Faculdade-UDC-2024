@@ -43,18 +43,18 @@ class MeasureController extends Controller
         $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'sigla']);
 
         $measure = Measure::create($upperCasedData);
-    });
+      });
 
-      if ($isApiRequest) {
-        return response()->json([
-            'success' => true,
-            'message' => 'Medida cadastrada com sucesso.',
-            'measure' => [
-                'id' => $measure->id,
-                'nome' => $measure->nome
-            ]
-        ]);
-    }
+      // if ($isApiRequest) {
+      //   return response()->json([
+      //     'success' => true,
+      //     'message' => 'Medida cadastrada com sucesso.',
+      //     'measure' => [
+      //       'id' => $measure->id,
+      //       'nome' => $measure->nome
+      //     ]
+      //   ]);
+      // }
 
       return to_route('measure.index')->with('success', "Medida cadastrada com sucesso.");
     } catch (QueryException $ex) {
@@ -62,10 +62,10 @@ class MeasureController extends Controller
 
       if ($isApiRequest) {
         return response()->json([
-            'success' => false,
-            'message' => 'Ops, algo deu errado, tente novamente.'
+          'success' => false,
+          'message' => 'Ops, algo deu errado, tente novamente.'
         ], 500);
-    }
+      }
       return to_route('measure.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }

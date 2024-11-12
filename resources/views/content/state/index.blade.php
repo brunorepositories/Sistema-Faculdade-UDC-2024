@@ -9,7 +9,7 @@
             <h4 class="head-label">Estados</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('state.create') }}">Cadastrar estado</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('state.create') }}">Cadastrar estado</a>
             </div>
         </div>
 

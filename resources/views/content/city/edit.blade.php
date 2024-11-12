@@ -4,7 +4,18 @@
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Alterar cidade</h4>
+        <div class="card-header d-flex justify-content-between">
+            <h4>Alterar Cidade</h4>
+
+            <div>
+                <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                    {{ date('d/m/Y H:i', strtotime($city->created_at)) }}
+                </span>
+                <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                    {{ $city->updated_at->format('d/m/Y H:i') }}
+                </span>
+            </div>
+        </div>
 
         <div class="card-body">
 
@@ -19,15 +30,28 @@
                 @csrf
                 @method('PUT') <!-- Usando PUT para a edição -->
 
-                <div class="col-8">
+                <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
+                        for="id">Código</label>
+                    <input
+                        required
+                        name="id"
+                        class="form-control toUpperCase"
+                        id="id"
+                        disabled
+                        value="{{ old('id', $city->id) }}">
+                </div>
+
+                <div class="col-7">
+                    <label
+                        class="form-label toUpperCase"
                         for="nome">Nome da cidade</label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
                         placeholder="Informe o nome da cidade"
                         maxlength="50"
@@ -39,13 +63,13 @@
 
                 <div class="col-1">
                     <label
-                        class="form-label"
+                        class="form-label toUpperCase"
                         for="ddd">DDD</label>
                     <input
                         required
                         name="ddd"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="ddd"
                         placeholder="Informe o DDD"
                         maxlength="3"
@@ -56,14 +80,14 @@
                 </div>
 
                 <div class="col-3">
-                    <label class="form-label" for="state_id">País</label>
+                    <label class="form-label toUpperCase" for="state_id">Estado</label>
                     <div class="input-group">
                         <select
                             required
                             name="state_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="state_id">
-                            <option value="" disabled>Selecione o país</option>
+                            <option value="" disabled>Selecione</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}"
                                     {{ old('state_id', $state->state_id) == $state->id ? 'selected' : '' }}>
@@ -90,18 +114,24 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
-                        <span class="badge bg-label-secondary rounded-pill">Cadastro:
-                            {{ date('d/m/Y H:i', strtotime($city->created_at)) }}</span>
-                        <span class="badge bg-label-secondary rounded-pill">Última alteração:
-                            {{ date('d/m/Y H:i', strtotime($city->updated_at)) }}</span>
+                        <input type="hidden" name="ativo" value="0">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="defaultCheck1"
+                            value="1"
+                            {{ old('ativo', $city->ativo) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
                     </div>
                     <div>
                         <a
                             href="{{ route('city.index') }}"
-                            class="btn btn-outline-secondary me-4">Cancelar</a>
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                         <button
                             type="submit"
-                            class="btn btn-success">Salvar</button>
+                            class="btn btn-success toUpperCase">Salvar</button>
 
                     </div>
                 </div>

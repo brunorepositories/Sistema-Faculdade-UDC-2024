@@ -9,7 +9,7 @@
             <h4 class="head-label">Medidas</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('measure.create') }}">Cadastrar Medida</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('measure.create') }}">Cadastrar Medida</a>
             </div>
         </div>
 

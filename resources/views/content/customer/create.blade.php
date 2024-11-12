@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Novo Cliente')
+@section('title', 'Cadastrar Cliente')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Novo Cliente</h4>
+        <h4 class="card-header">Cadastrar Cliente</h4>
 
         <div class="card-body">
 
@@ -19,11 +19,11 @@
                 @csrf
 
                 <div class="col-md-2 mb-3">
-                    <label class="form-label" for="tipoPessoa">Tipo de Pessoa</label>
+                    <label class="form-label toUpperCase" for="tipoPessoa">Tipo de Pessoa</label>
                     <select
                         required
                         name="tipoPessoa"
-                        class="form-select"
+                        class="form-select toUpperCase"
                         id="tipoPessoa"
                         onchange="toggleFields()">
                         <option value="F" selected>Física</option>
@@ -36,11 +36,11 @@
 
                 <!-- Campos para Pessoa Física -->
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label" for="cliente">Cliente</label>
+                    <label class="form-label toUpperCase" for="cliente">Cliente</label>
                     <input
                         name="cliente"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="cliente"
                         placeholder="Informe o nome do cliente"
                         maxlength="100"
@@ -51,11 +51,11 @@
                 </div>
 
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label" for="apelido">Apelido</label>
+                    <label class="form-label toUpperCase" for="apelido">Apelido</label>
                     <input
                         name="apelido"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="apelido"
                         placeholder="Informe o apelido"
                         maxlength="100"
@@ -66,11 +66,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label" for="cpf">CPF</label>
+                    <label class="form-label toUpperCase" for="cpf">CPF</label>
                     <input
                         name="cpf"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="cpf"
                         placeholder="Informe o CPF"
                         value="{{ old('cpf') }}">
@@ -80,11 +80,11 @@
                 </div>
 
                 <div class="col-md-2 mb-3 fisica-fields">
-                    <label class="form-label" for="dataNasc">Data de Nascimento</label>
+                    <label class="form-label toUpperCase" for="dataNasc">Data de Nascimento</label>
                     <input
                         name="dataNasc"
                         type="date"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="dataNasc"
                         value="{{ old('dataNasc') }}">
                     @error('dataNasc')
@@ -93,8 +93,8 @@
                 </div>
 
                 <div class="col-md-2 mb-3 fisica-fields">
-                    <label class="form-label" for="sexo">Sexo</label>
-                    <select name="sexo" class="form-select" id="sexo">
+                    <label class="form-label toUpperCase" for="sexo">Sexo</label>
+                    <select name="sexo" class="form-select toUpperCase" id="sexo">
                         <option value="" disabled selected>Selecione</option>
                         <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>Masculino</option>
                         <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Feminino</option>
@@ -105,11 +105,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label" for="rg">RG</label>
+                    <label class="form-label toUpperCase" for="rg">RG</label>
                     <input
                         name="rg"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="rg"
                         placeholder="Informe o RG"
                         value="{{ old('rg') }}">
@@ -120,12 +120,12 @@
 
                 <!-- Campos para Pessoa Jurídica -->
                 <div class="col-md-5 mb-3 juridica-fields">
-                    <label class="form-label" for="clienteRazaoSocial">Razão Social</label>
+                    <label class="form-label toUpperCase" for="clienteRazaoSocial">Razão Social</label>
                     <input
                         required
                         name="clienteRazaoSocial"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="clienteRazaoSocial"
                         placeholder="Informe a razão social"
                         maxlength="100"
@@ -136,11 +136,11 @@
                 </div>
 
                 <div class="col-md-5 mb-3 juridica-fields">
-                    <label class="form-label" for="apelidoNomeFantasia">Nome Fantasia</label>
+                    <label class="form-label toUpperCase" for="apelidoNomeFantasia">Nome Fantasia</label>
                     <input
                         name="apelidoNomeFantasia"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="apelidoNomeFantasia"
                         placeholder="Informe o nome fantasia"
                         maxlength="100"
@@ -151,11 +151,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label" for="cnpj">CNPJ</label>
+                    <label class="form-label toUpperCase" for="cnpj">CNPJ</label>
                     <input
                         name="cnpj"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="cnpj"
                         placeholder="Informe o CNPJ"
                         value="{{ old('cnpj') }}">
@@ -165,11 +165,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label" for="ie">Inscrição Estadual</label>
+                    <label class="form-label toUpperCase" for="ie">Inscrição Estadual</label>
                     <input
                         name="ie"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="ie"
                         placeholder="Informe a inscrição estadual"
                         value="{{ old('ie') }}">
@@ -179,11 +179,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label" for="dataFundacao">Data de Fundação</label>
+                    <label class="form-label toUpperCase" for="dataFundacao">Data de Fundação</label>
                     <input
                         name="dataFundacao"
                         type="date"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="dataFundacao"
                         value="{{ old('dataFundacao') }}">
                     @error('dataFundacao')
@@ -196,12 +196,12 @@
                 </div>
 
                 <div class="col-md-3 mb-3 juridica-fields">
-                    <label class="form-label" for="nomeContato">Nome para Contato</label>
+                    <label class="form-label toUpperCase" for="nomeContato">Nome para Contato</label>
                     <input
                         required
                         name="nomeContato"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nomeContato"
                         placeholder="Informe o nome para contato"
                         value="{{ old('nomeContato') }}">
@@ -211,12 +211,12 @@
                 </div>
 
                 <div class="col-md-3 mb-3">
-                    <label class="form-label" for="celular">Celular</label>
+                    <label class="form-label toUpperCase" for="celular">Celular</label>
                     <input
                         required
                         name="celular"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="celular"
                         placeholder="Informe o celular"
                         value="{{ old('celular') }}">
@@ -226,12 +226,12 @@
                 </div>
 
                 <div class="col-md-3 mb-3 fisica-fields">
-                    <label class="form-label" for="instagram">Instagram</label>
+                    <label class="form-label toUpperCase" for="instagram">Instagram</label>
                     <input
                         required
                         name="instagram"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="instagram"
                         placeholder="Informe o instagram"
                         value="{{ old('instagram') }}">
@@ -241,12 +241,12 @@
                 </div>
 
                 <div class="col-md-2 mb-3">
-                    <label class="form-label" for="telefone">Telefone</label>
+                    <label class="form-label toUpperCase" for="telefone">Telefone</label>
                     <input
                         required
                         name="telefone"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="telefone"
                         placeholder="Informe o telefone"
                         value="{{ old('telefone') }}">
@@ -256,12 +256,12 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="email">E-mail</label>
+                    <label class="form-label toUpperCase" for="email">E-mail</label>
                     <input
                         required
                         name="email"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="email"
                         placeholder="Informe o e-mail"
                         value="{{ old('email') }}">
@@ -275,12 +275,12 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label" for="logradouro">Logradouro</label>
+                    <label class="form-label toUpperCase" for="logradouro">Logradouro</label>
                     <input
                         required
                         name="logradouro"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="logradouro"
                         placeholder="Informe o logradouro"
                         value="{{ old('logradouro') }}">
@@ -290,12 +290,12 @@
                 </div>
 
                 <div class="col-md-2 mb-3">
-                    <label class="form-label" for="numero">Número</label>
+                    <label class="form-label toUpperCase" for="numero">Número</label>
                     <input
                         required
                         name="numero"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="numero"
                         placeholder="Informe o número"
                         value="{{ old('numero') }}">
@@ -305,11 +305,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="complemento">Complemento</label>
+                    <label class="form-label toUpperCase" for="complemento">Complemento</label>
                     <input
                         name="complemento"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="complemento"
                         placeholder="Informe o complemento"
                         value="{{ old('complemento') }}">
@@ -319,12 +319,12 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="bairro">Bairro</label>
+                    <label class="form-label toUpperCase" for="bairro">Bairro</label>
                     <input
                         required
                         name="bairro"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="bairro"
                         placeholder="Informe o bairro"
                         value="{{ old('bairro') }}">
@@ -334,8 +334,8 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="city">Cidade</label>
-                    <select required name="city" class="form-select" id="city">
+                    <label class="form-label toUpperCase" for="city">city</label>
+                    <select required name="city" class="form-select toUpperCase" id="city">
                         <option value="" disabled selected>Selecione</option>
                         @foreach ($cities as $city)
                             <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>
@@ -349,12 +349,12 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label class="form-label" for="cep">CEP</label>
+                    <label class="form-label toUpperCase" for="cep">CEP</label>
                     <input
                         required
                         name="cep"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="cep"
                         placeholder="Informe o CEP"
                         value="{{ old('cep') }}">
@@ -368,12 +368,12 @@
                 </div>
 
                 <div class="col flex-grow-1">
-                    <label class="form-label" for="payment-term_id">Forma de Pagamento</label>
+                    <label class="form-label toUpperCase" for="payment-term_id">Forma de Pagamento</label>
                     <div class="input-group">
                         <select
                             required
                             name="payment-term_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="payment-term_id">
                             <option value="" disabled selected>Selecione</option>
                             @foreach ($paymentTerms as $paymentTerm)
@@ -402,24 +402,40 @@
                 </div>
 
                 {{-- <div class="col-md-12 mb-3">
-                    <label class="form-label" for="observacao">Observação</label>
+                    <label class="form-label toUpperCase" for="observacao">Observação</label>
                     <textarea
                         name="observacao"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="observacao"
                         rows="3">{{ old('observacao') }}</textarea>
                 </div> --}}
 
                 <!-- Demais campos do formulário continuam aqui... -->
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a
-                        href="{{ route('customer.index') }}"
-                        class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button
-                        type="submit"
-                        class="btn btn-success">Cadastrar</button>
+
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <input type="hidden" name="ativo" value="1">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="ativo"
+                            value="1"
+                            disabled
+                            checked>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
+                    </div>
+                    <div>
+                        <a
+                            href="{{ route('customer.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                        <button
+                            type="submit"
+                            class="btn btn-success toUpperCase">Cadastrar</button>
+                    </div>
                 </div>
+
 
             </form>
         </div>

@@ -15,10 +15,11 @@ class Country extends Model
   // protected $hidden = ['created_at', 'updated_at'];
 
   protected $fillable = [
+    'id',
     'nome',
     'sigla',
     'ddi',
-    'ativo'
+    'ativo',
   ];
 
 

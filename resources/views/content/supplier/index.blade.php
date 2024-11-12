@@ -9,13 +9,23 @@
             <h4 class="head-label">Fornecedores</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('supplier.create') }}">Cadastrar Fornecedor</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('supplier.create') }}">Cadastrar Fornecedor</a>
             </div>
         </div>
 
         <div class="card-body">
 
             @include('components.feedbackMessage')
+
+            <!-- Formulário de busca -->
+            <form method="GET" action="{{ route('supplier.index') }}" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control toUpperCase"
+                        placeholder="Buscar por nome do fornecedor"
+                        value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary toUpperCase">Buscar</button>
+                </div>
+            </form>
 
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover">
@@ -69,6 +79,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-center">
+                {{ $suppliers->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

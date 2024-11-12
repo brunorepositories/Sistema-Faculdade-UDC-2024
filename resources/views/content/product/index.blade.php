@@ -9,7 +9,7 @@
             <h4 class="head-label">Produtos</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('product.create') }}">Cadastrar Produto</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('product.create') }}">Cadastrar Produto</a>
             </div>
         </div>
 
@@ -31,6 +31,16 @@
                     <input type="text" name="search" class="form-control" placeholder="Buscar por nome do produto"
                         value="{{ request('search') }}">
                     <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+
+            <!-- Formulário de busca -->
+            <form method="GET" action="{{ route('product.index') }}" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control toUpperCase"
+                        placeholder="Buscar por nome do produto"
+                        value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary toUpperCase">Buscar</button>
                 </div>
             </form>
 

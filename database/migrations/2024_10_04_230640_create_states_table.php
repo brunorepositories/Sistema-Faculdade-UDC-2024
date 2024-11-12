@@ -20,7 +20,7 @@ return new class extends Migration
       $table->char('uf', 2);
       $table->boolean('ativo')->default(true);
 
-      $table->foreignIdFor(Country::class, 'country_id')->constrained()->onDelete('Cascade');
+      $table->foreignIdFor(Country::class, 'country_id')->constrained()->onDelete('restrict');
     });
   }
 

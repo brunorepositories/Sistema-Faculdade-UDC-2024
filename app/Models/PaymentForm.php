@@ -12,15 +12,13 @@ class PaymentForm extends Model
   protected $table = 'payment_forms';
 
   protected $fillable = [
+    'id',
     'formaPagamento',
-    'ativo'
+    'ativo',
   ];
 
-  // public function toSearchableArray()
-  // {
-  //   return [
-  //     'id' => $this->id,
-  //     'formaPagamento' => $this->name,
-  //   ];
-  // }
+  public function installments()
+  {
+    return $this->hasMany(Installment::class);
+  }
 }

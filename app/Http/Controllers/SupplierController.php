@@ -16,9 +16,16 @@ class SupplierController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    $suppliers = Supplier::paginate(10);
+    $query = Supplier::query();
+
+    if ($search = $request->input('search')) {
+      $query->whereRaw('LOWER(fornecedorRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
+    }
+
+    $suppliers = $query->paginate(10);
+
     return view('content.supplier.index', compact('suppliers'));
   }
 

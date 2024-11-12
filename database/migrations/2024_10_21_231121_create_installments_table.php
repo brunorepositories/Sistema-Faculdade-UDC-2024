@@ -14,18 +14,22 @@ return new class extends Migration
   public function up(): void
   {
     Schema::create('installments', function (Blueprint $table) {
-      $table->primary(['payment_form_id', 'payment_term_id']);
+      // Adiciona o campo id como chave primária autoincrementável
+      $table->id();  // Este campo vai gerar o campo 'id' como chave primária
 
-      // Definir a chave estrangeira para a tabela payment_forms
+      // Define as chaves estrangeiras para as tabelas payment_forms e payment_terms
       $table->foreignIdFor(PaymentForm::class, 'payment_form_id')->constrained()->onDelete('restrict');
-
-      // Definir a chave estrangeira para a tabela payment_terms
       $table->foreignIdFor(PaymentTerm::class, 'payment_term_id')->constrained()->onDelete('cascade');
 
+      // Define a chave primária composta por payment_form_id, payment_term_id e o novo id
+      $table->primary(['payment_form_id', 'payment_term_id', 'id']);
+
+      // Campos adicionais para as parcelas
       $table->integer('parcela');
       $table->integer('dias');
       $table->float('percentual');
 
+      // Campos de timestamp
       $table->timestamps();
     });
   }

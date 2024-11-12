@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Listar Condições de Pagamento')
+@section('title', 'Condições de Pagamento')
 
 @section('content')
 
@@ -9,7 +9,8 @@
             <h4 class="head-label">Condições de Pagamento</h4>
 
             <div class="dt-action-buttons">
-                <a class="btn btn-primary" href="{{ route('payment_term.create') }}">Cadastrar Condição de Pagamento</a>
+                <a class="btn btn-primary toUpperCase" href="{{ route('payment_term.create') }}">Cadastrar Condição de
+                    Pagamento</a>
             </div>
         </div>
 

@@ -1,10 +1,10 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Nova Medida')
+@section('title', 'Cadastrar Unidade de Medida')
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Nova Medida</h4>
+        <h4 class="card-header">Cadastrar Unidade de Medida</h4>
 
         <div class="card-body">
             @include('components.errorMessage')
@@ -17,15 +17,15 @@
 
                 @csrf
 
-                <div class="col-7">
-                    <label class="form-label" for="nome">Nome da medida</label>
+                <div class="col-8">
+                    <label class="form-label toUpperCase" for="nome">Nome da unidade de medida</label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
-                        placeholder="Informe o nome da medida"
+                        placeholder="nome da unidade de medida"
                         maxlength="50"
                         value="{{ old('nome') }}">
                     @error('nome')
@@ -33,15 +33,15 @@
                     @enderror
                 </div>
 
-                <div class="col-5">
-                    <label class="form-label" for="sigla">Sigla</label>
+                <div class="col-4">
+                    <label class="form-label toUpperCase" for="sigla">Sigla</label>
                     <input
                         required
                         name="sigla"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="sigla"
-                        placeholder="Informe a sigla da medida"
+                        placeholder="sigla da unidade de medida"
                         maxlength="5"
                         value="{{ old('sigla') }}">
                     @error('sigla')
@@ -49,10 +49,26 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a href="{{ route('measure.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <input type="hidden" name="ativo" value="1">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="ativo"
+                            value="1"
+                            disabled
+                            checked>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
+                    </div>
+                    <div>
+                        <a href="{{ route('measure.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                        <button type="submit" class="btn btn-success toUpperCase">cadastrar</button>
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>

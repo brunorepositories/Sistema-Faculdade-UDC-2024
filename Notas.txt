@@ -26,15 +26,36 @@ Tabelas em inglês (Singulas > Plural)
 Pais        : Country > Countries
 Estado      : State   > States
 Cidade      : City > Cities
+Funcionario : Employee > Employees
+Unidade de Medida
+Categoria
 Produto     : Product > Products
+Forma de Pagamento
+Condição de Pagamento
 Fornecedor  : Supplier > Suppliers
 Cliente     : Customer > Customers
 Compra      : Purchase > Purchases
-Venda       : Sale > Sales
-Funcionario : Employee > Employees
-
-Contas a receber : accounts receivable
 Contas a pagar   : accounts payable
+Venda       : Sale > Sales
+Contas a receber : accounts receivable
+
+
+Pais
+Estado
+Cidade
+Funcionario
+Unidade de Medida
+Categoria
+Produto
+Forma de Pagamento
+Condição de Pagamento
+Fornecedor
+Cliente
+Compra
+Contas a pagar
+Venda
+Contas a receber
+
 
 
 Atividades:

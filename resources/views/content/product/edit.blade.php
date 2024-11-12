@@ -4,7 +4,18 @@
 
 @section('content')
     <div class="card mb-10">
-        <h4 class="card-header">Editar Produto</h4>
+        <div class="card-header d-flex justify-content-between">
+            <h4>Alterar produto</h4>
+
+            <div>
+                <span class="badge bg-label-secondary rounded-pill">Cadastro:
+                    {{ date('d/m/Y H:i', strtotime($product->created_at)) }}
+                </span>
+                <span class="badge bg-label-secondary rounded-pill">Última alteração:
+                    {{ $product->updated_at->format('d/m/Y H:i') }}
+                </span>
+            </div>
+        </div>
 
         <div class="card-body">
             @include('components.errorMessage')
@@ -169,9 +180,24 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-end mt-10">
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                <div class="d-flex justify-content-between align-items-center mt-10">
+                    <div>
+                        <input type="hidden" name="ativo" value="0">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="ativo"
+                            id="defaultCheck1"
+                            value="1"
+                            {{ old('ativo', $product->ativo) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
+                    </div>
+                    <div>
+
+                        <a href="{{ route('product.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -181,15 +207,16 @@
     @include('content.product.modal.selectMeasure')
 
 
-<script>
-    document.querySelectorAll('.preco').forEach(function (input) {
-        input.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');  // Remove qualquer coisa que não seja número
-            value = (value / 100).toFixed(2).replace('.', ','); // Converte para valor com 2 casas decimais
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona o separador de milhar
-            e.target.value = 'R$ ' + value;  // Formata o valor
+    <script>
+        document.querySelectorAll('.preco').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja número
+                value = (value / 100).toFixed(2).replace('.',
+                    ','); // Converte para valor com 2 casas decimais
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona o separador de milhar
+                e.target.value = 'R$ ' + value; // Formata o valor
+            });
         });
-    });
-</script>
+    </script>
 
 @endsection

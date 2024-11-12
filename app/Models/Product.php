@@ -10,6 +10,7 @@ class Product extends Model
   use HasFactory;
 
   protected $fillable = [
+    'id',
     'nome',
     'estoque',
     'precoCusto',
@@ -19,13 +20,13 @@ class Product extends Model
     'custoUltimaVenda',
     'dtUltimaVenda',
     'measure_id',
-    'ativo'
+    'ativo',
   ];
 
   public function measure()
-    {
-        return $this->belongsTo(Measure::class, 'measure_id');  // Alterado para belongsTo
-    }
+  {
+    return $this->belongsTo(Measure::class, 'measure_id');
+  }
 
   // public function productsPursache()
   // {
