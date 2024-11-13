@@ -9,3 +9,9 @@
 .toUpperCase {
   text-transform: uppercase;
 }
+
+.labelRequired {
+  color: #ff3e1d;
+  font-size: 14px;
+  margin-left: 2px;
+}

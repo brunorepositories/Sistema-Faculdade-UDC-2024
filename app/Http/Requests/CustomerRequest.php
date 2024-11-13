@@ -14,8 +14,8 @@ class CustomerRequest extends FormRequest
   public function rules(): array
   {
     // Verifica se estamos atualizando um cliente
-    if ($this->route('customers')) {
-      $customerId = $this->route('customers')->id;
+    if ($this->route('customer')) {
+      $customerId = $this->route('customer')->id;
 
       // Regras de unicidade para a atualização
       $uniqueRazaoSocial = "unique:customers,clienteRazaoSocial,$customerId";
@@ -31,7 +31,7 @@ class CustomerRequest extends FormRequest
     return [
       'tipoPessoa' => ['required'],
       'clienteRazaoSocial' => ['required', 'max:255', $uniqueRazaoSocial],
-      'apelidoNomeFantasia' => ['required', 'max:100'],
+      'apelidoNomeFantasia' => ['max:100'],
       'endereco' => ['required', 'max:255'],
       'bairro' => ['required', 'max:100'],
       'numero' => ['required', 'max:10'],
@@ -41,7 +41,7 @@ class CustomerRequest extends FormRequest
       'email' => ['email', 'max:255'],
       'usuario' => ['max:50'],
       'telefone' => ['max:20'],
-      'celular' => ['max:20'],
+      'celular' => ['required', 'max:20'],
       'nomeContato' => ['max:100'],
       'dataNasc' => ['date'],
       'cpf' => ['max:14', $uniqueCpf], // Adicionando a regra de unicidade
@@ -56,10 +56,12 @@ class CustomerRequest extends FormRequest
 
   protected function prepareForValidation()
   {
+
+
     $this->merge([
       'tipoPessoa' => strtoupper($this->tipoPessoa),
-      'clienteRazaoSocial' => strtoupper($this->clienteRazaoSocial),
-      'apelidoNomeFantasia' => strtoupper($this->apelidoNomeFantasia),
+      'clienteRazaoSocial' => $this->cliente ? strtoupper($this->cliente) : strtoupper($this->razaoSocial),
+      'apelidoNomeFantasia' => $this->apelidoNomeFantasia ? strtoupper($this->apelidoNomeFantasia) : null,
       'endereco' => strtoupper($this->endereco),
       'bairro' => strtoupper($this->bairro),
       'numero' => strtoupper($this->numero),
@@ -69,12 +71,15 @@ class CustomerRequest extends FormRequest
       'email' => $this->email ? strtoupper($this->email) : null,
       'usuario' => $this->usuario ? strtoupper($this->usuario) : null,
       'telefone' => $this->telefone ? strtoupper($this->telefone) : null,
-      'celular' => $this->celular ? strtoupper($this->celular) : null,
+      'celular' => strtoupper($this->celular),
       'nomeContato' => $this->nomeContato ? strtoupper($this->nomeContato) : null,
       'cpf' => $this->cpf ? strtoupper($this->cpf) : null,
       'cnpj' => $this->cnpj ? strtoupper($this->cnpj) : null,
       'ie' => $this->ie ? strtoupper($this->ie) : null,
       'rg' => $this->rg ? strtoupper($this->rg) : null,
+      'dataNasc' => $this->dataNascimento ? $this->dataNascimento : $this->dataFundacao,
     ]);
+
+    // dd($this->all());
   }
 }

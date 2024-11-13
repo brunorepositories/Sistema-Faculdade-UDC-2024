@@ -80,6 +80,7 @@
     ]
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-web": "^0.36.1",
     "@popperjs/core": "^2.11.8",
     "apexcharts-clevision": "^3.28.5",
     "bootstrap": "~5.3.3",

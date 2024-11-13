@@ -17,7 +17,7 @@ return new class extends Migration
       // Campos correspondentes à model de Supplier
       $table->char('tipoPessoa'); // Tipo de pessoa
       $table->string('clienteRazaoSocial'); // Razão social
-      $table->string('apelidoNomeFantasia'); // Nome fantasia
+      $table->string('apelidoNomeFantasia')->nullable(); // Nome fantasia
       $table->string('endereco'); // Endereço
       $table->string('bairro'); // Bairro
       $table->string('numero'); // Número do endereço
@@ -27,7 +27,7 @@ return new class extends Migration
       $table->string('email')->nullable(); // Email (opcional)
       $table->string('usuario')->nullable(); // Usuário (opcional)
       $table->string('telefone')->nullable(); // Telefone (opcional)
-      $table->string('celular')->nullable(); // Celular (opcional)
+      $table->string('celular'); // Celular (opcional)
       $table->string('nomeContato')->nullable(); // Nome do contato (opcional)
       $table->date('dataNasc')->nullable(); // Data de nascimento (opcional)
       $table->string('cpf')->nullable(); // CPF (opcional)

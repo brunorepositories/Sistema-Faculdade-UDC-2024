@@ -76,8 +76,8 @@ class CustomerController extends Controller
           'payment_term_id',
         ]);
 
-        // Converte os campos de string para uppercase, se necessário
-        $customerData = array_map('strtoupper', $customerData);
+        // // Converte os campos de string para uppercase, se necessário
+        // $customerData = array_map('strtoupper', $customerData);
 
         Customer::create($customerData);
       });

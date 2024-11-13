@@ -25,7 +25,7 @@
                 <div class="col-8">
                     <label
                         class="form-label toUpperCase"
-                        for="nome">Nome do país</label>
+                        for="nome">Nome do país <span class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -43,7 +43,7 @@
                 <div class="col-2">
                     <label
                         class="form-label toUpperCase"
-                        for="sigla">Sigla</label>
+                        for="sigla">Sigla<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="sigla"
@@ -61,7 +61,7 @@
                 <div class="col-2">
                     <label
                         class="form-label toUpperCase"
-                        for="ddi">DDI</label>
+                        for="ddi">DDI<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="ddi"
@@ -86,7 +86,7 @@
                             id="ativo"
                             disabled
                             checked>
-                        <label class="form-label toUpperCase form-check-label" for="ativo">Ativo</label>
+                        <label class="form-label form-check-label toUpperCase" for="ativo">Ativo</label>
                     </div>
                     <div>
                         <a href="{{ route('country.index') }}"

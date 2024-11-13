@@ -16,20 +16,23 @@ class CountryRequest extends FormRequest
   {
 
     if ($this->route('country')) {
-      return [
+      $createOrUpdate = [
         'nome' => "unique:countries,nome," . $this->route('country')->id,
-        'sigla' => "unique:countries,sigla," . $this->route('country')->id,
-        'ddi' => ['required', 'max:3'],
-        'ativo' => ['required', 'boolean']
+        'sigla' => "unique:countries,sigla," . $this->route('country')->id
       ];
     } else {
-      return [
+      $createOrUpdate =  [
         'nome' => "unique:countries,nome",
-        'sigla' => "unique:countries,sigla",
-        'ddi' => ['required', 'max:3'],
-        'ativo' => ['required', 'boolean']
+        'sigla' => "unique:countries,sigla"
       ];
     }
+
+    return [
+      'nome' => ['required', $createOrUpdate['nome'], 'max:50'],
+      'sigla' => ['required', $createOrUpdate['sigla'], 'max:3'],
+      'ddi' => ['required', 'max:3'],
+      'ativo' => ['required', 'boolean']
+    ];
   }
 
   public function prepareForValidation()

@@ -18,7 +18,8 @@
                 @csrf
 
                 <div class="col-7">
-                    <label class="form-label toUpperCase" for="nome">Nome do produto</label>
+                    <label class="form-label toUpperCase" for="nome">Nome do produto<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -34,7 +35,7 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="estoque">Estoque</label>
+                    <label class="form-label toUpperCase" for="estoque">Estoque<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="estoque"
@@ -50,7 +51,8 @@
 
 
                 <div class="col-3">
-                    <label class="form-label toUpperCase" for="measure_id">Medida</label>
+                    <label class="form-label toUpperCase" for="measure_id">Medida<span
+                            class="labelRequired">*</span></label>
                     <div class="input-group">
                         <select
                             required
@@ -80,7 +82,8 @@
                 </div>
 
                 <div class="col-2 mt-4">
-                    <label class="form-label toUpperCase preco" for="precoVenda">Preço de Venda</label>
+                    <label class="form-label toUpperCase preco" for="precoVenda">Preço de Venda<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="precoVenda"
@@ -175,7 +178,7 @@
                             value="1"
                             disabled
                             checked>
-                        <label class="form-check-label" for="ativo">Ativo</label>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
                     </div>
                     <div>
                         <a href="{{ route('product.index') }}"

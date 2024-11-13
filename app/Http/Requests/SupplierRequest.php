@@ -32,7 +32,7 @@ class SupplierRequest extends FormRequest
     return [
       'tipoPessoa' => ['required'],
       'fornecedorRazaoSocial' => ['required', 'max:255', $uniqueRazaoSocial],
-      'apelidoNomeFantasia' => ['required', 'max:100'],
+      'apelidoNomeFantasia' => ['max:100'],
       'endereco' => ['required', 'max:255'],
       'bairro' => ['required', 'max:100'],
       'numero' => ['required', 'max:10'],
@@ -42,7 +42,7 @@ class SupplierRequest extends FormRequest
       'email' => ['email', 'max:255'],
       'usuario' => ['max:50'],
       'telefone' => ['max:20'],
-      'celular' => ['max:20'],
+      'celular' => ['required', 'max:20'],
       'nomeContato' => ['max:100'],
       'dataNasc' => ['date'],
       'cpf' => ['max:14', $uniqueCpf], // Adicionando a regra de unicidade
@@ -60,7 +60,7 @@ class SupplierRequest extends FormRequest
     $this->merge([
       'tipoPessoa' => strtoupper($this->tipoPessoa),
       'fornecedorRazaoSocial' => strtoupper($this->fornecedorRazaoSocial),
-      'apelidoNomeFantasia' => strtoupper($this->apelidoNomeFantasia),
+      'apelidoNomeFantasia' => $this->apelidoNomeFantasia ? strtoupper($this->apelidoNomeFantasia) : null,
       'endereco' => strtoupper($this->endereco),
       'bairro' => strtoupper($this->bairro),
       'numero' => strtoupper($this->numero),
@@ -70,7 +70,7 @@ class SupplierRequest extends FormRequest
       'email' => $this->email ? strtoupper($this->email) : null,
       'usuario' => $this->usuario ? strtoupper($this->usuario) : null,
       'telefone' => $this->telefone ? strtoupper($this->telefone) : null,
-      'celular' => $this->celular ? strtoupper($this->celular) : null,
+      'celular' => strtoupper($this->celular),
       'nomeContato' => $this->nomeContato ? strtoupper($this->nomeContato) : null,
       'cpf' => $this->cpf ? strtoupper($this->cpf) : null,
       'cnpj' => $this->cnpj ? strtoupper($this->cnpj) : null,

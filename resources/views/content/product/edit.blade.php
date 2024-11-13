@@ -1,11 +1,11 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Editar Produto')
+@section('title', 'Alterar Produto')
 
 @section('content')
     <div class="card mb-10">
         <div class="card-header d-flex justify-content-between">
-            <h4>Alterar produto</h4>
+            <h4>Alterar Produto</h4>
 
             <div>
                 <span class="badge bg-label-secondary rounded-pill">Cadastro:
@@ -27,51 +27,67 @@
                 novalidate="">
 
                 @csrf
-                @method('PUT') <!-- Usando PUT para a edição -->
+                @method('PUT')
 
-                <div class="col-7">
-                    <label class="form-label" for="nome">Nome do Produto</label>
+                <div class="col-1">
+                    <label
+                        class="form-label toUpperCase"
+                        for="id">Código</label>
+                    <input
+                        required
+                        name="id"
+                        class="form-control toUpperCase"
+                        id="id"
+                        disabled
+                        value="{{ old('id', $product->id) }}">
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label toUpperCase" for="nome">Nome do produto<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
                         type="text"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="nome"
-                        placeholder="Informe o nome do produto"
+                        placeholder="nome do produto"
                         maxlength="50"
-                        value="{{ old('nome', $product->nome) }}"> <!-- Preenchendo com o valor atual -->
+                        value="{{ old('nome', $product->nome) }}">
                     @error('nome')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label" for="estoque">Estoque</label>
+                    <label class="form-label toUpperCase" for="estoque">Estoque</label>
+
+                    <input type="hidden" name="estoque" value="{{ old('estoque', $product->estoque) }}">
                     <input
-                        required
                         name="estoque"
                         type="number"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="estoque"
-                        placeholder="Informe o estoque"
-                        value="{{ old('estoque', $product->estoque) }}"> <!-- Preenchendo com o valor atual -->
+                        disabled
+                        value="{{ old('estoque', $product->estoque) }}">
                     @error('estoque')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-3">
-                    <label class="form-label" for="measure_id">Medida</label>
+                    <label class="form-label toUpperCase" for="measure_id">Medida<span
+                            class="labelRequired">*</span></label>
                     <div class="input-group">
                         <select
                             required
                             name="measure_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="measure_id">
                             <option value="" disabled>Selecione</option>
                             @foreach ($measures as $measure)
                                 <option value="{{ $measure->id }}"
-                                    {{ $measure->id == $product->measure_id ? 'selected' : '' }}>
+                                    {{ old('measure_id', $product->measure_id) == $measure->id ? 'selected' : '' }}>
                                     {{ $measure->nome }}
                                 </option>
                             @endforeach
@@ -90,25 +106,9 @@
                     @enderror
                 </div>
 
-                <!-- Preço de Custo -->
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="precoCusto">Preço de Custo</label>
-                    <input
-                        required
-                        name="precoCusto"
-                        type="text"
-                        class="form-control preco"
-                        id="precoCusto"
-                        placeholder="R$ 0,00"
-                        value="{{ old('precoCusto', 'R$ ' . number_format($product->precoCusto, 2, ',', '.')) }}">
-                    @error('precoCusto')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Preço de Venda -->
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="precoVenda">Preço de Venda</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase preco" for="precoVenda">Preço de Venda<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="precoVenda"
@@ -122,81 +122,80 @@
                     @enderror
                 </div>
 
-                <!-- Custo da Última Compra -->
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="custoUltimaCompra">Custo da Última Compra</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase preco" for="precoCusto">Preço de Custo</label>
                     <input
+                        disabled
+                        name="precoCusto"
+                        type="text"
+                        class="form-control preco"
+                        id="precoCusto"
+                        placeholder="R$ 0,00"
+                        value="{{ 'R$ ' . number_format($product->precoCusto, 2, ',', '.') }}">
+                </div>
+
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase preco" for="custoUltimaCompra">Custo da Última Compra</label>
+                    <input
+                        disabled
                         name="custoUltimaCompra"
                         type="text"
                         class="form-control preco"
                         id="custoUltimaCompra"
                         placeholder="R$ 0,00"
-                        value="{{ old('custoUltimaCompra', 'R$ ' . number_format($product->custoUltimaCompra, 2, ',', '.')) }}">
-                    @error('custoUltimaCompra')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        value="{{ 'R$ ' . number_format($product->custoUltimaCompra, 2, ',', '.') }}">
                 </div>
 
-                <!-- Custo da Última Venda -->
-                <div class="col-3 mt-4">
-                    <label class="form-label" for="custoUltimaVenda">Custo da Última Venda</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase preco" for="custoUltimaVenda">Preço da Última Venda</label>
                     <input
+                        disabled
                         name="custoUltimaVenda"
                         type="text"
                         class="form-control preco"
                         id="custoUltimaVenda"
                         placeholder="R$ 0,00"
-                        value="{{ old('custoUltimaVenda', 'R$ ' . number_format($product->custoUltimaVenda, 2, ',', '.')) }}">
-                    @error('custoUltimaVenda')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        value="{{ 'R$ ' . number_format($product->custoUltimaVenda, 2, ',', '.') }}">
                 </div>
 
-                <!-- Data da Última Compra -->
-                <div class="col-6 mt-4">
-                    <label class="form-label" for="dtUltimaCompra">Data da Última Compra</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase" for="dtUltimaCompra">Data da Última Compra</label>
                     <input
+                        disabled
                         name="dtUltimaCompra"
                         type="datetime-local"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="dtUltimaCompra"
-                        value="{{ old('dtUltimaCompra', $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('Y-m-d\TH:i') : '') }}">
-                    @error('dtUltimaCompra')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        value="{{ $product->dtUltimaCompra ? date('Y-m-d\TH:i', strtotime($product->dtUltimaCompra)) : '' }}">
                 </div>
 
-                <!-- Data da Última Venda -->
-                <div class="col-6 mt-4">
-                    <label class="form-label" for="dtUltimaVenda">Data da Última Venda</label>
+                <div class="col-2 mt-4">
+                    <label class="form-label toUpperCase" for="dtUltimaVenda">Data da Última Venda</label>
                     <input
+                        disabled
                         name="dtUltimaVenda"
                         type="datetime-local"
-                        class="form-control"
+                        class="form-control toUpperCase"
                         id="dtUltimaVenda"
-                        value="{{ old('dtUltimaVenda', $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('Y-m-d\TH:i') : '') }}">
-                    @error('dtUltimaVenda')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        value="{{ $product->dtUltimaVenda ? date('Y-m-d\TH:i', strtotime($product->dtUltimaVenda)) : '' }}">
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
                         <input type="hidden" name="ativo" value="0">
-
                         <input
                             class="form-check-input"
                             type="checkbox"
                             name="ativo"
-                            id="defaultCheck1"
+                            id="ativo"
                             value="1"
-                            {{ old('ativo', $product->ativo) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="defaultCheck1">Ativo</label>
+                            {{ $product->ativo ? 'checked' : '' }}>
+                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
                     </div>
                     <div>
-
-                        <a href="{{ route('product.index') }}" class="btn btn-outline-secondary me-4">Cancelar</a>
-                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a href="{{ route('product.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                        <button type="submit" class="btn btn-success toUpperCase">Salvar</button>
                     </div>
                 </div>
             </form>
@@ -206,17 +205,14 @@
     <!-- Modal Selecionar Medida -->
     @include('content.product.modal.selectMeasure')
 
-
     <script>
         document.querySelectorAll('.preco').forEach(function(input) {
             input.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja número
-                value = (value / 100).toFixed(2).replace('.',
-                    ','); // Converte para valor com 2 casas decimais
-                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona o separador de milhar
-                e.target.value = 'R$ ' + value; // Formata o valor
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2).replace('.', ',');
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                e.target.value = 'R$ ' + value;
             });
         });
     </script>
-
 @endsection

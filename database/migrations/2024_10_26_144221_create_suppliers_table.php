@@ -19,7 +19,7 @@ return new class extends Migration
 
       $table->char('tipoPessoa');
       $table->string('fornecedorRazaoSocial');
-      $table->string('apelidoNomeFantasia');
+      $table->string('apelidoNomeFantasia')->nullable();
       $table->string('endereco');
       $table->string('bairro');
       $table->string('numero');
