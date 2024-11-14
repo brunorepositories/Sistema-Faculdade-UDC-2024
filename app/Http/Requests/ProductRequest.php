@@ -33,6 +33,7 @@ class ProductRequest extends FormRequest
       'custoUltimaVenda' => ['nullable', 'min:0'],
       'dtUltimaVenda' => ['nullable', 'date'],
       'measure_id' => ['required', 'exists:measures,id'], // Garantir que a medida exista,
+      'supplier_id' => ['required', 'exists:suppliers,id'], // Garantir que a medida exista,
       'ativo' => ['required', 'boolean'],
     ];
   }

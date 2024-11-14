@@ -20,6 +20,7 @@ class Product extends Model
     'precoUltimaVenda',
     'dtUltimaVenda',
     'measure_id',
+    'supplier_id',
     'ativo',
   ];
 
@@ -27,6 +28,12 @@ class Product extends Model
   {
     return $this->belongsTo(Measure::class, 'measure_id');
   }
+
+  public function supplier()
+  {
+    return $this->belongsTo(Supplier::class, 'supplier_id');
+  }
+
 
   // public function productsPursache()
   // {

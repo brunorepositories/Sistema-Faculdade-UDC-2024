@@ -45,6 +45,11 @@ class Supplier extends Model
     return $this->belongsTo(City::class, 'city_id');
   }
 
+  // public function products()
+  // {
+  //   return $this->hasMany(Product::class, 'product_id');
+  // }
+
   // Relacionamento com a tabela PaymentTerm
   public function paymentTerm()
   {

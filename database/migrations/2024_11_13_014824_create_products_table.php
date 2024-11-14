@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Measure;
+use App\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,6 +28,10 @@ return new class extends Migration
       $table->boolean('ativo')->default(true);
 
       $table->foreignIdFor(Measure::class, 'measure_id')
+        ->constrained() // Cria a chave estrangeira para a tabela 'measures'
+        ->onDelete('restrict'); // Impede a exclusão de Measure se houver produtos vinculados
+
+      $table->foreignIdFor(Supplier::class, 'supplier_id')
         ->constrained() // Cria a chave estrangeira para a tabela 'measures'
         ->onDelete('restrict'); // Impede a exclusão de Measure se houver produtos vinculados
     });

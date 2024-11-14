@@ -29,7 +29,7 @@ class CityController extends Controller
   {
     $states = State::where('ativo', true)
       ->orderBy('id')
-      ->get();; // Puxando os estados para o dropdown de seleção
+      ->get(); // Puxando os estados para o dropdown de seleção
     return view('content.city.create', compact('states'));
   }
 
@@ -70,7 +70,7 @@ class CityController extends Controller
   {
     $states = State::where('ativo', true)
       ->orderBy('id')
-      ->get();; // Para popular a seleção de estados na edição
+      ->get(); // Para popular a seleção de estados na edição
     return view('content.city.edit', compact('city', 'states'));
   }
 

@@ -6,6 +6,7 @@ use App\Http\Helpers\FormatData;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Measure;
+use App\Models\Supplier;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,7 @@ class ProductController extends Controller
       $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($search) . '%']);
     }
 
-    $products = $query->with('measure')->paginate(10);
+    $products = $query->with('measure', 'supplier')->paginate(10);
 
     return view('content.product.index', compact('products'));
   }
@@ -37,9 +38,14 @@ class ProductController extends Controller
     // Recupera todas as medidas (Measure) para o dropdown
     $measures = Measure::where('ativo', true)
       ->orderBy('id')
-      ->get();;
+      ->get();
 
-    return view('content.product.create', compact('measures'));
+    // Recupera todas as medidas (Measure) para o dropdown
+    $suppliers = Supplier::where('ativo', true)
+      ->orderBy('id')
+      ->get();
+
+    return view('content.product.create', compact('measures', 'suppliers'));
   }
 
   /**
@@ -80,9 +86,15 @@ class ProductController extends Controller
     // Recupera todas as medidas para a edição do produto
     $measures = Measure::where('ativo', true)
       ->orderBy('id')
-      ->get();;
 
-    return view('content.product.edit', compact('product', 'measures'));
+      ->get();
+    // Recupera todas as medidas (Measure) para o dropdown
+    $suppliers = Supplier::where('ativo', true)
+      ->orderBy('id')
+      ->get();
+
+
+    return view('content.product.edit', compact('product', 'suppliers', 'measures'));
   }
 
   /**
