@@ -19,18 +19,24 @@ class CustomerRequest extends FormRequest
 
       // Regras de unicidade para a atualização
       $uniqueRazaoSocial = "unique:customers,clienteRazaoSocial,$customerId";
-      $uniqueCnpj = "unique:customers,cnpj,$customerId";
-      $uniqueCpf = "unique:customers,cpf,$customerId";
+      $uniqueCpfCnpj = "unique:customers,cpfCnpj,$customerId";
     } else {
       // Para criação, apenas a regra de unicidade
       $uniqueRazaoSocial = "unique:customers,clienteRazaoSocial";
-      $uniqueCnpj = "unique:customers,cnpj";
-      $uniqueCpf = "unique:customers,cpf";
+      $uniqueCpfCnpj = "unique:customers,cpfCnpj";
+    }
+
+    if ($this->tipoPessoa === 'F') {
+      $validacaoNomeContato = ['max:100'];
+    } else {
+      $validacaoNomeContato = ['required', 'max:100'];
     }
 
     return [
       'tipoPessoa' => ['required'],
       'clienteRazaoSocial' => ['required', 'max:255', $uniqueRazaoSocial],
+      'cpfCnpj' => ['required', 'max:14', "cpf_ou_cnpj", $uniqueCpfCnpj], // Adicionando a regra de unicidade
+      'rgIe' => ['max:20'],
       'apelidoNomeFantasia' => ['max:100'],
       'endereco' => ['required', 'max:255'],
       'bairro' => ['required', 'max:100'],
@@ -42,30 +48,33 @@ class CustomerRequest extends FormRequest
       'usuario' => ['max:50'],
       'telefone' => ['max:20'],
       'celular' => ['required', 'max:20'],
-      'nomeContato' => ['max:100'],
-      'dataNasc' => ['date'],
-      'cpf' => ['max:14', $uniqueCpf], // Adicionando a regra de unicidade
-      'cnpj' => ['max:18', $uniqueCnpj], // Adicionando a regra de unicidade
-      'ie' => ['max:20'],
-      'rg' => ['max:20'],
+      'nomeContato' => $validacaoNomeContato,
+      'dataNasc' => ['nullable', 'date', 'before:now'],
       'ativo' => ['required', 'boolean'],
       'city_id' => ['required', 'exists:cities,id'], // Verifica se a cidade existe
       'payment_term_id' => ['required', 'exists:payment_terms,id'], // Verifica se o termo de pagamento existe
     ];
   }
 
+  // public function messages()
+  // {
+
+  //   return [
+  //     'customer.cpfCnpj' => 'CPF ou CNPJ inválidos!'
+  //   ];
+  // }
   protected function prepareForValidation()
   {
-
-
     $this->merge([
       'tipoPessoa' => strtoupper($this->tipoPessoa),
-      'clienteRazaoSocial' => $this->cliente ? strtoupper($this->cliente) : strtoupper($this->razaoSocial),
-      'apelidoNomeFantasia' => $this->apelidoNomeFantasia ? strtoupper($this->apelidoNomeFantasia) : null,
+      'clienteRazaoSocial' => strtoupper($this->clienteRazaoSocial),
+      'cpfCnpj' => $this->cleanDocument(strtoupper($this->cpfCnpj)),
+      'rgIe' => $this->rgIe ? strtoupper($this->rgIe) : null,
       'endereco' => strtoupper($this->endereco),
       'bairro' => strtoupper($this->bairro),
       'numero' => strtoupper($this->numero),
       'cep' => strtoupper($this->cep),
+      'apelidoNomeFantasia' => $this->apelidoNomeFantasia ? strtoupper($this->apelidoNomeFantasia) : null,
       'complemento' => $this->complemento ? strtoupper($this->complemento) : null,
       'sexo' => $this->sexo ? strtoupper($this->sexo) : null,
       'email' => $this->email ? strtoupper($this->email) : null,
@@ -73,13 +82,19 @@ class CustomerRequest extends FormRequest
       'telefone' => $this->telefone ? strtoupper($this->telefone) : null,
       'celular' => strtoupper($this->celular),
       'nomeContato' => $this->nomeContato ? strtoupper($this->nomeContato) : null,
-      'cpf' => $this->cpf ? strtoupper($this->cpf) : null,
-      'cnpj' => $this->cnpj ? strtoupper($this->cnpj) : null,
-      'ie' => $this->ie ? strtoupper($this->ie) : null,
-      'rg' => $this->rg ? strtoupper($this->rg) : null,
-      'dataNasc' => $this->dataNascimento ? $this->dataNascimento : $this->dataFundacao,
+      'dataNasc' => $this->dataNasc ? $this->dataNasc : null,
     ]);
+  }
 
-    // dd($this->all());
+  /**
+   * Função para limpar documentos (CPF ou CNPJ), removendo caracteres não numéricos.
+   *
+   * @param string $document
+   * @return string
+   */
+  protected function cleanDocument($document)
+  {
+    // Remove qualquer caractere que não seja número
+    return preg_replace('/\D/', '', $document);
   }
 }

@@ -41,11 +41,7 @@ class StateController extends Controller
   {
     try {
       DB::transaction(function () use ($request) {
-
-
-        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'uf']);
-
-        State::create($upperCasedData);
+        State::create($request->all());
       });
 
       return to_route('state.index')->with('success', "Estado cadastrado com sucesso.");
@@ -85,10 +81,8 @@ class StateController extends Controller
   {
 
     try {
-      //code...
-      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome', 'uf']);
 
-      $state->update($upperCasedData);
+      $state->update($request->all());
 
       // dd($state);
 

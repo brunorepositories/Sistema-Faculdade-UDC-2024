@@ -32,8 +32,7 @@ class PaymentFormController extends Controller
    */
   public function store(PaymentFormRequest $request)
   {
-
-    $paymentForm = PaymentForm::create($request->all());
+    PaymentForm::create($request->all());
 
     return to_route('payment_form.index')->with('success', 'Forma de Pagamento criado com sucesso.');
   }

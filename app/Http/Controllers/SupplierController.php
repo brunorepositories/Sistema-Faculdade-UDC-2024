@@ -21,7 +21,8 @@ class SupplierController extends Controller
     $query = Supplier::query();
 
     if ($search = $request->input('search')) {
-      $query->whereRaw('LOWER(fornecedorRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
+
+      $query->where('fornecedorRazaoSocial', 'LIKE', '%' . strtoupper($search) . '%');
     }
 
     $suppliers = $query->orderBy('updated_at', 'desc')->paginate(10);
@@ -64,10 +65,8 @@ class SupplierController extends Controller
           'celular',
           'nomeContato',
           'dataNasc',
-          'cpf',
-          'cnpj',
-          'ie',
-          'rg',
+          'cpfCnpj',
+          'rgIe',
           'ativo',
           'city_id',
           'payment_term_id',
@@ -124,10 +123,8 @@ class SupplierController extends Controller
         'celular',
         'nomeContato',
         'dataNasc',
-        'cpf',
-        'cnpj',
-        'ie',
-        'rg',
+        'cpfCnpj',
+        'rgIe',
         'ativo',
         'city_id',
         'payment_term_id',

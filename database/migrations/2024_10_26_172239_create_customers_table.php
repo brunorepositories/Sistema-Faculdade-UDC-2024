@@ -15,13 +15,15 @@ return new class extends Migration
       $table->timestamps();
 
       // Campos correspondentes à model de Supplier
-      $table->char('tipoPessoa'); // Tipo de pessoa
+      $table->char('tipoPessoa', 1); // Tipo de pessoa
       $table->string('clienteRazaoSocial'); // Razão social
-      $table->string('apelidoNomeFantasia')->nullable(); // Nome fantasia
+      $table->string('cpfCnpj');
+      $table->string('rgIe')->nullable();
       $table->string('endereco'); // Endereço
       $table->string('bairro'); // Bairro
       $table->string('numero'); // Número do endereço
       $table->string('cep'); // CEP
+      $table->string('apelidoNomeFantasia')->nullable(); // Nome fantasia
       $table->string('complemento')->nullable(); // Complemento (opcional)
       $table->string('sexo')->nullable(); // Sexo (opcional)
       $table->string('email')->nullable(); // Email (opcional)
@@ -30,10 +32,6 @@ return new class extends Migration
       $table->string('celular'); // Celular (opcional)
       $table->string('nomeContato')->nullable(); // Nome do contato (opcional)
       $table->date('dataNasc')->nullable(); // Data de nascimento (opcional)
-      $table->string('cpf')->nullable(); // CPF (opcional)
-      $table->string('cnpj')->nullable(); // CNPJ (opcional)
-      $table->string('ie')->nullable(); // Inscrição Estadual (opcional)
-      $table->string('rg')->nullable(); // RG (opcional)
       $table->boolean('ativo')->default(true); // Ativo (padrão é true)
 
       // Chaves estrangeiras

@@ -22,7 +22,8 @@ class ProductController extends Controller
     $query = Product::query();
 
     if ($search = $request->input('search')) {
-      $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($search) . '%']);
+
+      $query->where('nome', 'LIKE', '%' . strtoupper($search) . '%');
     }
 
     $products = $query->with('measure', 'supplier')->orderBy('updated_at', 'desc')->paginate(10);

@@ -30,10 +30,8 @@ class Supplier extends Model
     'celular',
     'nomeContato',
     'dataNasc',
-    'cpf',
-    'cnpj',
-    'ie',
-    'rg',
+    'cpfCnpj',
+    'rgIe',
     'ativo',
     'city_id',
     'payment_term_id',
@@ -45,10 +43,10 @@ class Supplier extends Model
     return $this->belongsTo(City::class, 'city_id');
   }
 
-  // public function products()
-  // {
-  //   return $this->hasMany(Product::class, 'product_id');
-  // }
+  public function products()
+  {
+    return $this->hasMany(Product::class, 'product_id');
+  }
 
   // Relacionamento com a tabela PaymentTerm
   public function paymentTerm()

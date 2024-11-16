@@ -21,7 +21,7 @@ class CustomerController extends Controller
     $query = Customer::query();
 
     if ($search = $request->input('search')) {
-      $query->whereRaw('LOWER(clienteRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
+      $query->where('clienteRazaoSocial', 'LIKE', '%' . strtoupper($search) . '%');
     }
 
     $customers = $query->orderBy('updated_at', 'desc')->paginate(10);
@@ -67,10 +67,8 @@ class CustomerController extends Controller
           'celular',
           'nomeContato',
           'dataNasc',
-          'cpf',
-          'cnpj',
-          'ie',
-          'rg',
+          'cpfCnpj',
+          'rgIe',
           'ativo',
           'city_id',
           'payment_term_id',
@@ -102,7 +100,16 @@ class CustomerController extends Controller
    */
   public function edit(Customer $customer)
   {
-    return view('content.customer.edit', compact('customer'));
+    $cities = City::where('ativo', true)
+      ->orderBy('id')
+      ->get();
+    $paymentTerms = PaymentTerm::where('ativo', true)
+      ->orderBy('id')
+      ->get();
+
+    // dd($customer);
+
+    return view('content.customer.edit', compact('customer', 'cities', 'paymentTerms'));
   }
 
   /**
@@ -111,6 +118,7 @@ class CustomerController extends Controller
   public function update(CustomerRequest $request, Customer $customer)
   {
     try {
+      // dd($request->all());
       $customer->update($request->only([
         'tipoPessoa',
         'clienteRazaoSocial',
@@ -127,10 +135,8 @@ class CustomerController extends Controller
         'celular',
         'nomeContato',
         'dataNasc',
-        'cpf',
-        'cnpj',
-        'ie',
-        'rg',
+        'cpfCnpj',
+        'rgIe',
         'ativo',
         'city_id',
         'payment_term_id',

@@ -37,17 +37,18 @@
 
                 <!-- Campos para Pessoa Física -->
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="cliente">Cliente<span
+                    <label class="form-label toUpperCase" for="clienteRazaoSocial">Cliente<span
                             class="labelRequired">*</span></label>
                     <input
-                        name="cliente"
+                        required
+                        name="clienteRazaoSocial"
                         type="text"
-                        class="form-control toUpperCase isRequiredFisica"
-                        id="cliente"
+                        class="form-control toUpperCase fisica-input"
+                        id="clienteRazaoSocial"
                         placeholder="Informe o nome do Cliente"
                         maxlength="100"
-                        value="{{ old('cliente') }}">
-                    @error('cliente')
+                        value="{{ old('clienteRazaoSocial') }}">
+                    @error('clienteRazaoSocial')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -68,29 +69,43 @@
                 </div>
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="cpf">CPF<span class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="cpfCnpj">CPF<span class="labelRequired">*</span></label>
                     <input
-                        name="cpf"
+                        required
+                        name="cpfCnpj"
                         type="text"
-                        class="form-control toUpperCase isRequiredFisica"
-                        id="cpf"
+                        class="form-control toUpperCase fisica-input"
+                        id="cpfCnpj"
                         placeholder="Informe o CPF"
-                        value="{{ old('cpf') }}">
-                    @error('cpf')
+                        value="{{ old('cpfCnpj') }}">
+                    @error('cpfCnpj')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-3 fisica-fields">
+                    <label class="form-label toUpperCase" for="rgIe">RG</label>
+                    <input
+                        name="rgIe"
+                        type="text"
+                        class="form-control toUpperCase"
+                        id="rgIe"
+                        placeholder="Informe o RG"
+                        value="{{ old('rgIe') }}">
+                    @error('rgIe')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-2 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="dataNascimento">Data de Nascimento<span
-                            class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="dataNasc">Data de Nascimento</label>
                     <input
-                        name="dataNascimento"
+                        name="dataNasc"
                         type="date"
-                        class="form-control toUpperCase isRequiredFisica"
-                        id="dataNascimento"
-                        value="{{ old('dataNascimento') }}">
-                    @error('dataNascimento')
+                        class="form-control toUpperCase"
+                        id="dataNasc"
+                        value="{{ old('dataNasc') }}">
+                    @error('dataNasc')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -107,33 +122,22 @@
                     @enderror
                 </div>
 
-                <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="rg">RG</label>
-                    <input
-                        name="rg"
-                        type="text"
-                        class="form-control toUpperCase"
-                        id="rg"
-                        placeholder="Informe o RG"
-                        value="{{ old('rg') }}">
-                    @error('rg')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+
 
                 <!-- Campos para Pessoa Jurídica -->
                 <div class="col-md-5 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="razaoSocial">Razão Social<span
+                    <label class="form-label toUpperCase" for="clienteRazaoSocial">Razão Social<span
                             class="labelRequired">*</span></label>
                     <input
-                        name="razaoSocial"
+                        required
+                        name="clienteRazaoSocial"
                         type="text"
-                        class="form-control toUpperCase isRequiredJuridica"
-                        id="razaoSocial"
+                        class="form-control toUpperCase juridica-input"
+                        id="clienteRazaoSocial"
                         placeholder="Informe a razão social"
                         maxlength="100"
-                        value="{{ old('razaoSocial') }}">
-                    @error('razaoSocial')
+                        value="{{ old('clienteRazaoSocial') }}">
+                    @error('clienteRazaoSocial')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -154,41 +158,42 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="cnpj">CNPJ<span class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="cpfCnpj">CNPJ<span class="labelRequired">*</span></label>
                     <input
-                        name="cnpj"
+                        required
+                        name="cpfCnpj"
                         type="text"
-                        class="form-control toUpperCase isRequiredJuridica"
-                        id="cnpj"
+                        class="form-control toUpperCase juridica-input"
+                        id="cpfCnpj"
                         placeholder="Informe o CNPJ"
-                        value="{{ old('cnpj') }}">
-                    @error('cnpj')
+                        value="{{ old('cpfCnpj') }}">
+                    @error('cpfCnpj')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="ie">Inscrição Estadual</label>
+                    <label class="form-label toUpperCase" for="rgIe">Inscrição Estadual</label>
                     <input
-                        name="ie"
+                        name="rgIe"
                         type="text"
                         class="form-control toUpperCase"
-                        id="ie"
+                        id="rgIe"
                         placeholder="Informe a inscrição estadual"
-                        value="{{ old('ie') }}">
-                    @error('ie')
+                        value="{{ old('rgIe') }}">
+                    @error('rgIe')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="dataFundacao">Data de Fundação</label>
+                    <label class="form-label toUpperCase" for="dataNasc">Data de Fundação</label>
                     <input
-                        name="dataFundacao"
+                        name="dataNasc"
                         type="date"
                         class="form-control toUpperCase"
-                        id="dataFundacao"
-                        value="{{ old('dataFundacao') }}">
+                        id="dataNasc"
+                        value="{{ old('dataNasc') }}">
                     @error('dataNasc')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -202,9 +207,10 @@
                     <label class="form-label toUpperCase" for="nomeContato">Nome para Contato<span
                             class="labelRequired">*</span></label>
                     <input
+                        required
                         name="nomeContato"
                         type="text"
-                        class="form-control toUpperCase isRequiredJuridica"
+                        class="form-control toUpperCase juridica-input"
                         id="nomeContato"
                         placeholder="Informe o nome para contato"
                         value="{{ old('nomeContato') }}">
@@ -456,30 +462,27 @@
             const tipoPessoa = document.getElementById('tipoPessoa').value;
             const fisicaFields = document.querySelectorAll('.fisica-fields');
             const juridicaFields = document.querySelectorAll('.juridica-fields');
+            const fisicaInputs = document.querySelectorAll('.fisica-input');
+            const juridicaInputs = document.querySelectorAll('.juridica-input');
 
-            // Exibir campos com base no tipo de pessoa
-            fisicaFields.forEach(field => {
-                const input = field.querySelector('input, select, textarea');
-                field.style.display = tipoPessoa === 'F' ? 'block' : 'none';
-                if (field.classList.contains('isRequiredFisica')) {
-                    input.required = tipoPessoa === 'F';
-                }
-            });
-
-            juridicaFields.forEach(field => {
-                const input = field.querySelector('input, select, textarea');
-                field.style.display = tipoPessoa === 'J' ? 'block' : 'none';
-                if (field.classList.contains('isRequiredJuridica')) {
-                    input.required = tipoPessoa === 'J';
-                }
-            });
+            if (tipoPessoa === 'F') {
+                // Exibe campos de pessoa física e desabilita os de pessoa jurídica
+                fisicaFields.forEach(field => field.style.display = 'block');
+                juridicaFields.forEach(field => field.style.display = 'none');
+                fisicaInputs.forEach(input => input.disabled = false);
+                juridicaInputs.forEach(input => input.disabled = true);
+            } else {
+                // Exibe campos de pessoa jurídica e desabilita os de pessoa física
+                fisicaFields.forEach(field => field.style.display = 'none');
+                juridicaFields.forEach(field => field.style.display = 'block');
+                fisicaInputs.forEach(input => input.disabled = true);
+                juridicaInputs.forEach(input => input.disabled = false);
+            }
         }
 
+        // Inicializa os campos com base na seleção atual
         document.addEventListener('DOMContentLoaded', toggleFields);
-        document.getElementById('tipoPessoa').addEventListener('change', toggleFields);
     </script>
-
-
 
 
     {{-- <script>
@@ -490,8 +493,6 @@
 
             if (tipoPessoa === 'F') {
                 fisicaFields.forEach(field => field.style.display = 'block');
-                juridicaFields.forEach(field => field.style.display = 'none');
-
                 juridicaFields.forEach(field => field.style.display = 'none');
             } else {
                 fisicaFields.forEach(field => field.style.display = 'none');

@@ -17,13 +17,15 @@ return new class extends Migration
       $table->id();
       $table->timestamps();
 
-      $table->char('tipoPessoa');
+      $table->char('tipoPessoa', 1);
       $table->string('fornecedorRazaoSocial');
-      $table->string('apelidoNomeFantasia')->nullable();
+      $table->string('cpfCnpj');
+      $table->string('rgIe')->nullable();
       $table->string('endereco');
       $table->string('bairro');
       $table->string('numero');
       $table->string('cep');
+      $table->string('apelidoNomeFantasia')->nullable();
       $table->string('complemento')->nullable(); // Adicionando nullable se for opcional
       $table->string('sexo')->nullable();
       $table->string('email')->nullable();
@@ -32,10 +34,6 @@ return new class extends Migration
       $table->string('celular')->nullable();
       $table->string('nomeContato')->nullable();
       $table->date('dataNasc')->nullable(); // data em C# é DateTime em Laravel
-      $table->string('cpf')->nullable();
-      $table->string('cnpj')->nullable();
-      $table->string('ie')->nullable();
-      $table->string('rg')->nullable();
       $table->boolean('ativo')->default(true); // Default como ativo
 
       // Se você tiver chaves estrangeiras, você pode adicionar:

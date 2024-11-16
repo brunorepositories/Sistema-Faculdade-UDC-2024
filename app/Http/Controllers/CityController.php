@@ -39,12 +39,9 @@ class CityController extends Controller
   public function store(CityRequest $request)
   {
 
-    // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
-        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
-
-        City::create($upperCasedData);
+        City::create($request->all());
       });
 
       return to_route('city.index')->with('success', "Cidade cadastrada com sucesso.");
@@ -81,10 +78,9 @@ class CityController extends Controller
   {
 
     try {
-      //code...
-      $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
-
-      $city->update($upperCasedData);
+      DB::transaction(function () use ($request, $city) {
+        $city->update($request->all());
+      });
 
       return to_route('city.index')->with('success', "Cidade alterada com sucesso.");
     } catch (QueryException $ex) {
