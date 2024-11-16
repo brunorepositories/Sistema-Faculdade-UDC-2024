@@ -180,6 +180,40 @@
                         value="{{ $product->dtUltimaVenda ? date('Y-m-d\TH:i', strtotime($product->dtUltimaVenda)) : '' }}">
                 </div>
 
+                <div class="col mt-4">
+                    <label class="form-label toUpperCase" for="supplier_id">Fornecedor principal<span
+                            class="labelRequired">*</span></label>
+                    <div class="input-group">
+                        <select
+                            required
+                            name="supplier_id"
+                            class="form-select toUpperCase"
+                            id="supplier_id">
+                            <option value="" disabled>Selecione</option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}"
+                                    {{ old('supplier_id', $product->supplier_id) == $supplier->id ? 'selected' : '' }}>
+                                    {{ $supplier->id }} -
+                                    {{ $supplier->fornecedorRazaoSocial }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        {{-- Botão de ação do modal de selecionar forma de pagamento --}}
+                        <button class="btn btn-outline-secondary"
+                            style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#supplierModal">
+                            <span class="tf-icons bx bx-search bx-18px"></span>
+                        </button>
+                        {{-- End Button --}}
+                    </div>
+                    @error('supplier_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
                         <input type="hidden" name="ativo" value="0">

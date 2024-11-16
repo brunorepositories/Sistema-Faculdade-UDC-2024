@@ -18,7 +18,8 @@
                 @csrf
 
                 <div class="col-8">
-                    <label class="form-label toUpperCase" for="nome">Nome da unidade de medida</label>
+                    <label class="form-label toUpperCase" for="nome">Nome da unidade de medida<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -34,7 +35,7 @@
                 </div>
 
                 <div class="col-4">
-                    <label class="form-label toUpperCase" for="sigla">Sigla</label>
+                    <label class="form-label toUpperCase" for="sigla">Sigla<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="sigla"

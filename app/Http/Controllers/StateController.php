@@ -18,7 +18,7 @@ class StateController extends Controller
    */
   public function index()
   {
-    $states = State::with(['country'])->get(); // Incluindo o relacionamento com o Country
+    $states = State::with(['country'])->orderBy('updated_at', 'desc')->paginate(10); // Incluindo o relacionamento com o Country
 
     return view('content.state.index', compact('states'));
   }

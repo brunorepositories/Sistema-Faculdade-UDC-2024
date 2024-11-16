@@ -17,7 +17,7 @@ class CountryController extends Controller
   public function index(Country $country)
   {
 
-    $countries = $country->all();
+    $countries = $country->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.country.index', compact('countries'));
   }

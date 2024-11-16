@@ -35,6 +35,7 @@ class PaymentTermRequest extends FormRequest
       'desconto' => ['required', 'min:0', 'max:100'],
       'parcelas' => new CheckArray,
       'ativo' => ['required', 'boolean'],
+      'percentualTotal' => ['min:100'],
     ];
   }
 

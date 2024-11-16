@@ -18,7 +18,7 @@ class CityController extends Controller
    */
   public function index()
   {
-    $cities = City::with(['state'])->get(); // Incluindo o relacionamento com o State
+    $cities = City::with(['state'])->orderBy('updated_at', 'desc')->paginate(10); // Incluindo o relacionamento com o State
     return view('content.city.index', compact('cities'));
   }
 

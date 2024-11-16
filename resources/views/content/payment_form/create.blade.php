@@ -19,7 +19,8 @@
                 @csrf
 
                 <div class="col-12">
-                    <label class="form-label toUpperCase" for="formaPagamento">Forma de Pagamento</label>
+                    <label class="form-label toUpperCase" for="formaPagamento">Forma de Pagamento<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="formaPagamento"

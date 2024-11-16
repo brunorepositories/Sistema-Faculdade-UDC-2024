@@ -58,6 +58,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-12 mt-4">
+                {{ $paymentForms->appends(request()->query())->links('pagination::bootstrap-5') }}
+            </div>
         </div>
     </div>
 @endsection

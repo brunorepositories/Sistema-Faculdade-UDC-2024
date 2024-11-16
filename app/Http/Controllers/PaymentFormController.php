@@ -14,7 +14,7 @@ class PaymentFormController extends Controller
   public function index(PaymentForm $payments)
   {
     // $searchTerm = $request->input('search') ?? '';
-    $paymentForms = $payments->paginate(10);
+    $paymentForms = $payments->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.payment_form.index', compact('paymentForms'));
   }

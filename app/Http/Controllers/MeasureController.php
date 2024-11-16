@@ -17,7 +17,7 @@ class MeasureController extends Controller
   public function index()
   {
     // Inclui o relacionamento com Products ao carregar as medidas
-    $measures = Measure::all();
+    $measures = Measure::orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.measure.index', compact('measures'));
   }

@@ -46,7 +46,7 @@
                 <div class="col-7">
                     <label
                         class="form-label toUpperCase"
-                        for="nome">Nome da cidade</label>
+                        for="nome">Nome da cidade<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -64,7 +64,7 @@
                 <div class="col-1">
                     <label
                         class="form-label toUpperCase"
-                        for="ddd">DDD</label>
+                        for="ddd">DDD<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="ddd"
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="col-3">
-                    <label class="form-label toUpperCase" for="state_id">Estado</label>
+                    <label class="form-label toUpperCase" for="state_id">Estado<span class="labelRequired">*</span></label>
                     <div class="input-group">
                         <select
                             required

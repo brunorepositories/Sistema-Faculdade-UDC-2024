@@ -21,7 +21,7 @@ class PaymentTermController extends Controller
   public function index(PaymentTerm $payments)
   {
     // $searchTerm = $request->input('search') ?? '';
-    $paymentTerms = $payments->paginate(10);
+    $paymentTerms = $payments->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.payment_term.index', compact('paymentTerms'));
   }

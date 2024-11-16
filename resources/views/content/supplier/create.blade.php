@@ -19,7 +19,8 @@
                 @csrf
 
                 <div class="col-md-2 mb-3">
-                    <label class="form-label toUpperCase" for="tipoPessoa">Tipo de Pessoa</label>
+                    <label class="form-label toUpperCase" for="tipoPessoa">Tipo de Pessoa<span
+                            class="labelRequired">*</span></label>
                     <select
                         required
                         name="tipoPessoa"
@@ -36,7 +37,8 @@
 
                 <!-- Campos para Pessoa Física -->
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="fornecedor">Fornecedor</label>
+                    <label class="form-label toUpperCase" for="fornecedor">Fornecedor<span
+                            class="labelRequired">*</span></label>
                     <input
                         name="fornecedor"
                         type="text"
@@ -66,7 +68,7 @@
                 </div>
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="cpf">CPF</label>
+                    <label class="form-label toUpperCase" for="cpf">CPF<span class="labelRequired">*</span></label>
                     <input
                         name="cpf"
                         type="text"
@@ -106,7 +108,7 @@
 
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="rg">RG</label>
+                    <label class="form-label toUpperCase" for="rg">RG<span class="labelRequired">*</span></label>
                     <input
                         name="rg"
                         type="text"
@@ -124,7 +126,8 @@
 
                 <!-- Campos para Pessoa Jurídica -->
                 <div class="col-md-5 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="fornecedorRazaoSocial">Razão Social</label>
+                    <label class="form-label toUpperCase" for="fornecedorRazaoSocial">Razão Social<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="fornecedorRazaoSocial"
@@ -155,7 +158,7 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="cnpj">CNPJ</label>
+                    <label class="form-label toUpperCase" for="cnpj">CNPJ<span class="labelRequired">*</span></label>
                     <input
                         name="cnpj"
                         type="text"

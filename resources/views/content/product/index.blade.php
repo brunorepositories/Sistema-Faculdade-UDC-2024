@@ -35,10 +35,10 @@
                             <th>Nome</th>
                             <th>Medida</th> <!-- Nome da medida associada -->
                             <th>Estoque</th>
-                            <th>Preço de Custo</th>
                             <th>Preço de Venda</th>
-                            <th>Última Compra</th>
+                            <th>Preço de Custo</th>
                             <th>Última Venda</th>
+                            <th>Última Compra</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
@@ -50,13 +50,13 @@
                                 <td>{{ $product->measure->nome }} ({{ $product->measure->sigla }}) </td>
                                 <!-- Nome da medida associada -->
                                 <td>{{ $product->estoque }}</td>
-                                <td> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
                                 <!-- Formatação para R$ -->
                                 <td> R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td>
+                                <td> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
+                                <td>{{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}
+                                </td>
                                 <!-- Formatação para R$ -->
                                 <td>{{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}
-                                </td>
-                                <td>{{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}
                                 </td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
@@ -84,7 +84,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="col-12 mt-4">
                 {{ $products->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>

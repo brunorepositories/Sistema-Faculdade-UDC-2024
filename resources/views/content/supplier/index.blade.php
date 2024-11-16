@@ -80,7 +80,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="col-12 mt-4">
                 {{ $suppliers->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>

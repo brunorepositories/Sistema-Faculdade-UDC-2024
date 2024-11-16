@@ -24,7 +24,7 @@ class CustomerController extends Controller
       $query->whereRaw('LOWER(clienteRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
     }
 
-    $customers = $query->paginate(10);
+    $customers = $query->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.customer.index', compact('customers'));
   }

@@ -46,7 +46,7 @@
                 <div class="col-9">
                     <label
                         class="form-label toUpperCase"
-                        for="nome">Nome da Medida</label>
+                        for="nome">Nome da Medida<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -64,7 +64,7 @@
                 <div class="col-2">
                     <label
                         class="form-label toUpperCase"
-                        for="sigla">Sigla</label>
+                        for="sigla">Sigla<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="sigla"

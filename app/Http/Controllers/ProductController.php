@@ -25,7 +25,7 @@ class ProductController extends Controller
       $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($search) . '%']);
     }
 
-    $products = $query->with('measure', 'supplier')->paginate(10);
+    $products = $query->with('measure', 'supplier')->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.product.index', compact('products'));
   }
@@ -56,9 +56,7 @@ class ProductController extends Controller
     try {
       DB::transaction(function () use ($request) {
 
-        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
-
-        Product::create($upperCasedData); // Cria o produto com dados validados
+        Product::create($request); // Cria o produto com dados validados
       });
 
       return to_route('product.index')->with('success', 'Produto cadastrado com sucesso.');
@@ -103,10 +101,13 @@ class ProductController extends Controller
   public function update(ProductRequest $request, Product $product)
   {
     try {
+
+      // dd($request->all());
       DB::transaction(function () use ($request, $product) {
 
-        $upperCasedData = FormatData::toUpperCaseArray($request->all(), ['nome']);
-        $product->update($upperCasedData); // Atualiza o produto com dados validados
+        $product->update($request->all()); // Atualiza o produto com dados validados
+
+        // dd($product);
       });
 
       return to_route('product.index')->with('success', 'Produto atualizado com sucesso.');

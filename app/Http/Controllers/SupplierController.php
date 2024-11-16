@@ -24,7 +24,7 @@ class SupplierController extends Controller
       $query->whereRaw('LOWER(fornecedorRazaoSocial) LIKE ?', ['%' . strtolower($search) . '%']);
     }
 
-    $suppliers = $query->paginate(10);
+    $suppliers = $query->orderBy('updated_at', 'desc')->paginate(10);
 
     return view('content.supplier.index', compact('suppliers'));
   }

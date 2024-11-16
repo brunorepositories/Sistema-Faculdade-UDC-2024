@@ -166,6 +166,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
                 <div class="col mt-4">
                     <label class="form-label toUpperCase" for="supplier_id">Fornecedor principal<span
                             class="labelRequired">*</span></label>

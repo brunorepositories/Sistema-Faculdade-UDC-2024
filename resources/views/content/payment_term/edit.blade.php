@@ -42,7 +42,8 @@
                 </div>
 
                 <div class="col-5">
-                    <label class="form-label toUpperCase" for="condicaoPagamento">Condição de Pagamento</label>
+                    <label class="form-label toUpperCase" for="condicaoPagamento">Condição de Pagamento<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="condicaoPagamento"
@@ -58,7 +59,8 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="multa">Multa (%)</label>
+                    <label class="form-label toUpperCase" for="multa">Multa (%)<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="multa"
@@ -75,7 +77,8 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="juros">Juros (%)</label>
+                    <label class="form-label toUpperCase" for="juros">Juros (%)<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="juros"
@@ -92,7 +95,8 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="desconto">Desconto (%)</label>
+                    <label class="form-label toUpperCase" for="desconto">Desconto (%)<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="desconto"
@@ -184,6 +188,10 @@
                         <div class="ms-6">
                             <button type="button" class="btn btn-primary" id="add-parcela">Adicionar</button>
                         </div>
+
+                        @error('percentualTotal')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div id="parcelas-container" class="mt-3">

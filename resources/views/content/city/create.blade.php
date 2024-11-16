@@ -21,7 +21,7 @@
                 <div class="col-8">
                     <label
                         class="form-label toUpperCase"
-                        for="nome">Nome da cidade</label>
+                        for="nome">Nome da cidade<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="nome"
@@ -39,7 +39,7 @@
                 <div class="col-1">
                     <label
                         class="form-label toUpperCase"
-                        for="ddd">DDD</label>
+                        for="ddd">DDD<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="ddd"
@@ -57,7 +57,7 @@
                 <div class="col-3">
                     <label
                         class="form-label toUpperCase"
-                        for="state_id">Estado</label>
+                        for="state_id">Estado<span class="labelRequired">*</span></label>
                     <div class="input-group">
                         <select
                             required

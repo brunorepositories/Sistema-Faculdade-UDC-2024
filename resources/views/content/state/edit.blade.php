@@ -46,7 +46,7 @@
                 <div class="col-7">
                     <label
                         class="form-label toUpperCase"
-                        for="nome">Nome do estado</label>
+                        for="nome">Nome do estado<span class="labelRequired">*</span></label>
                     <input required
                         name="nome"
                         type="text"
@@ -63,7 +63,7 @@
                 <div class="col-1">
                     <label
                         class="form-label toUpperCase"
-                        for="uf">UF</label>
+                        for="uf">UF<span class="labelRequired">*</span></label>
                     <input
                         required
                         name="uf"
@@ -84,12 +84,12 @@
                         <select
                             required
                             name="country_id"
-                            class="form-select"
+                            class="form-select toUpperCase"
                             id="country_id">
                             <option value="" disabled>Selecione o país</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}"
-                                    {{ old('country_id', $state->country_id) == $country->id ? 'selected' : '' }}>
+                                    {{ old('country_id', $country->country_id) == $country->id ? 'selected' : '' }}>
                                     {{ $country->nome }}
                                 </option>
                             @endforeach
