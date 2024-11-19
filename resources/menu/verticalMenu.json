@@ -5,31 +5,18 @@
     },
     {
       "url": "/sale.index",
-      "name": "Registrar venda",
-      "slug": "sale.index"
-    },
-    {
-      "url": "/purchase.index",
-      "name": "Registrar compra",
-      "slug": "purchase.index"
-    },
-    {
-      "menuHeader": "Financeiro"
-    },
-    {
-      "url": "/sale.index",
       "name": "Vendas",
       "slug": "sale.index"
-    },
-    {
-      "url": "/purchase.index",
-      "name": "Compras",
-      "slug": "purchase.index"
     },
     {
       "url": "/accountsReceivable.index",
       "name": "Contas a Receber",
       "slug": "accountsReceivable.index"
+    },
+    {
+      "url": "/purchase",
+      "name": "Compras",
+      "slug": "purchase.index"
     },
     {
       "url": "/accountsPayable",

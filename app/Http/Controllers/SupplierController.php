@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SupplierRequest;
 use App\Models\City;
 use App\Models\PaymentTerm;
+use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -84,63 +85,53 @@ class SupplierController extends Controller
 
   public function export()
   {
-    $suppliers = Supplier::with(['city', 'paymentTerm'])->get(); // Carrega as relações necessárias
+    $purchases = Purchase::with(['supplier', 'paymentTerm'])->get(); // Carrega as relações necessárias
 
-    // Cabeçalhos do CSV correspondentes às colunas da migrate
+    // Cabeçalhos do CSV correspondentes às colunas da migrate de purchases
     $csvData = [];
     $csvData[] = [
       'Código',
-      'Tipo de Pessoa',
-      'Razão Social',
-      'CPF/CNPJ',
-      'RG/IE',
-      'Endereço',
-      'Bairro',
-      'Número',
-      'CEP',
-      'Apelido / Nome Fantasia',
-      'Complemento',
-      'Sexo',
-      'Email',
-      'Usuário',
-      'Telefone',
-      'Celular',
-      'Nome do Contato',
-      'Data de Nascimento',
-      'Ativo',
-      'Cidade',
-      'Termos de Pagamento'
+      'Número da Nota',
+      'Modelo',
+      'Série',
+      'Fornecedor',
+      'Data Emissão',
+      'Data Chegada',
+      'Tipo de Frete',
+      'Valor Frete',
+      'Valor Seguro',
+      'Outras Despesas',
+      'Total Produtos',
+      'Total a Pagar',
+      'Condição de Pagamento',
+      'Observação',
+      'Data Cancelamento'
     ];
 
-    // Adiciona os dados do fornecedor ao CSV
-    foreach ($suppliers as $supplier) {
+    // Adiciona os dados das compras ao CSV
+    foreach ($purchases as $purchase) {
       $csvData[] = [
-        $supplier->id,
-        $supplier->tipoPessoa,
-        $supplier->fornecedorRazaoSocial,
-        $supplier->cpfCnpj,
-        $supplier->rgIe ?? '-',
-        $supplier->endereco,
-        $supplier->bairro,
-        $supplier->numero,
-        $supplier->cep,
-        $supplier->apelidoNomeFantasia ?? '-',
-        $supplier->complemento ?? '-',
-        $supplier->sexo ?? '-',
-        $supplier->email ?? '-',
-        $supplier->usuario ?? '-',
-        $supplier->telefone ?? '-',
-        $supplier->celular,
-        $supplier->nomeContato ?? '-',
-        $supplier->dataNasc ? \Carbon\Carbon::parse($supplier->dataNasc)->format('d/m/Y') : '-',
-        $supplier->ativo ? 'Sim' : 'Não',
-        $supplier->city->nome ?? '-', // Nome da cidade
-        $supplier->paymentTerm->descricao ?? '-' // Termos de pagamento
+        $purchase->id,
+        $purchase->numero_nota,
+        $purchase->modelo,
+        $purchase->serie,
+        $purchase->supplier->fornecedorRazaoSocial ?? '-', // Nome do fornecedor
+        $purchase->data_emissao->format('d/m/Y'),
+        $purchase->data_chegada->format('d/m/Y'),
+        $purchase->tipo_frete ? 'Frete Pago' : 'Frete a Pagar', // Traduz tipo de frete (booleano)
+        number_format($purchase->valor_frete ?? 0, 2, ',', '.'),
+        number_format($purchase->valor_seguro ?? 0, 2, ',', '.'),
+        number_format($purchase->outras_despesas ?? 0, 2, ',', '.'),
+        number_format($purchase->total_produtos, 2, ',', '.'),
+        number_format($purchase->total_pagar, 2, ',', '.'),
+        $purchase->paymentTerm->descricao ?? '-', // Termos de pagamento
+        $purchase->observacao ?? '-', // Observações
+        $purchase->data_cancelamento ? $purchase->data_cancelamento->format('d/m/Y') : '-' // Data de cancelamento
       ];
     }
 
     // Gera o arquivo CSV
-    $filename = 'fornecedores-export_' . now()->format('dmY-Hi') . '.csv';
+    $filename = 'compras-export_' . now()->format('dmY-Hi') . '.csv';
     $handle = fopen('php://temp', 'w');
     foreach ($csvData as $row) {
       fputcsv($handle, $row, ';');
@@ -154,6 +145,7 @@ class SupplierController extends Controller
       ->header('Content-Type', 'text/csv')
       ->header('Content-Disposition', "attachment; filename=\"$filename\"");
   }
+
 
 
   /**

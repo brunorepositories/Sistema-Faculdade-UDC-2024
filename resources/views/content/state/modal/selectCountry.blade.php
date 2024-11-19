@@ -9,7 +9,7 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between">
                 <h5 class="modal-title" id="countryModalLabel">Selecione o País</h5>
-                {{-- <button type="button" id="openCountryCreateModal" class="btn btn-primary">Cadastrar pais</button> --}}
+                <button type="button" id="openCountryCreateModal" class="btn btn-primary">Cadastrar pais</button>
             </div>
             <div class="modal-body">
                 <div class="table-responsive text-nowrap">
@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-{{--
+
 <!-- Modal para cadastrar novo país -->
 <div class="modal fade" id="countryCreateModal" tabindex="-1" aria-labelledby="countryCreateModalLabel"
     aria-hidden="true">
@@ -47,8 +47,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="countryCreateModalLabel">Cadastrar Novo País</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button> --}}
             </div>
             <div class="modal-body">
                 <form id="countryCreateForm">
@@ -83,11 +83,13 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script>
     $(document).ready(function() {
+
+        // console.log('teste');
         // Captura o clique na linha da tabela de países para selecionar o país
         $('.select-country').on('click', function() {
             var countryId = $(this).data('id');
@@ -101,59 +103,56 @@
         });
 
         // Alternar para o modal de cadastro de país
-        // $('#openCountryCreateModal').on('click', function() {
-        //     $('#countryModal').modal('hide'); // Fecha o modal de seleção de países
-        //     $('#countryCreateModal').modal('show'); // Abre o modal de cadastro de país
-        // });
+        $('#openCountryCreateModal').on('click', function() {
+            $('#countryModal').modal('hide'); // Fecha o modal de seleção de países
+            $('#countryCreateModal').modal('show'); // Abre o modal de cadastro de país
+        });
 
         // Alternar para o modal de seleção de pais
-        // $('#closeCountryCreateModal').on('click', function() {
+        $('#closeCountryCreateModal').on('click', function() {
 
-        //     $('#countryCreateModal').modal('hide'); // Fechar modal de cadastro de país
-        //     $('#countryModal').modal('show'); // Reabrir o modal de seleção de países
-        // });
+            $('#countryCreateModal').modal('hide'); // Fechar modal de cadastro de país
+            $('#countryModal').modal('show'); // Reabrir o modal de seleção de países
+        });
 
+        $('#countryCreateForm').on('submit', function(e) {
+            e.preventDefault();
 
+            var newCountryData = {
+                nome: $('#newCountryName').val(),
+                sigla: $('#newCountrySigla').val(),
+                ddi: $('#newCountryDDI').val(),
+                _token: '{{ csrf_token() }}'
+            };
 
-        // Quando o formulário de cadastro de país for enviado
-        // $('#countryCreateForm').on('submit', function(e) {
-        //     e.preventDefault();
+            $.ajax({
+                url: '{{ route('country.store') }}', // URL da rota para salvar o país
+                method: 'POST',
+                data: newCountryData,
+                success: function(response) {
 
-        //     var newCountryData = {
-        //         nome: $('#newCountryName').val(),
-        //         sigla: $('#newCountrySigla').val(),
-        //         ddi: $('#newCountryDDI').val(),
-        //         _token: '{{ csrf_token() }}'
-        //     };
+                    // Fechar modal de cadastro de país
+                    $('#countryCreateModal').modal('hide');
 
-        //     $.ajax({
-        //         url: '{{ route('country.store') }}', // URL da rota para salvar o país
-        //         method: 'POST',
-        //         data: newCountryData,
-        //         success: function(response) {
+                    // Reabrir o modal de seleção de países
+                    $('#countryModal').modal('show');
 
-        //             // Fechar modal de cadastro de país
-        //             $('#countryCreateModal').modal('hide');
+                    // Atualizar a lista de países no modal de seleção
+                    $('#country-list').append('<tr class="select-country" data-id="' +
+                        response.id + '" data-name="' + response.nome + '"><td>' +
+                        response.id + '</td><td>' + response.nome + '</td></tr>');
 
-        //             // Reabrir o modal de seleção de países
-        //             $('#countryModal').modal('show');
+                    // Adicionar o novo país ao select no formulário principal
+                    $('#country_id').append('<option value="' + response.id + '">' +
+                        response.nome + '</option>');
 
-        //             // Atualizar a lista de países no modal de seleção
-        //             $('#country-list').append('<tr class="select-country" data-id="' +
-        //                 response.id + '" data-name="' + response.nome + '"><td>' +
-        //                 response.id + '</td><td>' + response.nome + '</td></tr>');
-
-        //             // Adicionar o novo país ao select no formulário principal
-        //             $('#country_id').append('<option value="' + response.id + '">' +
-        //                 response.nome + '</option>');
-
-        //             // Resetar o formulário de cadastro de país
-        //             $('#countryCreateForm')[0].reset();
-        //         },
-        //         error: function(response) {
-        //             alert('Erro ao cadastrar país. Tente novamente.');
-        //         }
-        //     });
-        // });
+                    // Resetar o formulário de cadastro de país
+                    $('#countryCreateForm')[0].reset();
+                },
+                error: function(response) {
+                    alert('Erro ao cadastrar país. Tente novamente.');
+                }
+            });
+        });
     });
 </script>

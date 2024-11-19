@@ -8,6 +8,7 @@ use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PaymentFormController;
 use App\Http\Controllers\PaymentTermController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
 
@@ -19,9 +20,16 @@ Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
 // Route::resource('employee', EmployeeController::class);
 
 
+
+// Compras
+Route::resource('purchase', PurchaseController::class);
+Route::get('/purchases/export', [PurchaseController::class, 'export'])->name('purchase.export');
+
+
 // Clientes
 Route::resource('customer', CustomerController::class);
 Route::get('/customers/export', [CustomerController::class, 'export'])->name('customer.export');
+
 
 
 // Fornecedores
