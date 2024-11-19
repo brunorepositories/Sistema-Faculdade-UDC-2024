@@ -16,8 +16,8 @@ class SupplierRequest extends FormRequest
 
     // dd('teste');
     // Verifica se estamos atualizando um fornecedor
-    if ($this->route('suppliers')) {
-      $supplierId = $this->route('suppliers')->id;
+    if ($this->route('supplier')) {
+      $supplierId = $this->route('supplier')->id;
 
       $uniqueRazaoSocial = "unique:suppliers,fornecedorRazaoSocial,$supplierId";
       $uniqueCpfCnpj = "unique:suppliers,cpfCnpj,$supplierId";

@@ -9,6 +9,8 @@
             <h4 class="head-label">Produtos</h4>
 
             <div class="dt-action-buttons">
+                <a class="btn btn-outline-primary toUpperCase me-4" href="{{ route('product.export') }}">Exportar
+                    relatório</a>
                 <a class="btn btn-primary toUpperCase" href="{{ route('product.create') }}">Cadastrar Produto</a>
             </div>
         </div>
@@ -23,7 +25,7 @@
                     <input type="text" name="search" class="form-control toUpperCase"
                         placeholder="Buscar por nome do produto"
                         value="{{ request('search') }}">
-                    <button type="submit" class="btn btn-primary toUpperCase">Buscar</button>
+                    <button type="submit" class="btn btn-secondary toUpperCase">Buscar</button>
                 </div>
             </form>
 
@@ -39,6 +41,7 @@
                             <th>Preço de Custo</th>
                             <th>Última Venda</th>
                             <th>Última Compra</th>
+                            <th>Ativo</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
@@ -57,6 +60,21 @@
                                 </td>
                                 <!-- Formatação para R$ -->
                                 <td>{{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}
+                                </td>
+                                <!-- Alteração para exibir o checkbox -->
+                                <td>
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="ativo"
+                                            id="ativo_{{ $product->id }}"
+                                            value="1"
+                                            disabled
+                                            {{ $product->ativo ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="ativo_{{ $product->id }}">
+                                        </label>
+                                    </div>
                                 </td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"

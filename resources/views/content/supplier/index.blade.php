@@ -9,6 +9,8 @@
             <h4 class="head-label">Fornecedores</h4>
 
             <div class="dt-action-buttons">
+                <a class="btn btn-outline-primary toUpperCase me-4" href="{{ route('supplier.export') }}">Exportar
+                    relatório</a>
                 <a class="btn btn-primary toUpperCase" href="{{ route('supplier.create') }}">Cadastrar Fornecedor</a>
             </div>
         </div>
@@ -23,7 +25,7 @@
                     <input type="text" name="search" class="form-control toUpperCase"
                         placeholder="Buscar por nome do fornecedor"
                         value="{{ request('search') }}">
-                    <button type="submit" class="btn btn-primary toUpperCase">Buscar</button>
+                    <button type="submit" class="btn btn-secondary toUpperCase">Buscar</button>
                 </div>
             </form>
 
@@ -34,8 +36,8 @@
                             <th>Código</th>
                             <th>Fornecedor</th>
                             <th>Documento</th>
-                            <th>Email</th>
                             <th>Telefone</th>
+                            <th>Email</th>
                             <th>Ativo</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
@@ -45,15 +47,24 @@
                             <tr>
                                 <td>{{ $supplier->id }}</td>
                                 <td>{{ $supplier->fornecedorRazaoSocial }}</td>
-                                @if ($supplier->tipoPessoa == 'F')
-                                    <td>{{ $supplier->cpf }}</td>
-                                @else
-                                    <td>{{ $supplier->cnpj }}</td>
-                                @endif
-                                <td>{{ $supplier->apelidoNomeFantasia }}</td>
+                                <td>{{ $supplier->cpfCnpj }}</td>
+                                <td>{{ $supplier->celular }}</td>
                                 <td>{{ $supplier->email }}</td>
-                                <td>{{ $supplier->telefone }}</td>
-                                <td>{{ $supplier->ativo ? 'Sim' : 'Não' }}</td>
+                                <!-- Alteração para exibir o checkbox -->
+                                <td>
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="ativo"
+                                            id="ativo_{{ $supplier->id }}"
+                                            value="1"
+                                            disabled
+                                            {{ $supplier->ativo ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="ativo_{{ $supplier->id }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('supplier.edit', $supplier->id) }}">
@@ -78,6 +89,7 @@
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
             <div class="col-12 mt-4">

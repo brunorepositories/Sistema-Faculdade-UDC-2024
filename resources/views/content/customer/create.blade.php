@@ -484,23 +484,4 @@
         document.addEventListener('DOMContentLoaded', toggleFields);
     </script>
 
-
-    {{-- <script>
-        function toggleFields() {
-            const tipoPessoa = document.getElementById('tipoPessoa').value;
-            const fisicaFields = document.querySelectorAll('.fisica-fields');
-            const juridicaFields = document.querySelectorAll('.juridica-fields');
-
-            if (tipoPessoa === 'F') {
-                fisicaFields.forEach(field => field.style.display = 'block');
-                juridicaFields.forEach(field => field.style.display = 'none');
-            } else {
-                fisicaFields.forEach(field => field.style.display = 'none');
-                juridicaFields.forEach(field => field.style.display = 'block');
-            }
-        }
-
-        // Inicializa os campos com base na seleção atual
-        document.addEventListener('DOMContentLoaded', toggleFields);
-    </script> --}}
 @endsection

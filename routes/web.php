@@ -21,10 +21,12 @@ Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
 
 // Clientes
 Route::resource('customer', CustomerController::class);
+Route::get('/customers/export', [CustomerController::class, 'export'])->name('customer.export');
 
 
 // Fornecedores
 Route::resource('supplier', SupplierController::class);
+Route::get('/suppliers/export', [SupplierController::class, 'export'])->name('supplier.export');
 
 
 // Condição de Pagamento
@@ -35,6 +37,8 @@ Route::resource('payment_form', PaymentFormController::class);
 
 // Produtos
 Route::resource('product', ProductController::class);
+Route::get('/products/export', [ProductController::class, 'export'])->name('product.export');
+
 // Unidade de Medida
 Route::resource('measure', MeasureController::class);
 

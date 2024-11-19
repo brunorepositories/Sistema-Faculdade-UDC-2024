@@ -95,6 +95,80 @@ class CustomerController extends Controller
     return view('content.customer.show', compact('customer'));
   }
 
+  public function export()
+  {
+    $customers = Customer::with(['city', 'paymentTerm'])->get(); // Carrega as relações necessárias
+
+    // Cabeçalhos do CSV correspondentes às colunas da migrate
+    $csvData = [];
+    $csvData[] = [
+      'Código',
+      'Tipo de Pessoa',
+      'Razão Social',
+      'CPF/CNPJ',
+      'RG/IE',
+      'Endereço',
+      'Bairro',
+      'Número',
+      'CEP',
+      'Apelido / Nome Fantasia',
+      'Complemento',
+      'Sexo',
+      'Email',
+      'Usuário',
+      'Telefone',
+      'Celular',
+      'Nome do Contato',
+      'Data de Nascimento',
+      'Ativo',
+      'Cidade',
+      'Termos de Pagamento'
+    ];
+
+    // Adiciona os dados do cliente ao CSV
+    foreach ($customers as $customer) {
+      $csvData[] = [
+        $customer->id,
+        $customer->tipoPessoa,
+        $customer->clienteRazaoSocial,
+        $customer->cpfCnpj,
+        $customer->rgIe ?? '-',
+        $customer->endereco,
+        $customer->bairro,
+        $customer->numero,
+        $customer->cep,
+        $customer->apelidoNomeFantasia ?? '-',
+        $customer->complemento ?? '-',
+        $customer->sexo ?? '-',
+        $customer->email ?? '-',
+        $customer->usuario ?? '-',
+        $customer->telefone ?? '-',
+        $customer->celular,
+        $customer->nomeContato ?? '-',
+        $customer->dataNasc ? \Carbon\Carbon::parse($customer->dataNasc)->format('d/m/Y') : '-',
+        $customer->ativo ? 'Sim' : 'Não',
+        $customer->city->nome ?? '-', // Nome da cidade
+        $customer->paymentTerm->descricao ?? '-' // Termos de pagamento
+      ];
+    }
+
+    // Gera o arquivo CSV
+    $filename = 'clientes-export_' . now()->format('dmY-Hi') . '.csv';
+    $handle = fopen('php://temp', 'w');
+    foreach ($csvData as $row) {
+      fputcsv($handle, $row, ';');
+    }
+    rewind($handle);
+    $content = stream_get_contents($handle);
+    fclose($handle);
+
+    // Retorna a resposta como arquivo para download
+    return response($content)
+      ->header('Content-Type', 'text/csv')
+      ->header('Content-Disposition', "attachment; filename=\"$filename\"");
+  }
+
+
   /**
    * Show the form for editing the specified resource.
    */

@@ -27,8 +27,8 @@
                         class="form-select toUpperCase"
                         id="tipoPessoa"
                         onchange="toggleFields()">
-                        <option value="J" selected>Jurídica</option>
                         <option value="F">Física</option>
+                        <option value="J" selected>Jurídica</option>
                     </select>
                     @error('tipoPessoa')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -37,46 +37,62 @@
 
                 <!-- Campos para Pessoa Física -->
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="fornecedor">Fornecedor<span
+                    <label class="form-label toUpperCase" for="fornecedorRazaoSocial">Fornecedor<span
                             class="labelRequired">*</span></label>
                     <input
-                        name="fornecedor"
+                        required
+                        name="fornecedorRazaoSocial"
                         type="text"
-                        class="form-control toUpperCase"
-                        id="fornecedor"
-                        placeholder="Informe o nome do fornecedor"
+                        class="form-control toUpperCase fisica-input"
+                        id="fornecedorRazaoSocial"
+                        placeholder="Informe o nome do Fornecedor"
                         maxlength="100"
-                        value="{{ old('fornecedor') }}">
-                    @error('fornecedor')
+                        value="{{ old('fornecedorRazaoSocial') }}">
+                    @error('fornecedorRazaoSocial')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-5 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="apelido">Apelido</label>
+                    <label class="form-label toUpperCase" for="apelidoNomeFantasia">Apelido</label>
                     <input
-                        name="apelido"
+                        name="apelidoNomeFantasia"
                         type="text"
                         class="form-control toUpperCase"
-                        id="apelido"
+                        id="apelidoNomeFantasia"
                         placeholder="Informe o apelido"
                         maxlength="100"
-                        value="{{ old('apelido') }}">
-                    @error('apelido')
+                        value="{{ old('apelidoNomeFantasia') }}">
+                    @error('apelidoNomeFantasia')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="cpf">CPF<span class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="cpfCnpj">CPF<span class="labelRequired">*</span></label>
                     <input
-                        name="cpf"
+                        required
+                        name="cpfCnpj"
+                        type="text"
+                        class="form-control toUpperCase fisica-input"
+                        id="cpfCnpj"
+                        placeholder="Informe o CPF"
+                        value="{{ old('cpfCnpj') }}">
+                    @error('cpfCnpj')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-3 fisica-fields">
+                    <label class="form-label toUpperCase" for="rgIe">RG</label>
+                    <input
+                        name="rgIe"
                         type="text"
                         class="form-control toUpperCase"
-                        id="cpf"
-                        placeholder="Informe o CPF"
-                        value="{{ old('cpf') }}">
-                    @error('cpf')
+                        id="rgIe"
+                        placeholder="Informe o RG"
+                        value="{{ old('rgIe') }}">
+                    @error('rgIe')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -106,24 +122,6 @@
                     @enderror
                 </div>
 
-
-                <div class="col-md-4 mb-3 fisica-fields">
-                    <label class="form-label toUpperCase" for="rg">RG<span class="labelRequired">*</span></label>
-                    <input
-                        name="rg"
-                        type="text"
-                        class="form-control toUpperCase"
-                        id="rg"
-                        placeholder="Informe o RG"
-                        value="{{ old('rg') }}">
-                    @error('rg')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-
-
-
                 <!-- Campos para Pessoa Jurídica -->
                 <div class="col-md-5 mb-3 juridica-fields">
                     <label class="form-label toUpperCase" for="fornecedorRazaoSocial">Razão Social<span
@@ -132,7 +130,7 @@
                         required
                         name="fornecedorRazaoSocial"
                         type="text"
-                        class="form-control toUpperCase"
+                        class="form-control toUpperCase juridica-input"
                         id="fornecedorRazaoSocial"
                         placeholder="Informe a razão social"
                         maxlength="100"
@@ -158,75 +156,77 @@
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="cnpj">CNPJ<span class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="cpfCnpj">CNPJ<span class="labelRequired">*</span></label>
                     <input
-                        name="cnpj"
+                        required
+                        name="cpfCnpj"
                         type="text"
-                        class="form-control toUpperCase"
-                        id="cnpj"
+                        class="form-control toUpperCase juridica-input"
+                        id="cpfCnpj"
                         placeholder="Informe o CNPJ"
-                        value="{{ old('cnpj') }}">
-                    @error('cnpj')
+                        value="{{ old('cpfCnpj') }}">
+                    @error('cpfCnpj')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="ie">Inscrição Estadual</label>
+                    <label class="form-label toUpperCase" for="rgIe">Inscrição Estadual</label>
                     <input
-                        name="ie"
+                        name="rgIe"
                         type="text"
                         class="form-control toUpperCase"
-                        id="ie"
+                        id="rgIe"
                         placeholder="Informe a inscrição estadual"
-                        value="{{ old('ie') }}">
-                    @error('ie')
+                        value="{{ old('rgIe') }}">
+                    @error('rgIe')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="dataFundacao">Data de Fundação</label>
+                    <label class="form-label toUpperCase" for="dataNasc">Data de Fundação</label>
                     <input
-                        name="dataFundacao"
+                        name="dataNasc"
                         type="date"
                         class="form-control toUpperCase"
-                        id="dataFundacao"
-                        value="{{ old('dataFundacao') }}">
-                    @error('dataFundacao')
+                        id="dataNasc"
+                        value="{{ old('dataNasc') }}">
+                    @error('dataNasc')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-
-                <div class="col-12 mt-6 mb-2">
+                <div class="col-12 mt-8 mb-2">
                     <h5>Contato</h5>
                 </div>
 
-                <div class="col-md-4 mb-3 juridica-fields">
-                    <label class="form-label toUpperCase" for="nomeContato">Nome para Contato</label>
+                <div class="col-md-3 mb-3 juridica-fields">
+                    <label class="form-label toUpperCase" for="nomeContato">Nome para Contato<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="nomeContato"
                         type="text"
-                        class="form-control toUpperCase"
+                        class="form-control toUpperCase juridica-input"
                         id="nomeContato"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o nome para contato"
                         value="{{ old('nomeContato') }}">
                     @error('nomeContato')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-md-2 mb-3">
-                    <label class="form-label toUpperCase" for="celular">Celular</label>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label toUpperCase" for="celular">Celular<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="celular"
                         type="text"
                         class="form-control toUpperCase"
                         id="celular"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o celular"
                         value="{{ old('celular') }}">
                     @error('celular')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -236,55 +236,54 @@
                 <div class="col-md-2 mb-3">
                     <label class="form-label toUpperCase" for="telefone">Telefone</label>
                     <input
-                        required
                         name="telefone"
                         type="text"
                         class="form-control toUpperCase"
                         id="telefone"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o telefone"
                         value="{{ old('telefone') }}">
                     @error('telefone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-
                 <div class="col-md-4 mb-3">
                     <label class="form-label toUpperCase" for="email">E-mail</label>
                     <input
-                        required
                         name="email"
                         type="text"
                         class="form-control toUpperCase"
                         id="email"
-                        placeholder="Informe o endereço"
+                        placeholder="Informe o e-mail"
                         value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-12 mt-6 mb-2">
+                <div class="col-12 mt-8 mb-4">
                     <h5>Endereço</h5>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label toUpperCase" for="logradouro">Logradouro</label>
+                    <label class="form-label toUpperCase" for="endereco">Logradouro<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
-                        name="logradouro"
+                        name="endereco"
                         type="text"
                         class="form-control toUpperCase"
-                        id="logradouro"
-                        placeholder="Informe o endereço"
-                        value="{{ old('logradouro') }}">
-                    @error('logradouro')
+                        id="endereco"
+                        placeholder="Informe o endereco"
+                        value="{{ old('endereco') }}">
+                    @error('endereco')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-2 mb-3">
-                    <label class="form-label toUpperCase" for="numero">Número</label>
+                    <label class="form-label toUpperCase" for="numero">Número<span
+                            class="labelRequired">*</span></label>
                     <input
                         required
                         name="numero"
@@ -294,36 +293,6 @@
                         placeholder="Informe o número"
                         value="{{ old('numero') }}">
                     @error('numero')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label class="form-label toUpperCase" for="bairro">Bairro</label>
-                    <input
-                        required
-                        name="bairro"
-                        type="text"
-                        class="form-control toUpperCase"
-                        id="bairro"
-                        placeholder="Informe o bairro"
-                        value="{{ old('bairro') }}">
-                    @error('bairro')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-2 mb-3">
-                    <label class="form-label toUpperCase" for="cep">CEP</label>
-                    <input
-                        required
-                        name="cep"
-                        type="text"
-                        class="form-control toUpperCase"
-                        id="cep"
-                        placeholder="Informe o CEP"
-                        value="{{ old('cep') }}">
-                    @error('cep')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -342,29 +311,76 @@
                     @enderror
                 </div>
 
+                <div class="col-md-4 mb-3">
+                    <label class="form-label toUpperCase" for="bairro">Bairro<span
+                            class="labelRequired">*</span></label>
+                    <input
+                        required
+                        name="bairro"
+                        type="text"
+                        class="form-control toUpperCase"
+                        id="bairro"
+                        placeholder="Informe o bairro"
+                        value="{{ old('bairro') }}">
+                    @error('bairro')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                <div class="col-12 mt-6 mb-2">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label toUpperCase" for="city_id">Cidade<span
+                            class="labelRequired">*</span></label>
+                    <select required name="city_id" class="form-select toUpperCase" id="city_id">
+                        <option value="" disabled selected>Selecione</option>
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                {{ $city->id }} - {{ $city->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('city_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label toUpperCase" for="cep">CEP<span class="labelRequired">*</span></label>
+                    <input
+                        required
+                        name="cep"
+                        type="text"
+                        class="form-control toUpperCase"
+                        id="cep"
+                        placeholder="Informe o CEP"
+                        value="{{ old('cep') }}">
+                    @error('cep')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-12 mt-8 mb-4">
                     <h5>Condição de Pagamento</h5>
                 </div>
 
                 <div class="col flex-grow-1">
-                    <label class="form-label toUpperCase" for="payment-term_id">Forma de Pagamento</label>
+                    <label class="form-label toUpperCase" for="payment_term_id">Condição de Pagamento<span
+                            class="labelRequired">*</span></label>
                     <div class="input-group">
                         <select
                             required
-                            name="payment-term_id"
+                            name="payment_term_id"
                             class="form-select toUpperCase"
-                            id="payment-term_id">
+                            id="payment_term_id">
                             <option value="" disabled selected>Selecione</option>
                             @foreach ($paymentTerms as $paymentTerm)
-                                <option value="{{ $paymentTerm->id }}">
+                                <option value="{{ $paymentTerm->id }}"
+                                    {{ old('payment_term_id') == $paymentTerm->id ? 'selected' : '' }}>
                                     {{ $paymentTerm->id }} -
                                     {{ $paymentTerm->condicaoPagamento }}
                                 </option>
                             @endforeach
                         </select>
 
-                        {{-- Botão de ação do modal de selecionar forma de pagamento --}}
                         <button class="btn btn-outline-secondary"
                             style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
                             type="button"
@@ -372,17 +388,12 @@
                             data-bs-target="#paymentTermModal">
                             <span class="tf-icons bx bx-search bx-18px"></span>
                         </button>
-                        {{-- End Button --}}
                     </div>
 
-
-                    @error('payment-term_id')
+                    @error('payment_term_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Demais campos do formulário continuam aqui... -->
-
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
                     <div>
@@ -406,6 +417,7 @@
                             class="btn btn-success toUpperCase">Cadastrar</button>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -415,18 +427,26 @@
             const tipoPessoa = document.getElementById('tipoPessoa').value;
             const fisicaFields = document.querySelectorAll('.fisica-fields');
             const juridicaFields = document.querySelectorAll('.juridica-fields');
+            const fisicaInputs = document.querySelectorAll('.fisica-input');
+            const juridicaInputs = document.querySelectorAll('.juridica-input');
 
             if (tipoPessoa === 'F') {
+                // Exibe campos de pessoa física e desabilita os de pessoa jurídica
                 fisicaFields.forEach(field => field.style.display = 'block');
                 juridicaFields.forEach(field => field.style.display = 'none');
+                fisicaInputs.forEach(input => input.disabled = false);
+                juridicaInputs.forEach(input => input.disabled = true);
             } else {
+                // Exibe campos de pessoa jurídica e desabilita os de pessoa física
                 fisicaFields.forEach(field => field.style.display = 'none');
                 juridicaFields.forEach(field => field.style.display = 'block');
+                fisicaInputs.forEach(input => input.disabled = true);
+                juridicaInputs.forEach(input => input.disabled = false);
             }
         }
 
-        $(document).ready(function() {
-            toggleFields();
-        });
+        // Inicializa os campos com base na seleção atual
+        document.addEventListener('DOMContentLoaded', toggleFields);
     </script>
+
 @endsection

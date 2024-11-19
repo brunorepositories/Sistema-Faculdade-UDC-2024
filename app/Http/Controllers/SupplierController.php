@@ -72,9 +72,6 @@ class SupplierController extends Controller
           'payment_term_id',
         ]);
 
-        // Converte os campos de string para uppercase, se necessário
-        $supplierData = array_map('strtoupper', $supplierData);
-
         Supplier::create($supplierData);
       });
 
@@ -84,6 +81,80 @@ class SupplierController extends Controller
       return to_route('supplier.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
+
+  public function export()
+  {
+    $suppliers = Supplier::with(['city', 'paymentTerm'])->get(); // Carrega as relações necessárias
+
+    // Cabeçalhos do CSV correspondentes às colunas da migrate
+    $csvData = [];
+    $csvData[] = [
+      'Código',
+      'Tipo de Pessoa',
+      'Razão Social',
+      'CPF/CNPJ',
+      'RG/IE',
+      'Endereço',
+      'Bairro',
+      'Número',
+      'CEP',
+      'Apelido / Nome Fantasia',
+      'Complemento',
+      'Sexo',
+      'Email',
+      'Usuário',
+      'Telefone',
+      'Celular',
+      'Nome do Contato',
+      'Data de Nascimento',
+      'Ativo',
+      'Cidade',
+      'Termos de Pagamento'
+    ];
+
+    // Adiciona os dados do fornecedor ao CSV
+    foreach ($suppliers as $supplier) {
+      $csvData[] = [
+        $supplier->id,
+        $supplier->tipoPessoa,
+        $supplier->fornecedorRazaoSocial,
+        $supplier->cpfCnpj,
+        $supplier->rgIe ?? '-',
+        $supplier->endereco,
+        $supplier->bairro,
+        $supplier->numero,
+        $supplier->cep,
+        $supplier->apelidoNomeFantasia ?? '-',
+        $supplier->complemento ?? '-',
+        $supplier->sexo ?? '-',
+        $supplier->email ?? '-',
+        $supplier->usuario ?? '-',
+        $supplier->telefone ?? '-',
+        $supplier->celular,
+        $supplier->nomeContato ?? '-',
+        $supplier->dataNasc ? \Carbon\Carbon::parse($supplier->dataNasc)->format('d/m/Y') : '-',
+        $supplier->ativo ? 'Sim' : 'Não',
+        $supplier->city->nome ?? '-', // Nome da cidade
+        $supplier->paymentTerm->descricao ?? '-' // Termos de pagamento
+      ];
+    }
+
+    // Gera o arquivo CSV
+    $filename = 'fornecedores-export_' . now()->format('dmY-Hi') . '.csv';
+    $handle = fopen('php://temp', 'w');
+    foreach ($csvData as $row) {
+      fputcsv($handle, $row, ';');
+    }
+    rewind($handle);
+    $content = stream_get_contents($handle);
+    fclose($handle);
+
+    // Retorna a resposta como arquivo para download
+    return response($content)
+      ->header('Content-Type', 'text/csv')
+      ->header('Content-Disposition', "attachment; filename=\"$filename\"");
+  }
+
 
   /**
    * Display the specified resource.
@@ -98,7 +169,10 @@ class SupplierController extends Controller
    */
   public function edit(Supplier $supplier)
   {
-    return view('content.supplier.edit', compact('supplier'));
+    $cities = City::all();
+    $paymentTerms = PaymentTerm::all();
+
+    return view('content.supplier.edit', compact('supplier', 'cities', 'paymentTerms'));
   }
 
   /**

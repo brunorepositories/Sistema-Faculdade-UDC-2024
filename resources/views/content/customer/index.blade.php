@@ -9,6 +9,8 @@
             <h4 class="head-label">Clientes</h4>
 
             <div class="dt-action-buttons">
+                <a class="btn btn-outline-primary toUpperCase me-4" href="{{ route('customer.export') }}">Exportar
+                    relatório</a>
                 <a class="btn btn-primary toUpperCase" href="{{ route('customer.create') }}">Cadastrar Cliente</a>
             </div>
         </div>
@@ -23,7 +25,7 @@
                     <input type="text" name="search" class="form-control toUpperCase"
                         placeholder="Buscar por nome do cliente"
                         value="{{ request('search') }}">
-                    <button type="submit" class="btn btn-primary toUpperCase">Buscar</button>
+                    <button type="submit" class="btn btn-secondary toUpperCase">Buscar</button>
                 </div>
             </form>
 
@@ -35,8 +37,8 @@
                             <th>Código</th>
                             <th>Cliente</th>
                             <th>Documento</th>
-                            <th>Email</th>
                             <th>Telefone</th>
+                            <th>Email</th>
                             <th>Ativo</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
@@ -46,14 +48,24 @@
                             <tr>
                                 <td>{{ $customer->id }}</td>
                                 <td>{{ $customer->clienteRazaoSocial }}</td>
-                                @if ($customer->tipoPessoa == 'F')
-                                    <td>{{ $customer->cpf }}</td>
-                                @else
-                                    <td>{{ $customer->cnpj }}</td>
-                                @endif
-                                <td>{{ $customer->email }}</td>
+                                <td>{{ $customer->cpfCnpj }}</td>
                                 <td>{{ $customer->telefone }}</td>
-                                <td>{{ $customer->ativo ? 'Sim' : 'Não' }}</td>
+                                <td>{{ $customer->email }}</td>
+                                <!-- Alteração para exibir o checkbox -->
+                                <td>
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="ativo"
+                                            id="ativo_{{ $customer->id }}"
+                                            value="1"
+                                            disabled
+                                            {{ $customer->ativo ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="ativo_{{ $customer->id }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('customer.edit', $customer->id) }}">

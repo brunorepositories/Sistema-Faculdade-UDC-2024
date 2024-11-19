@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Measure;
 use App\Models\Supplier;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,63 @@ class ProductController extends Controller
       return to_route('product.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
+
+  public function export()
+  {
+    $products = Product::with(['measure', 'supplier'])->get(); // Carrega as relações necessárias
+
+    // Cabeçalhos do CSV correspondentes às colunas da migrate
+    $csvData = [];
+    $csvData[] = [
+      'Código',
+      'Nome',
+      'Estoque',
+      'Preço de Custo',
+      'Custo da Última Compra',
+      'Data da Última Compra',
+      'Preço de Venda',
+      'Custo da Última Venda',
+      'Data da Última Venda',
+      'Ativo',
+      'Medida',
+      'Fornecedor'
+    ];
+
+    // Adiciona os dados do produto ao CSV
+    foreach ($products as $product) {
+      $csvData[] = [
+        $product->id,
+        $product->nome,
+        $product->estoque,
+        number_format($product->precoCusto, 2, ',', '.'),
+        number_format($product->custoUltimaCompra, 2, ',', '.'),
+        $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-',
+        number_format($product->precoVenda, 2, ',', '.'),
+        number_format($product->custoUltimaVenda, 2, ',', '.'),
+        $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-',
+        $product->ativo ? 'Sim' : 'Não',
+        $product->measure->nome . ' (' . $product->measure->sigla . ')', // Nome e sigla da medida
+        $product->supplier->nome ?? '-' // Nome do fornecedor, caso exista
+      ];
+    }
+
+    // Gera o arquivo CSV
+    $filename = 'produtos-export_' . now()->format('dmY-Hi') . '.csv';
+    $handle = fopen('php://temp', 'w');
+    foreach ($csvData as $row) {
+      fputcsv($handle, $row, ';');
+    }
+    rewind($handle);
+    $content = stream_get_contents($handle);
+    fclose($handle);
+
+    // Retorna a resposta como arquivo para download
+    return response($content)
+      ->header('Content-Type', 'text/csv')
+      ->header('Content-Disposition', "attachment; filename=\"$filename\"");
+  }
+
+
 
   /**
    * Display the specified resource.
