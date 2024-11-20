@@ -43,8 +43,9 @@ class PurchaseController extends Controller
     $fornecedores = Supplier::where('ativo', true)->orderBy('id')->get();
     $paymentTerms = PaymentTerm::where('ativo', true)->orderBy('id')->get();
     $products = Product::where('ativo', true)->orderBy('id')->get();
+    $suppliers = Supplier::where('ativo', true)->orderBy('id')->get();
 
-    return view('content.purchase.create', compact('fornecedores', 'paymentTerms', 'products'));
+    return view('content.purchase.create', compact('fornecedores', 'paymentTerms', 'products', 'suppliers'));
   }
 
   /**

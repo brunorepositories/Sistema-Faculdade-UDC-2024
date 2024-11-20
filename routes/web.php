@@ -13,7 +13,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
 
 // Main Page Route
-Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
+Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
 
 
 // Funcionários
