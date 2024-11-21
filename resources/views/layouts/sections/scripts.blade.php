@@ -6,6 +6,7 @@
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Theme JS-->
 @vite(['resources/assets/js/main.js'])
+@vite(['resources/js/app.js', 'resources/css/app.css'])
 
 <!-- END: Theme JS-->
 <!-- Pricing Modal JS-->

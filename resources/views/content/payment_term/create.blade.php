@@ -223,42 +223,40 @@
 
     <!-- Modal Selecionar Medida -->
     @include('content.payment_term.modal.selectPaymentForm')
-@endsection
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    let parcelaCount = 0;
-    let percentualTotal = 0;
+    <script>
+        let parcelaCount = 0;
+        let percentualTotal = 0;
 
-    $(document).ready(function() {
-        $('#add-parcela').on('click', function() {
+        $(document).ready(function() {
+            $('#add-parcela').on('click', function() {
 
-            // Recupera os valores dos campos
-            const numParcela = $('#parcela').val();
-            const diasParcela = $('#dias').val();
-            const percentualParcela = $('#percentual').val();
-            const payment_form_id = $('#payment_form_id').val();
-            const formaPagamentoText = $('#payment_form_id option:selected').text();
+                // Recupera os valores dos campos
+                const numParcela = $('#parcela').val();
+                const diasParcela = $('#dias').val();
+                const percentualParcela = $('#percentual').val();
+                const payment_form_id = $('#payment_form_id').val();
+                const formaPagamentoText = $('#payment_form_id option:selected').text();
 
-            // Valida se todos os campos estão preenchidos
-            if (!numParcela || !diasParcela || !percentualParcela || !payment_form_id) {
-                return alert(
-                    'Por favor, preencha todos os campos antes de adicionar uma parcela.'
-                );
-            }
+                // Valida se todos os campos estão preenchidos
+                if (!numParcela || !diasParcela || !percentualParcela || !payment_form_id) {
+                    return alert(
+                        'Por favor, preencha todos os campos antes de adicionar uma parcela.'
+                    );
+                }
 
-            if (percentualTotal + parseFloat(percentualParcela) > 100) {
-                return alert(
-                    'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
-                );
-            }
+                if (percentualTotal + parseFloat(percentualParcela) > 100) {
+                    return alert(
+                        'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
+                    );
+                }
 
-            // Incrementa o contador de parcelas e o percentual total
-            parcelaCount++;
-            percentualTotal += parseFloat(percentualParcela);
+                // Incrementa o contador de parcelas e o percentual total
+                parcelaCount++;
+                percentualTotal += parseFloat(percentualParcela);
 
-            // Adiciona a nova linha na tabela com os dados da parcela
-            $('#parcelas-list').append(` <tr class="parcela-item" data-index="${parcelaCount}">
+                // Adiciona a nova linha na tabela com os dados da parcela
+                $('#parcelas-list').append(` <tr class="parcela-item" data-index="${parcelaCount}">
                                         <td>${numParcela}</td>
                                         <td>${diasParcela}</td>
                                         <td>${percentualParcela}</td>
@@ -274,52 +272,55 @@
                                         <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
                                     </tr> `);
 
-            // Limpar os campos após adicionar a parcela
-            $('#parcela').val('');
-            $('#dias').val('');
-            $('#percentual').val('');
-            $('#payment_form_id').val('');
+                // Limpar os campos após adicionar a parcela
+                $('#parcela').val('');
+                $('#dias').val('');
+                $('#percentual').val('');
+                $('#payment_form_id').val('');
 
-            // Atualiza o percentual total
-            $('#percentualTotal').val(percentualTotal.toFixed(2));
+                // Atualiza o percentual total
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
 
-            // Reordena as parcelas
-            reorderParcelas();
-        });
-
-        $(document).on('click', '.remove-parcela', function() {
-            // Diminui o contador de parcelas
-            parcelaCount--;
-
-            // Captura o valor percentual da parcela que será removida
-            const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
-                .text());
-
-            // Subtrai o percentual da parcela do total
-            percentualTotal -= percentualParcela;
-
-            // Atualiza o valor do percentual total no campo
-            $('#percentualTotal').val(percentualTotal.toFixed(2));
-
-            // Remove a linha da tabela
-            $(this).closest('.parcela-item').remove();
-
-            // Reordena as parcelas após a remoção
-            reorderParcelas();
-        });
-
-        function reorderParcelas() {
-            const rows = $('#parcelas-list .parcela-item').get();
-
-            // Ordena as linhas com base no número da parcela (assumindo que está na primeira coluna)
-            rows.sort((a, b) => {
-                const numA = parseInt($(a).find('td:eq(0)').text());
-                const numB = parseInt($(b).find('td:eq(0)').text());
-                return numA - numB; // Ordem crescente
+                // Reordena as parcelas
+                reorderParcelas();
             });
 
-            // Remove todas as linhas e adiciona na ordem correta
-            $('#parcelas-list').empty().append(rows);
-        }
-    });
-</script>
+            $(document).on('click', '.remove-parcela', function() {
+                // Diminui o contador de parcelas
+                parcelaCount--;
+
+                // Captura o valor percentual da parcela que será removida
+                const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
+                    .text());
+
+                // Subtrai o percentual da parcela do total
+                percentualTotal -= percentualParcela;
+
+                // Atualiza o valor do percentual total no campo
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                // Remove a linha da tabela
+                $(this).closest('.parcela-item').remove();
+
+                // Reordena as parcelas após a remoção
+                reorderParcelas();
+            });
+
+            function reorderParcelas() {
+                const rows = $('#parcelas-list .parcela-item').get();
+
+                // Ordena as linhas com base no número da parcela (assumindo que está na primeira coluna)
+                rows.sort((a, b) => {
+                    const numA = parseInt($(a).find('td:eq(0)').text());
+                    const numB = parseInt($(b).find('td:eq(0)').text());
+                    return numA - numB; // Ordem crescente
+                });
+
+                // Remove todas as linhas e adiciona na ordem correta
+                $('#parcelas-list').empty().append(rows);
+            }
+        });
+    </script>
+
+
+@endsection

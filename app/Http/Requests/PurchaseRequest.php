@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckArray;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PurchaseRequest extends FormRequest
@@ -16,10 +17,10 @@ class PurchaseRequest extends FormRequest
     // Verifica se estamos atualizando uma compra
     if ($this->route('purchase')) {
       $purchaseId = $this->route('purchase')->id;
-      $uniqueNumeroNota = "unique:purchases,numero_nota,{$purchaseId},id,supplier_id,{$this->supplier_id}";
+      $uniqueNumeroNota = "unique:purchases,numeroNota,{$purchaseId},id,supplier_id,{$this->supplier_id}";
     } else {
       // Para criação, apenas a regra de unicidade
-      $uniqueNumeroNota = "unique:purchases,numero_nota,NULL,id,supplier_id,{$this->supplier_id}";
+      $uniqueNumeroNota = "unique:purchases,numeroNota,NULL,id,supplier_id,{$this->supplier_id}";
     }
 
     return [
@@ -28,16 +29,17 @@ class PurchaseRequest extends FormRequest
       'serie' => ['required', 'max:10'],
       'supplier_id' => ['required', 'exists:suppliers,id'],
       'dataEmissao' => ['required', 'date', 'before_or_equal:now'],
-      'dataChegada' => ['required', 'date', 'after_or_equal:data_emissao'],
-      'tipoFrete' => ['required', 'max:1'],
+      'dataChegada' => ['required', 'date', 'after_or_equal:dataEmissao'],
+      'tipoFrete' => ['required', 'in:CIF,FOB'],
       'valorFrete' => ['nullable', 'numeric', 'min:0'],
       'valorSeguro' => ['nullable', 'numeric', 'min:0'],
       'outrasDespesas' => ['nullable', 'numeric', 'min:0'],
       'totalProdutos' => ['required', 'numeric', 'min:0.01'],
+      'produtos' => new CheckArray,
       'totalPagar' => ['required', 'numeric', 'min:0.01'],
       'payment_term_id' => ['required', 'exists:payment_terms,id'],
       'observacao' => ['nullable', 'max:1000'],
-      'dataCancelamento' => ['nullable', 'date', 'after_or_equal:data_emissao'],
+      'dataCancelamento' => ['nullable', 'date', 'after_or_equal:dataEmissao'],
     ];
   }
 

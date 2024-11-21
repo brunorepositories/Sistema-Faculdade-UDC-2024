@@ -37,6 +37,8 @@
     <!-- Include Scripts -->
     @include('layouts/sections/scripts')
 
+    {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
+
 </body>
 
 </html>

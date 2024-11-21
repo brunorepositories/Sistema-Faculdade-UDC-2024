@@ -91,6 +91,7 @@
                         class="form-control preco"
                         id="precoVenda"
                         placeholder="R$ 0,00"
+                        maxlength="17"
                         value="{{ old('precoVenda') }}">
                     @error('precoVenda')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -106,6 +107,7 @@
                         class="form-control preco"
                         id="precoCusto"
                         placeholder="R$ 0,00"
+                        maxlength="17"
                         value="{{ old('precoCusto') }}">
                 </div>
 
@@ -118,6 +120,7 @@
                         class="form-control preco"
                         id="custoUltimaCompra"
                         placeholder="R$ 0,00"
+                        maxlength="17"
                         value="{{ old('custoUltimaCompra') }}">
                     @error('custoUltimaCompra')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -133,6 +136,7 @@
                         class="form-control preco"
                         id="custoUltimaVenda"
                         placeholder="R$ 0,00"
+                        maxlength="17"
                         value="{{ old('custoUltimaVenda') }}">
                     @error('custoUltimaVenda')
                         <div class="invalid-feedback">{{ $message }}</div>

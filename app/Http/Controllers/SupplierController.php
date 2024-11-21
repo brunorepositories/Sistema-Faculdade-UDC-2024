@@ -112,18 +112,18 @@ class SupplierController extends Controller
     foreach ($purchases as $purchase) {
       $csvData[] = [
         $purchase->id,
-        $purchase->numero_nota,
+        $purchase->numeroNota,
         $purchase->modelo,
         $purchase->serie,
         $purchase->supplier->fornecedorRazaoSocial ?? '-', // Nome do fornecedor
-        $purchase->data_emissao->format('d/m/Y'),
-        $purchase->data_chegada->format('d/m/Y'),
-        $purchase->tipo_frete ? 'Frete Pago' : 'Frete a Pagar', // Traduz tipo de frete (booleano)
-        number_format($purchase->valor_frete ?? 0, 2, ',', '.'),
-        number_format($purchase->valor_seguro ?? 0, 2, ',', '.'),
-        number_format($purchase->outras_despesas ?? 0, 2, ',', '.'),
-        number_format($purchase->total_produtos, 2, ',', '.'),
-        number_format($purchase->total_pagar, 2, ',', '.'),
+        $purchase->dataEmissao->format('d/m/Y'),
+        $purchase->dataChegada->format('d/m/Y'),
+        $purchase->tipoFrete ? 'Frete Pago' : 'Frete a Pagar', // Traduz tipo de frete (booleano)
+        number_format($purchase->valorFrete ?? 0, 2, ',', '.'),
+        number_format($purchase->valorSeguro ?? 0, 2, ',', '.'),
+        number_format($purchase->outrasDespesas ?? 0, 2, ',', '.'),
+        number_format($purchase->totalProdutos, 2, ',', '.'),
+        number_format($purchase->totalPagar, 2, ',', '.'),
         $purchase->paymentTerm->descricao ?? '-', // Termos de pagamento
         $purchase->observacao ?? '-', // Observações
         $purchase->data_cancelamento ? $purchase->data_cancelamento->format('d/m/Y') : '-' // Data de cancelamento
@@ -155,6 +155,33 @@ class SupplierController extends Controller
   {
     return view('content.supplier.show', compact('supplier'));
   }
+
+
+  public function findId($id)
+  {
+    // Tenta encontrar o fornecedor pelo ID
+    $supplier = Supplier::find($id);
+
+    // Verifica se o fornecedor foi encontrado
+    if ($supplier) {
+      return response()->json([
+        'success' => true,
+        'message' => 'Fornecedor encontrado.',
+        'exists' => true,
+        'supplier' => $supplier
+      ], 200);
+    }
+
+    // Se não encontrar o fornecedor, retorna uma mensagem de erro
+    return response()->json([
+      'success' => false,
+      'message' => 'Nenhum registro encontrado.',
+      'exists' => false,
+      'supplier' => null
+    ], 404);
+  }
+
+
 
   /**
    * Show the form for editing the specified resource.

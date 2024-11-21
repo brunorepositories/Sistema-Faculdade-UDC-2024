@@ -24,7 +24,7 @@ return new class extends Migration
 
       $table->date('dataEmissao'); // Data de emissão
       $table->date('dataChegada'); // Data de chegada
-      $table->boolean('tipoFrete'); // Tipo de frete (bool)
+      $table->char('tipoFrete', 3); // Tipo de frete (bool)
       $table->decimal('valorFrete', 10, 2)->nullable(); // Valor do frete (opcional)
       $table->decimal('valorSeguro', 10, 2)->nullable(); // Valor do seguro (opcional)
       $table->decimal('outrasDespesas', 10, 2)->nullable(); // Outras despesas (opcional)

@@ -15,15 +15,13 @@ use App\Http\Controllers\SupplierController;
 // Main Page Route
 Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
 
-
 // Funcionários
 // Route::resource('employee', EmployeeController::class);
-
-
 
 // Compras
 Route::resource('purchase', PurchaseController::class);
 Route::get('/purchases/export', [PurchaseController::class, 'export'])->name('purchase.export');
+Route::post('/check-purchase', [PurchaseController::class, 'checkPurchase'])->name('purchase.check');
 
 
 // Clientes
@@ -35,6 +33,7 @@ Route::get('/customers/export', [CustomerController::class, 'export'])->name('cu
 // Fornecedores
 Route::resource('supplier', SupplierController::class);
 Route::get('/suppliers/export', [SupplierController::class, 'export'])->name('supplier.export');
+Route::get('/suppliers/findId/{id}', [SupplierController::class, 'findId'])->name('supplier.findId');
 
 
 // Condição de Pagamento

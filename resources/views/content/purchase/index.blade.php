@@ -5,10 +5,13 @@
 @section('content')
 
     <div class="card">
+
         <div class="card-header d-flex justify-content-between">
-            <h4 class="head-label">Notas de Compra</h4>
+            <h4 class="head-label">Compras</h4>
 
             <div class="dt-action-buttons">
+                <a class="btn btn-outline-primary toUpperCase me-4" href="{{ route('purchase.export') }}">Exportar
+                    relatório</a>
                 <a class="btn btn-primary toUpperCase" href="{{ route('purchase.create') }}">Registrar Compra</a>
             </div>
         </div>
@@ -34,7 +37,7 @@
                     <tbody class="table-border-bottom-0">
                         @foreach ($purchases as $purchase)
                             <tr>
-                                <td>{{ $purchase->supplier->fornecedorRazaoSocial }}</td>
+                                <td>{{ $purchase->supplier->id }} - {{ $purchase->supplier->fornecedorRazaoSocial }}</td>
                                 <td>{{ $purchase->numeroNota }}</td>
                                 <td>{{ $purchase->modelo }}</td>
                                 <td>{{ $purchase->serie }}</td>

@@ -45,7 +45,7 @@ class Purchase extends Model
   protected $casts = [
     'dataEmissao' => 'date',
     'dataChegada' => 'date',
-    'tipoFrete' => 'boolean',
+    'tipoFrete' => 'char',
     'valorFrete' => 'decimal:2',
     'valorSeguro' => 'decimal:2',
     'outrasDespesas' => 'decimal:2',
@@ -87,8 +87,8 @@ class Purchase extends Model
    */
   public function getTotalDespesasAdicionais(): float
   {
-    return (float) ($this->valor_frete ?? 0) +
-      (float) ($this->valor_seguro ?? 0) +
-      (float) ($this->outras_despesas ?? 0);
+    return (float) ($this->valorFrete ?? 0) +
+      (float) ($this->valorSeguro ?? 0) +
+      (float) ($this->outrasDespesas ?? 0);
   }
 }
