@@ -13,13 +13,12 @@
         <div>
             {{-- Etapa 1: Informações Básicas --}}
             <div id="step1" class="step">
-                <div class="card mb-4">
+                <div class="card mb-8">
 
                     <div class="card-header d-flex justify-content-between">
-                        <h4>Registrar Nota Fiscal de Compra</h5>
-                        </h4>
+                        <h4 class="mb-0">Registrar Nota Fiscal de Compra</h4>
 
-                        <h6>Etapa 1</h6>
+                        <p class="badge bg-label-primary">Etapa 1</p>
                     </div>
                     <div class="card-body" id="step1Content">
                         <div class="row">
@@ -151,12 +150,11 @@
             </div>
 
 
-            <div class="card mb-4 d-none">
+            <div class="card mb-8 d-none">
 
                 <div class="card-header d-flex justify-content-between">
                     <h5>Produtos</h5>
-
-                    <h6>Etapa 2</h6>
+                    <p class="badge bg-label-primary">Etapa 2</p>
                 </div>
                 <div class="card-body ">
                     <span class="d-flex justify-content-center">
@@ -168,9 +166,11 @@
             {{-- Etapa 2: Produtos e Condições --}}
             <div id="step2" class="step">
 
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-end">
-                        <h5 class="mb-0">Adicionar Produtos</h5>
+                <div class="card mb-8">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="mb-0">Produtos</h5>
+
+                        <p class="badge bg-label-primary">Etapa 2</p>
                     </div>
                     <div class="card-body" id="step2Content">
                         <div class="d-flex justify-content-between align-items-end">
@@ -315,23 +315,36 @@
                             </div>
 
                             <!-- Seção Totais -->
-                            <div>
+                            <div class="ms-4">
                                 <h5>Totais</h5>
                                 <div class="d-flex">
-                                    <div>
-                                        <label for="totalProdutos" class="form-label toUpperCase">Total
+                                    <div class="col-3">
+                                        <label for="qtdTotalProdutos" class="form-label toUpperCase">QTD.
+                                            produtos</label>
+                                        <input
+                                            disabled
+                                            type="text"
+                                            name="qtdTotalProdutos"
+                                            placeholder="0"
+                                            id="qtdTotalProdutos"
+                                            class="form-control toUpperCase text-end"
+                                            value="{{ old('qtdTotalProdutos') }}">
+                                    </div>
+                                    <div class="ms-4">
+                                        <label for="totalProdutos" class="form-label toUpperCase preco">valor
                                             produtos</label>
                                         <input
                                             disabled
                                             type="text"
                                             name="totalProdutos"
-                                            placeholder="0"
+                                            placeholder="R$ 00,00"
+                                            maxlength="17"
                                             id="totalProdutos"
-                                            class="form-control toUpperCase text-end"
+                                            class="form-control preco toUpperCase text-end"
                                             value="{{ old('totalProdutos') }}">
                                     </div>
                                     <div class="ms-4">
-                                        <label for="totalPagar" class="form-label toUpperCase preco">Total a pagar</label>
+                                        <label for="totalPagar" class="form-label toUpperCase preco">valor da nota</label>
                                         <input
                                             disabled
                                             type="text"
@@ -377,12 +390,12 @@
             </div>
 
 
-            <div class="card mb-4 d-none">
+            <div class="card mb-8 d-none">
 
                 <div class="card-header d-flex justify-content-between">
-                    <h5>Condição de Pagamento</h5>
+                    <h5 class="mb-0">Condição de Pagamento</h5>
 
-                    <h5>Etapa 3</h5>
+                    <p class="badge bg-label-primary">Etapa 3</p>
                 </div>
                 <div class="card-body ">
                     <span class="d-flex justify-content-center">
@@ -393,9 +406,11 @@
 
             {{-- Etapa 3: Gerar Parcelas --}}
             <div id="step3" class="step">
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card mb-8">
+                    <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Condição de Pagamento</h5>
+
+                        <p class="badge bg-label-primary">Etapa 3</p>
                     </div>
                     <div class="card-body" id="step3Content">
                         <div class="d-flex justify-content-between align-items-end">
