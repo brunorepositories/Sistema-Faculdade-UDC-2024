@@ -25,11 +25,11 @@
                     <thead>
                         <tr>
                             <th>Fornecedor</th>
-                            <th>Número da Nota</th>
+                            <th>Nº Nota</th>
                             <th>Modelo</th>
                             <th>Série</th>
-                            <th>Data Emissão</th>
-                            <th>Data Chegada</th>
+                            <th class="text-center"> Data Emissão</th>
+                            <th class="text-center">Data Chegada</th>
                             <th>Valor da Nota</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
@@ -42,20 +42,20 @@
                                 <td>{{ $purchase->modelo }}</td>
                                 <td>{{ $purchase->serie }}</td>
                                 <!-- Assumindo que 'supplier' é o relacionamento com o fornecedor -->
-                                <td>{{ $purchase->dataEmissao->format('d/m/Y') }}</td>
-                                <td>{{ $purchase->dataChegada->format('d/m/Y') }}</td>
-                                <td>R$ {{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
+                                <td class="text-center">{{ $purchase->dataEmissao->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ $purchase->dataChegada->format('d/m/Y') }}</td>
+                                <td class="text-end">R$ {{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('purchase.edit', $purchase->id) }}">
-                                        <span class="tf-icons bx bx-edit bx-22px"></span>
+                                        <span class="bx bx-edit bx-tada-hover bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $purchase->id }}">
-                                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                                        <span class="bx bx-trash bx-tada-hover bx-22px"></span>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->

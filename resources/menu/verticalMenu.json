@@ -19,9 +19,9 @@
       "slug": "purchase.index"
     },
     {
-      "url": "/accountsPayable",
+      "url": "/account_payable",
       "name": "Contas a Pagar",
-      "slug": "accountsPayable.index"
+      "slug": "account_payable.index"
     },
     {
       "menuHeader": "Cadastros"

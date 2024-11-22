@@ -36,14 +36,14 @@
                                 <td style="width: 150px">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('measure.edit', $measure->id) }}">
-                                        <span class="tf-icons bx bx-edit bx-22px"></span>
+                                        <span class="bx bx-edit bx-22px bx-tada-hover"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $measure->id }}">
-                                        <i class='bx bx-trash'></i>
+                                        <i class='bx bx-trash bx-22px bx-tada-hover'></i>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->

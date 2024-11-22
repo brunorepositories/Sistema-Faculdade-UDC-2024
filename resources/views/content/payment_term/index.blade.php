@@ -24,10 +24,10 @@
                         <tr>
                             <th>Código</th>
                             <th>Condição de Pagamento</th>
-                            <th>Multa</th>
-                            <th>Juros</th>
-                            <th>Desconto</th>
-                            <th>Quantidade de Parcelas</th>
+                            <th class="text-center">Multa</th>
+                            <th class="text-center">Juros</th>
+                            <th class="text-center">Desconto</th>
+                            <th class="text-center">Qtd. Parcelas</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
@@ -36,21 +36,21 @@
                             <tr>
                                 <td>{{ $paymentTerm->id }}</td>
                                 <td>{{ $paymentTerm->condicaoPagamento }}</td>
-                                <td>{{ $paymentTerm->multa }}</td>
-                                <td>{{ $paymentTerm->juros }}</td>
-                                <td>{{ $paymentTerm->desconto }}</td>
-                                <td>{{ $paymentTerm->qtdParcelas }}</td>
+                                <td class="text-center">{{ $paymentTerm->multa }}</td>
+                                <td class="text-center">{{ $paymentTerm->juros }}</td>
+                                <td class="text-center">{{ $paymentTerm->desconto }}</td>
+                                <td class="text-center">{{ $paymentTerm->qtdParcelas }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('payment_term.edit', $paymentTerm->id) }}">
-                                        <span class="tf-icons bx bx-edit bx-22px"></span>
+                                        <span class="bx bx-edit bx-tada-hover bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $paymentTerm->id }}">
-                                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                                        <span class="bx bx-trash bx-tada-hover bx-22px"></span>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->

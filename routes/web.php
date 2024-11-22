@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountPayableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
-use App\Models\AccountReceivable;
+// use App\Models\AccountReceivable;
 
 // Main Page Route
 Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
@@ -19,7 +20,7 @@ Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
 
 
 // Contas a receber
-Route::resource('account-receivable', AccountReceivable::class);
+Route::resource('account_payable', AccountPayableController::class);
 
 // Compras
 Route::resource('purchase', PurchaseController::class);

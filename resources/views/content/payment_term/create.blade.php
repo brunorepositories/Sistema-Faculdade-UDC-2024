@@ -249,6 +249,176 @@
         }
 
         $(document).ready(function() {
+            // Reconstrói as parcelas do old() se existirem
+            const oldParcelas = {!! json_encode(old('parcelas', [])) !!};
+
+            if (Object.keys(oldParcelas).length > 0) {
+                Object.keys(oldParcelas).forEach(index => {
+                    const parcela = oldParcelas[index];
+
+                    // Incrementa o contador e adiciona ao percentual total
+                    parcelaCount++;
+                    percentualTotal += parseFloat(parcela.percentual);
+
+                    // Busca o texto da forma de pagamento
+                    const formaPagamentoText = $(
+                        `#payment_form_id option[value='${parcela.payment_form_id}']`).text();
+
+                    // Adiciona a linha na tabela
+                    $('#parcelas-list').append(`
+                      <tr class="parcela-item" data-index="${index}">
+                          <td>${parcela.parcela}</td>
+                          <td>${parcela.dias}</td>
+                          <td>${parcela.percentual}</td>
+                          <td>${formaPagamentoText}</td>
+                          <td class="size-col-action">
+                              <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-parcela">
+                                  <span class="tf-icons bx bx-trash bx-22px"></span>
+                              </button>
+                          </td>
+                          <input type="hidden" name="parcelas[${index}][parcela]" value="${parcela.parcela}">
+                          <input type="hidden" name="parcelas[${index}][dias]" value="${parcela.dias}">
+                          <input type="hidden" name="parcelas[${index}][percentual]" value="${parcela.percentual}">
+                          <input type="hidden" name="parcelas[${index}][payment_form_id]" value="${parcela.payment_form_id}">
+                      </tr>
+                  `);
+                });
+
+                // Atualiza o campo de percentual total
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                // Reordena as parcelas
+                reorderParcelas();
+            }
+
+            // Adiciona validação no envio do formulário
+            $('form').on('submit', function(e) {
+                // Verifica se o percentual total é diferente de 100
+                if (percentualTotal !== 100) {
+                    e.preventDefault(); // Impede o envio do formulário
+                    alert(
+                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.');
+                    return false;
+                }
+                return true;
+            });
+
+            $('#add-parcela').on('click', function() {
+                // Recupera os valores dos campos
+                const numParcela = $('#parcela').val();
+                const diasParcela = $('#dias').val();
+                const percentualParcela = $('#percentual').val();
+                const payment_form_id = $('#payment_form_id').val();
+                const formaPagamentoText = $('#payment_form_id option:selected').text();
+
+                // Valida se todos os campos estão preenchidos
+                if (!numParcela || !diasParcela || !percentualParcela || !payment_form_id) {
+                    return alert('Por favor, preencha todos os campos antes de adicionar uma parcela.');
+                }
+
+                if (percentualTotal + parseFloat(percentualParcela) > 100) {
+                    return alert(
+                        'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
+                        );
+                }
+
+                // Incrementa o contador de parcelas e o percentual total
+                parcelaCount++;
+                percentualTotal += parseFloat(percentualParcela);
+
+                // Adiciona a nova linha na tabela com os dados da parcela
+                $('#parcelas-list').append(`
+                  <tr class="parcela-item" data-index="${parcelaCount}">
+                      <td>${numParcela}</td>
+                      <td>${diasParcela}</td>
+                      <td>${percentualParcela}</td>
+                      <td>${formaPagamentoText}</td>
+                      <td class="size-col-action">
+                          <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-parcela">
+                              <span class="tf-icons bx bx-trash bx-22px"></span>
+                          </button>
+                      </td>
+                      <input type="hidden" name="parcelas[${parcelaCount}][parcela]" value="${numParcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
+                  </tr>
+              `);
+
+                // Limpar os campos após adicionar a parcela
+                $('#parcela').val('');
+                $('#dias').val('');
+                $('#percentual').val('');
+                $('#payment_form_id').val('');
+
+                // Atualiza o percentual total
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                // Reordena as parcelas
+                reorderParcelas();
+            });
+
+            $(document).on('click', '.remove-parcela', function() {
+                // Captura o valor percentual da parcela que será removida
+                const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
+                .text());
+
+                // Diminui o contador de parcelas
+                parcelaCount--;
+
+                // Subtrai o percentual da parcela do total
+                percentualTotal -= percentualParcela;
+
+                // Atualiza o valor do percentual total no campo
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                // Remove a linha da tabela
+                $(this).closest('.parcela-item').remove();
+
+                // Reordena as parcelas após a remoção
+                reorderParcelas();
+            });
+
+            // Validações dos campos de percentual
+            $('#desconto, #multa, #juros, #percentual').on('change', function() {
+                const campo = $(this);
+                const valor = parseFloat(campo.val() || 0);
+                const nomeCampo = campo.prev('label').text().toLowerCase();
+
+                if (valor > 100 || valor < 0) {
+                    campo.val('');
+                    alert(`O ${nomeCampo} deve estar entre 0 e 100%.`);
+                }
+            });
+
+            function reorderParcelas() {
+                const rows = $('#parcelas-list .parcela-item').get();
+
+                // Ordena as linhas com base no número da parcela
+                rows.sort((a, b) => {
+                    const numA = parseInt($(a).find('td:eq(0)').text());
+                    const numB = parseInt($(b).find('td:eq(0)').text());
+                    return numA - numB;
+                });
+
+                // Remove todas as linhas e adiciona na ordem correta
+                $('#parcelas-list').empty().append(rows);
+            }
+        });
+    </script>
+
+    {{-- <script>
+        let parcelaCount = 0;
+        let percentualTotal = 0;
+
+        // Limita o tamanho dos campos
+        function limitInputLength(input, length) {
+            if (input.value.length > length) {
+                input.value = input.value.slice(0, length);
+            }
+        }
+
+        $(document).ready(function() {
 
             // Adiciona validação no envio do formulário
             $('form').on('submit', function(e) {
@@ -392,7 +562,7 @@
                 $('#parcelas-list').empty().append(rows);
             }
         });
-    </script>
+    </script> --}}
 
 
 @endsection

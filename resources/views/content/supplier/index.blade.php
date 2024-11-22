@@ -68,14 +68,14 @@
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('supplier.edit', $supplier->id) }}">
-                                        <span class="tf-icons bx bx-edit bx-22px"></span>
+                                        <span class="bx bx-edit bx-tada-hover bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $supplier->id }}">
-                                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                                        <span class="bx bx-trash bx-tada-hover bx-22px"></span>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->

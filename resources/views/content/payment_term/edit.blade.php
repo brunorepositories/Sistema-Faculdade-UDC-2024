@@ -296,6 +296,169 @@
         }
 
         $(document).ready(function() {
+            // Reconstrói as parcelas do old() se existirem
+            const oldParcelas = {!! json_encode(old('parcelas', [])) !!};
+
+            // Se existirem parcelas no old(), reconstrói a tabela com elas
+            if (Object.keys(oldParcelas).length > 0) {
+                // Reseta os contadores pois vamos reconstruir do old()
+                parcelaCount = 0;
+                percentualTotal = 0;
+
+                // Limpa a tabela atual
+                $('#parcelas-list').empty();
+
+                // Reconstrói cada parcela do old()
+                Object.keys(oldParcelas).forEach(index => {
+                    const parcela = oldParcelas[index];
+
+                    // Incrementa os contadores
+                    parcelaCount++;
+                    percentualTotal += parseFloat(parcela.percentual);
+
+                    // Busca o texto da forma de pagamento
+                    const formaPagamentoText = $(
+                        `#payment_form_id option[value='${parcela.payment_form_id}']`).text();
+
+                    // Adiciona a linha na tabela
+                    $('#parcelas-list').append(`
+                      <tr class="parcela-item" data-index="${index}">
+                          <td>${parcela.parcela}</td>
+                          <td>${parcela.dias}</td>
+                          <td>${parcela.percentual}</td>
+                          <td>${formaPagamentoText}</td>
+                          <td class="size-col-action">
+                              <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-parcela">
+                                  <span class="tf-icons bx bx-trash bx-22px"></span>
+                              </button>
+                          </td>
+                          <input type="hidden" name="parcelas[${index}][parcela]" value="${parcela.parcela}">
+                          <input type="hidden" name="parcelas[${index}][dias]" value="${parcela.dias}">
+                          <input type="hidden" name="parcelas[${index}][percentual]" value="${parcela.percentual}">
+                          <input type="hidden" name="parcelas[${index}][payment_form_id]" value="${parcela.payment_form_id}">
+                      </tr>
+                  `);
+                });
+
+                // Reordena as parcelas
+                reorderParcelas();
+            }
+
+            // Atualiza o campo de percentual total inicialmente
+            $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+            // Adiciona validação no envio do formulário
+            $('form').on('submit', function(e) {
+                // Verifica se o percentual total é diferente de 100
+                if (percentualTotal !== 100) {
+                    e.preventDefault(); // Impede o envio do formulário
+                    alert(
+                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.');
+                    return false;
+                }
+                return true;
+            });
+
+            $('#add-parcela').on('click', function() {
+                const parcela = $('#parcela').val();
+                const diasParcela = $('#dias').val();
+                const percentualParcela = $('#percentual').val();
+                const payment_form_id = $('#payment_form_id').val();
+                const formaPagamentoText = $('#payment_form_id option:selected').text();
+
+                if (!parcela || !diasParcela || !percentualParcela || !payment_form_id) {
+                    return alert('Por favor, preencha todos os campos antes de adicionar uma parcela.');
+                }
+
+                if (percentualTotal + parseFloat(percentualParcela) > 100) {
+                    return alert(
+                        'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
+                        );
+                }
+
+                parcelaCount++;
+                percentualTotal += parseFloat(percentualParcela);
+
+                $('#parcelas-list').append(`
+                  <tr class="parcela-item" data-index="${parcelaCount}">
+                      <td>${parcela}</td>
+                      <td>${diasParcela}</td>
+                      <td>${percentualParcela}</td>
+                      <td>${formaPagamentoText}</td>
+                      <td class="size-col-action">
+                          <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-parcela">
+                              <span class="tf-icons bx bx-trash bx-22px"></span>
+                          </button>
+                      </td>
+                      <input type="hidden" name="parcelas[${parcelaCount}][parcela]" value="${parcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
+                      <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
+                  </tr>
+              `);
+
+                $('#parcela').val('');
+                $('#dias').val('');
+                $('#percentual').val('');
+                $('#payment_form_id').val('');
+
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                reorderParcelas();
+            });
+
+            $(document).on('click', '.remove-parcela', function() {
+                parcelaCount--;
+
+                const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
+                .text());
+
+                percentualTotal -= percentualParcela;
+
+                $('#percentualTotal').val(percentualTotal.toFixed(2));
+
+                $(this).closest('.parcela-item').remove();
+
+                reorderParcelas();
+            });
+
+            $('#desconto, #multa, #juros, #percentual').on('change', function() {
+                const campo = $(this);
+                const valor = parseFloat(campo.val() || 0);
+                const nomeCampo = campo.prev('label').text().toLowerCase();
+
+                if (valor > 100 || valor < 0) {
+                    campo.val('');
+                    alert(`O ${nomeCampo} deve estar entre 0 e 100%.`);
+                }
+            });
+
+            function reorderParcelas() {
+                const rows = $('#parcelas-list .parcela-item').get();
+
+                rows.sort((a, b) => {
+                    const numA = parseInt($(a).find('td:eq(0)').text());
+                    const numB = parseInt($(b).find('td:eq(0)').text());
+                    return numA - numB;
+                });
+
+                $('#parcelas-list').empty().append(rows);
+            }
+        });
+    </script>
+
+    {{-- <script>
+        let parcelaCount = {{ count($paymentTerm->installments) }};
+        let percentualTotal = {{ $paymentTerm->installments->sum('percentual') }};
+
+        // Limita o tamanho dos campos
+        function limitInputLength(input, length) {
+            if (input.value.length > length) {
+                input.value = input.value.slice(0, length);
+            }
+        }
+
+        $(document).ready(function() {
             // Atualiza o campo de percentual total inicialmente
             $('#percentualTotal').val(percentualTotal);
 
@@ -425,7 +588,7 @@
                 $('#parcelas-list').empty().append(rows);
             }
         });
-    </script>
+    </script> --}}
 
 
 @endsection

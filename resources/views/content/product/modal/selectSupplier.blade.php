@@ -6,9 +6,9 @@
     aria-labelledby="supplierModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 800px">
             <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title" id="supplierModalLabel">Selecione uma Medida</h5>
+                <h5 class="modal-title" id="supplierModalLabel">Selecione um Fornecedor</h5>
             </div>
             <div class="modal-body">
                 <div class="table-responsive text-nowrap">
@@ -16,9 +16,9 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
+                                <th>Tipo</th>
                                 <th>Fornecedor</th>
                                 <th>Documento</th>
-
                             </tr>
                         </thead>
                         <tbody id="supplier-list">
@@ -26,8 +26,16 @@
                                 <tr class="select-supplier" data-id="{{ $supplier->id }}"
                                     data-name="{{ $supplier->nome }}">
                                     <td>{{ $supplier->id }}</td>
+                                    <td>
+                                        @if ($supplier->tipoPessoa == 'F')
+                                            Física
+                                        @else
+                                            Jurídica
+                                        @endif
+                                    </td>
                                     <td>{{ $supplier->fornecedorRazaoSocial }}</td>
-                                    <td>{{ $supplier->tipoPessoa }}: {{ $supplier->cpfCnpj }} </td>
+                                    <td>{{ $supplier->cpfCnpj }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -42,8 +50,6 @@
     </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         // Captura o clique na linha da tabela de medidas para selecionar a medida
@@ -52,10 +58,11 @@
             var supplierName = $(this).data('fornecedorRazaoSocial');
 
             // Atualiza o campo de seleção de medida
-            $('#supplier_id').val(supplierId);
+            $('#supplier_id').val(supplierId).trigger('change');
 
             // Fecha o modal de seleção de medidas
             $('#supplierModal').modal('hide');
+
         });
     });
 </script>

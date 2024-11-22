@@ -238,6 +238,7 @@
 
     <!-- Modal Selecionar Medida -->
     @include('content.product.modal.selectMeasure')
+    @include('content.product.modal.selectSupplier')
 
     <script>
         document.querySelectorAll('.preco').forEach(function(input) {

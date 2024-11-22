@@ -34,13 +34,13 @@
                     <thead>
                         <tr>
                             <th>Código</th>
-                            <th>Nome</th>
-                            <th>Medida</th> <!-- Nome da medida associada -->
-                            <th>Estoque</th>
+                            <th>Produto</th>
+                            {{-- <th>Medida</th>  --}}
+                            <th class="text-center">Estoque</th>
                             <th>Preço de Venda</th>
                             <th>Preço de Custo</th>
-                            <th>Última Venda</th>
-                            <th>Última Compra</th>
+                            <th class="text-center">Última Venda</th>
+                            <th class="text-center">Última Compra</th>
                             <th>Ativo</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
@@ -50,16 +50,18 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>{{ $product->nome }}</td>
-                                <td>{{ $product->measure->nome }} ({{ $product->measure->sigla }}) </td>
-                                <!-- Nome da medida associada -->
-                                <td>{{ $product->estoque }}</td>
+                                {{-- <td>{{ $product->measure->nome }} {{ $product->measure->sigla }}) </td> --}}
+
+                                <td class="text-center">{{ $product->estoque }}</td>
                                 <!-- Formatação para R$ -->
-                                <td> R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td>
-                                <td> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
-                                <td>{{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}
+                                <td class="text-end"> R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td>
+                                <td class="text-end"> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
+                                <td class="text-center">
+                                    {{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}
                                 </td>
                                 <!-- Formatação para R$ -->
-                                <td>{{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}
+                                <td class="text-center">
+                                    {{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}
                                 </td>
                                 <!-- Alteração para exibir o checkbox -->
                                 <td>
@@ -79,14 +81,14 @@
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('product.edit', $product->id) }}">
-                                        <span class="tf-icons bx bx-edit bx-22px"></span>
+                                        <span class="bx bx-edit bx-22px bx-tada-hover"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $product->id }}">
-                                        <i class='bx bx-trash'></i>
+                                        <i class='bx bx-trash bx-22px bx-tada-hover'></i>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->
