@@ -31,7 +31,20 @@
                 @csrf
                 @method('PUT')
 
-                <div class="col-md-2 mb-3">
+                <div class="col-1">
+                    <label
+                        class="form-label toUpperCase"
+                        for="id">Código</label>
+                    <input
+                        required
+                        name="id"
+                        class="form-control toUpperCase"
+                        id="id"
+                        disabled
+                        value="{{ old('id', $supplier->id) }}">
+                </div>
+
+                <div class="col-md-2 mb-2">
                     <label class="form-label toUpperCase" for="tipoPessoa">Tipo de Pessoa<span
                             class="labelRequired">*</span></label>
                     <select
@@ -68,7 +81,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-5 mb-3 fisica-fields">
+                <div class="col-md-4 mb-3 fisica-fields">
                     <label class="form-label toUpperCase" for="apelidoNomeFantasia">Apelido</label>
                     <input
                         name="apelidoNomeFantasia"
@@ -157,7 +170,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-5 mb-3 juridica-fields">
+                <div class="col-md-4 mb-3 juridica-fields">
                     <label class="form-label toUpperCase" for="apelidoNomeFantasia">Nome Fantasia</label>
                     <input
                         name="apelidoNomeFantasia"

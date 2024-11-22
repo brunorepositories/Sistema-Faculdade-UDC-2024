@@ -326,68 +326,61 @@ class PurchaseController extends Controller
     }
   }
 
-  /**
-   * Display the specified resource.
-   */
-  // app/Http/Controllers/PurchaseController.php
-
-  public function show(Purchase $purchase)
+  public function show($numeroNota, $modelo, $serie, $supplier_id)
   {
     try {
-      // Busca a compra usando a chave composta
-      $purchaseObj = Purchase::where([
-        'numeroNota' => $purchase->numeroNota,
-        'modelo' => $purchase->modelo,
-        'serie' => $purchase->serie,
-        'supplier_id' => $purchase->supplier_id
-      ])
-        ->with([
-          // Carrega o fornecedor com cidade
-          'supplier.city',
+      // Busca a compra com todas as relações necessárias
+      $purchase = Purchase::where([
+        'numeroNota' => $numeroNota,
+        'modelo' => $modelo,
+        'serie' => $serie,
+        'supplier_id' => $supplier_id
+      ])->with([
+        // Produtos e suas relações
+        'products' => function ($query) {
+          $query->withPivot([
+            'precoProduto',
+            'qtdProduto',
+            'descontoProduto',
+            'custoMedio',
+            'custoUltCompra',
+            'rateio'
+          ]);
+        },
+        'products.measure',
 
-          // Carrega os produtos com suas relações
-          'products' => function ($query) {
-            $query->withPivot([
-              'precoProduto',
-              'qtdProduto',
-              'descontoProduto',
-              'custoMedio',
-              'custoUltCompra',
-              'rateio'
-            ]);
-          },
-          'products.measure',
+        // Fornecedor e suas relações
+        'supplier.city',
 
-          // Carrega a condição de pagamento
-          'paymentTerm',
+        // Condição de pagamento
+        'paymentTerm',
 
-          // Carrega as contas a pagar com forma de pagamento
-          'accountPayables' => function ($query) {
-            $query->orderBy('parcela', 'asc');
-          },
-          'accountPayables.paymentForm',
-        ])
-        ->firstOrFail();
+        // Contas a pagar
+        'accountPayables' => function ($query) {
+          $query->orderBy('parcela', 'asc');
+        },
+        'accountPayables.paymentForm'
+      ])->firstOrFail();
 
-      // Calcula totais adicionais
+      // Calcula totais dos produtos
       $totals = [
         'totalQuantidade' => $purchase->products->sum('pivot.qtdProduto'),
-        'totalDesconto' => $purchase->products->sum(function ($product) {
-          $subtotal = $product->pivot->precoProduto * $product->pivot->qtdProduto;
-          return ($subtotal * $product->pivot->descontoProduto) / 100;
-        }),
         'totalProdutosSemDesconto' => $purchase->products->sum(function ($product) {
           return $product->pivot->precoProduto * $product->pivot->qtdProduto;
         }),
+        'totalDesconto' => $purchase->products->sum(function ($product) {
+          $subtotal = $product->pivot->precoProduto * $product->pivot->qtdProduto;
+          $desconto = $product->pivot->descontoProduto ?? 0;
+          return ($subtotal * $desconto) / 100;
+        }),
+        'totalRateio' => $purchase->products->sum('pivot.rateio'),
       ];
 
-      // Calcula status de pagamento
-      $statusPagamento = $this->calcularStatusPagamento($purchase);
-
-      // Prepara dados do fornecedor para exibição
+      // Prepara dados do fornecedor
       $fornecedorDetalhes = [
         'documento' => $purchase->supplier->tipoPessoa === 'F' ? 'CPF' : 'CNPJ',
         'numeroDocumento' => $purchase->supplier->cpfCnpj,
+        'telefone' => $purchase->supplier->celular ?? $purchase->supplier->telefone,
         'endereco' => sprintf(
           "%s, %s, %s - %s/%s",
           $purchase->supplier->endereco,
@@ -395,40 +388,44 @@ class PurchaseController extends Controller
           $purchase->supplier->bairro,
           $purchase->supplier->city->nome,
           $purchase->supplier->city->estado
-        ),
+        )
       ];
 
-      // Status das parcelas
-      $statusParcelas = $this->getStatusParcelas($purchase->accountPayables);
+      // Calcula status de pagamento
+      $statusPagamento = $this->calcularStatusPagamento($purchase->accountPayables);
+
+      // Calcula estatísticas das parcelas
+      $statusParcelas = $this->calcularStatusParcelas($purchase->accountPayables);
 
       return view('purchase.show', compact(
         'purchase',
         'totals',
-        'statusPagamento',
         'fornecedorDetalhes',
+        'statusPagamento',
         'statusParcelas'
       ));
     } catch (ModelNotFoundException $e) {
-      return redirect()
-        ->route('purchase.index')
+      Log::error('Nota fiscal não encontrada: ' . $e->getMessage());
+      return to_route('purchase.index')
         ->with('error', 'Nota fiscal não encontrada.');
     } catch (\Exception $e) {
-      return redirect()
-        ->route('purchase.index')
-        ->with('error', 'Erro ao carregar os dados da nota fiscal.');
+      Log::error('Erro ao visualizar nota fiscal: ' . $e->getMessage());
+      return to_route('purchase.index')
+        ->with('error', 'Erro ao carregar dados da nota fiscal.');
     }
   }
 
   /**
-   * Calcula o status geral de pagamento da compra
+   * Calcula o status geral do pagamento
    */
-  private function calcularStatusPagamento($purchase)
+  private function calcularStatusPagamento($parcelas)
   {
-    $totalParcelas = $purchase->accountPayables->count();
-    $parcelasPagas = $purchase->accountPayables->where('status', 'Pago')->count();
-    $parcelasVencidas = $purchase->accountPayables
-      ->where('status', 'Pendente')
-      ->where('dataVencimento', '<', now())
+    $hoje = now();
+    $totalParcelas = $parcelas->count();
+    $parcelasPagas = $parcelas->where('status', 'Pago')->count();
+    $parcelasVencidas = $parcelas
+      ->where('status', 'pendente')
+      ->where('dataVencimento', '<', $hoje)
       ->count();
 
     if ($parcelasPagas === $totalParcelas) {
@@ -443,13 +440,37 @@ class PurchaseController extends Controller
         'classe' => 'danger',
         'descricao' => "Existem $parcelasVencidas parcela(s) vencida(s)"
       ];
-    } else {
-      return [
-        'status' => 'Pendente',
-        'classe' => 'warning',
-        'descricao' => 'Existem parcelas a vencer'
-      ];
     }
+
+    return [
+      'status' => 'Pendente',
+      'classe' => 'warning',
+      'descricao' => 'Existem parcelas a vencer'
+    ];
+  }
+
+  /**
+   * Calcula estatísticas das parcelas
+   */
+  private function calcularStatusParcelas($parcelas)
+  {
+    $hoje = now();
+
+    return [
+      'total' => $parcelas->count(),
+      'pagas' => $parcelas->where('status', 'Pago')->count(),
+      'pendentes' => $parcelas->where('status', 'pendente')->count(),
+      'vencidas' => $parcelas
+        ->where('status', 'pendente')
+        ->where('dataVencimento', '<', $hoje)
+        ->count(),
+      'totalPago' => $parcelas
+        ->where('status', 'Pago')
+        ->sum('valorPago'),
+      'totalRestante' => $parcelas
+        ->where('status', 'pendente')
+        ->sum('valorParcela'),
+    ];
   }
 
   /**

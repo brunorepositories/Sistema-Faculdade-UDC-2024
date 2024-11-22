@@ -22,9 +22,10 @@ Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
 Route::resource('account_payable', AccountPayableController::class);
 
 // Compras
-Route::resource('purchase', PurchaseController::class);
+Route::resource('purchase', PurchaseController::class)->except(['show']);
 Route::get('/purchases/export', [PurchaseController::class, 'export'])->name('purchase.export');
 Route::post('/check-purchase', [PurchaseController::class, 'checkPurchase'])->name('purchase.check');
+Route::get('/purchase/{numeroNota}/{modelo}/{serie}/{supplier_id}', [PurchaseController::class, 'show'])->name('purchase.show');
 
 
 // Clientes

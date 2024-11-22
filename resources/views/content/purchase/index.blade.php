@@ -47,7 +47,12 @@
                                 <td class="text-end">R$ {{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
-                                        href="{{ route('purchase.show', $purchase->id) }}">
+                                        href="{{ route('purchase.show', [
+                                            'numeroNota' => $purchase->numeroNota,
+                                            'modelo' => $purchase->modelo,
+                                            'serie' => $purchase->serie,
+                                            'supplier_id' => $purchase->supplier_id,
+                                        ]) }}">
                                         <span class="bx bx-detail bx-tada-hover bx-22px"></span>
                                     </a>
 
@@ -55,7 +60,7 @@
                                     <button type="button" class="btn btn-outline-danger rounded-pill border-0"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $purchase->id }}">
-                                        <span class="bx bx-trash bx-tada-hover bx-22px"></span>
+                                        <span class="bx bx-block bx-tada-hover bx-22px"></span>
                                     </button>
 
                                     <!-- Componente de modal de confirmação -->
