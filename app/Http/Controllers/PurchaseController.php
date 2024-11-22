@@ -52,10 +52,10 @@ class PurchaseController extends Controller
     $custoUnitarioTotal = $custoNovo + ($valorRateio / $qtdNova);
 
     // Cálculo do custo médio ponderado
-    $valorEstoqueAtual = $produto->quantidade * $produto->custoMedio;
+    $valorEstoqueAtual = $produto->estoque * $produto->custoMedio;
     $valorNovaCompra = $qtdNova * $custoUnitarioTotal;
 
-    $novaQuantidadeTotal = $produto->quantidade + $qtdNova;
+    $novaQuantidadeTotal = $produto->estoque + $qtdNova;
 
     if ($novaQuantidadeTotal == 0) {
       return $custoUnitarioTotal;
@@ -202,7 +202,7 @@ class PurchaseController extends Controller
   public function store(PurchaseRequest $request)
   {
 
-    dd($request->all());
+    // dd($request->all());
     try {
       DB::transaction(function () use ($request) {
         // Dados da compra
@@ -220,7 +220,6 @@ class PurchaseController extends Controller
           'totalProdutos',
           'totalPagar',
           'payment_term_id',
-          'observacao'
         ]);
 
         // Criação da compra
@@ -228,7 +227,9 @@ class PurchaseController extends Controller
 
         // Prepara dados para cálculo do rateio
         $produtosParaRateio = [];
-        foreach ($request->products as $product) {
+
+        // dd($request->all());
+        foreach ($request->produtos as $product) {
           $produtosParaRateio[$product['product_id']] = [
             'precoProduto' => $product['precoProduto'],
             'qtdProduto' => $product['qtdProduto']
@@ -244,7 +245,7 @@ class PurchaseController extends Controller
         );
 
         // Processa cada produto
-        foreach ($request->products as $productData) {
+        foreach ($request->produtos as $productData) {
           $product_id = $productData['product_id'];
           $valorRateio = $rateios[$product_id] ?? 0;
 
@@ -277,9 +278,9 @@ class PurchaseController extends Controller
 
           // Atualiza o produto no estoque
           Product::where('id', $product_id)->update([
-            'custoMedio' => $custoMedio,
-            'custoUltCompra' => round($custoUltCompra, 2),
-            'quantidade' => DB::raw("quantidade + {$productData['qtdProduto']}")
+            'precoCusto' => $custoMedio,
+            'custoUltimaCompra' => round($custoUltCompra, 2),
+            'estoque' => DB::raw("estoque + {$productData['qtdProduto']}")
           ]);
         }
 
@@ -405,12 +406,12 @@ class PurchaseController extends Controller
         foreach ($purchaseProducts as $item) {
           $produto = Product::find($item->product_id);
 
-          // Remove a quantidade do estoque
-          $novaQuantidade = $produto->quantidade - $item->qtdProduto;
+          // Remove a estoque do estoque
+          $novaQuantidade = $produto->estoque - $item->qtdProduto;
 
           // Recalcula o custo médio sem esta compra
           if ($novaQuantidade > 0) {
-            $valorEstoqueSemCompra = ($produto->quantidade * $produto->custoMedio) -
+            $valorEstoqueSemCompra = ($produto->estoque * $produto->custoMedio) -
               ($item->qtdProduto * $item->custoMedio);
             $novoCustoMedio = round($valorEstoqueSemCompra / $novaQuantidade, 2);
           } else {
@@ -419,7 +420,7 @@ class PurchaseController extends Controller
 
           // Atualiza o produto
           $produto->update([
-            'quantidade' => $novaQuantidade,
+            'estoque' => $novaQuantidade,
             'custoMedio' => $novoCustoMedio
           ]);
         }

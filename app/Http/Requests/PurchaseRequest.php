@@ -30,7 +30,7 @@ class PurchaseRequest extends FormRequest
       'supplier_id' => ['required', 'exists:suppliers,id'],
       'dataEmissao' => ['required', 'date', 'before_or_equal:now'],
       'dataChegada' => ['required', 'date', 'after_or_equal:dataEmissao'],
-      'tipoFrete' => ['required', 'in:CIF,FOB'],
+      'tipoFrete' => ['required'],
       'valorFrete' => ['nullable', 'numeric', 'min:0'],
       'valorSeguro' => ['nullable', 'numeric', 'min:0'],
       'outrasDespesas' => ['nullable', 'numeric', 'min:0'],
@@ -39,14 +39,13 @@ class PurchaseRequest extends FormRequest
       'parcelas' => new CheckArray,
       'totalPagar' => ['required', 'numeric', 'min:0.01'],
       'payment_term_id' => ['required', 'exists:payment_terms,id'],
-      'observacao' => ['nullable', 'max:1000'],
       'dataCancelamento' => ['nullable', 'date', 'after_or_equal:dataEmissao'],
     ];
   }
 
   protected function prepareForValidation()
   {
-    dd($this->all());
+    // dd($this->all());
     $this->merge([
       'numeroNota' => strtoupper($this->numeroNota),
       'modelo' => strtoupper($this->modelo),

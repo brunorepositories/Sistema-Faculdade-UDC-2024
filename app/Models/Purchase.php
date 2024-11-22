@@ -45,7 +45,7 @@ class Purchase extends Model
   protected $casts = [
     'dataEmissao' => 'date',
     'dataChegada' => 'date',
-    'tipoFrete' => 'char',
+    'tipoFrete' => 'string',
     'valorFrete' => 'decimal:2',
     'valorSeguro' => 'decimal:2',
     'outrasDespesas' => 'decimal:2',
