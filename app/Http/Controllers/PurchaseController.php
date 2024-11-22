@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\PaymentTerm;
 use App\Models\Product;
 use App\Models\PurchaseProducts;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -328,10 +329,149 @@ class PurchaseController extends Controller
   /**
    * Display the specified resource.
    */
+  // app/Http/Controllers/PurchaseController.php
+
   public function show(Purchase $purchase)
   {
-    $purchase->load(['supplier', 'paymentTerm', 'purchaseProducts.product']);
-    return view('content.purchase.show', compact('purchase'));
+    try {
+      // Busca a compra usando a chave composta
+      $purchaseObj = Purchase::where([
+        'numeroNota' => $purchase->numeroNota,
+        'modelo' => $purchase->modelo,
+        'serie' => $purchase->serie,
+        'supplier_id' => $purchase->supplier_id
+      ])
+        ->with([
+          // Carrega o fornecedor com cidade
+          'supplier.city',
+
+          // Carrega os produtos com suas relações
+          'products' => function ($query) {
+            $query->withPivot([
+              'precoProduto',
+              'qtdProduto',
+              'descontoProduto',
+              'custoMedio',
+              'custoUltCompra',
+              'rateio'
+            ]);
+          },
+          'products.measure',
+
+          // Carrega a condição de pagamento
+          'paymentTerm',
+
+          // Carrega as contas a pagar com forma de pagamento
+          'accountPayables' => function ($query) {
+            $query->orderBy('parcela', 'asc');
+          },
+          'accountPayables.paymentForm',
+        ])
+        ->firstOrFail();
+
+      // Calcula totais adicionais
+      $totals = [
+        'totalQuantidade' => $purchase->products->sum('pivot.qtdProduto'),
+        'totalDesconto' => $purchase->products->sum(function ($product) {
+          $subtotal = $product->pivot->precoProduto * $product->pivot->qtdProduto;
+          return ($subtotal * $product->pivot->descontoProduto) / 100;
+        }),
+        'totalProdutosSemDesconto' => $purchase->products->sum(function ($product) {
+          return $product->pivot->precoProduto * $product->pivot->qtdProduto;
+        }),
+      ];
+
+      // Calcula status de pagamento
+      $statusPagamento = $this->calcularStatusPagamento($purchase);
+
+      // Prepara dados do fornecedor para exibição
+      $fornecedorDetalhes = [
+        'documento' => $purchase->supplier->tipoPessoa === 'F' ? 'CPF' : 'CNPJ',
+        'numeroDocumento' => $purchase->supplier->cpfCnpj,
+        'endereco' => sprintf(
+          "%s, %s, %s - %s/%s",
+          $purchase->supplier->endereco,
+          $purchase->supplier->numero,
+          $purchase->supplier->bairro,
+          $purchase->supplier->city->nome,
+          $purchase->supplier->city->estado
+        ),
+      ];
+
+      // Status das parcelas
+      $statusParcelas = $this->getStatusParcelas($purchase->accountPayables);
+
+      return view('purchase.show', compact(
+        'purchase',
+        'totals',
+        'statusPagamento',
+        'fornecedorDetalhes',
+        'statusParcelas'
+      ));
+    } catch (ModelNotFoundException $e) {
+      return redirect()
+        ->route('purchase.index')
+        ->with('error', 'Nota fiscal não encontrada.');
+    } catch (\Exception $e) {
+      return redirect()
+        ->route('purchase.index')
+        ->with('error', 'Erro ao carregar os dados da nota fiscal.');
+    }
+  }
+
+  /**
+   * Calcula o status geral de pagamento da compra
+   */
+  private function calcularStatusPagamento($purchase)
+  {
+    $totalParcelas = $purchase->accountPayables->count();
+    $parcelasPagas = $purchase->accountPayables->where('status', 'Pago')->count();
+    $parcelasVencidas = $purchase->accountPayables
+      ->where('status', 'Pendente')
+      ->where('dataVencimento', '<', now())
+      ->count();
+
+    if ($parcelasPagas === $totalParcelas) {
+      return [
+        'status' => 'Pago',
+        'classe' => 'success',
+        'descricao' => 'Nota fiscal totalmente paga'
+      ];
+    } elseif ($parcelasVencidas > 0) {
+      return [
+        'status' => 'Atrasado',
+        'classe' => 'danger',
+        'descricao' => "Existem $parcelasVencidas parcela(s) vencida(s)"
+      ];
+    } else {
+      return [
+        'status' => 'Pendente',
+        'classe' => 'warning',
+        'descricao' => 'Existem parcelas a vencer'
+      ];
+    }
+  }
+
+  /**
+   * Obtém estatísticas das parcelas
+   */
+  private function getStatusParcelas($parcelas)
+  {
+    $hoje = now();
+
+    return [
+      'total' => $parcelas->count(),
+      'pagas' => $parcelas->where('status', 'Pago')->count(),
+      'pendentes' => $parcelas->where('status', 'Pendente')->count(),
+      'vencidas' => $parcelas
+        ->where('status', 'Pendente')
+        ->where('dataVencimento', '<', $hoje)
+        ->count(),
+      'totalPago' => $parcelas->sum('valorPago'),
+      'totalRestante' => $parcelas
+        ->where('status', 'Pendente')
+        ->sum('valorParcela'),
+    ];
   }
 
   /**

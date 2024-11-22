@@ -47,8 +47,8 @@
                                 <td class="text-end">R$ {{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
-                                        href="{{ route('purchase.edit', $purchase->id) }}">
-                                        <span class="bx bx-edit bx-tada-hover bx-22px"></span>
+                                        href="{{ route('purchase.show', $purchase->id) }}">
+                                        <span class="bx bx-detail bx-tada-hover bx-22px"></span>
                                     </a>
 
                                     <!-- Botão que abre o modal de exclusão -->

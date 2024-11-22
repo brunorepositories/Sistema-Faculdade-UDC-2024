@@ -35,13 +35,17 @@ class Product extends Model
   }
 
 
-  // public function productsPursache()
-  // {
-  //   return $this->hasMany(ProductsPursache::class, 'productsPursache_id');
-  // }
-
-  // public function productsSale()
-  // {
-  //   return $this->hasMany(ProductsSale::class, 'productsSale_id');
-  // }
+  public function purchases()
+  {
+    return $this->belongsToMany(Purchase::class, 'purchase_products')
+      ->withPivot([
+        'precoProduto',
+        'qtdProduto',
+        'descontoProduto',
+        'custoMedio',
+        'custoUltCompra',
+        'rateio'
+      ])
+      ->withTimestamps();
+  }
 }

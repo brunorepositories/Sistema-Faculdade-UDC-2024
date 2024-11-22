@@ -11,172 +11,152 @@
             @csrf
 
             {{-- Etapa 1: Informações Básicas --}}
-            <div id="step1" class="step">
-                <div class="card mb-8">
-
-                    <div class="card-header d-flex justify-content-between">
-                        <h4 class="mb-0">Registrar Nota Fiscal de Compra</h4>
-
-                        <p class="badge bg-label-primary">Etapa 1</p>
-                    </div>
-                    <div class="card-body mt-1" id="step1Content">
-                        <h5 class="mb-4">Dados da Nota Fiscal</h5>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="numeroNota" class="form-label toUpperCase">Número <span
-                                        class="labelRequired">*</span></label>
-                                <input
-                                    type="number"
-                                    name="numeroNota"
-                                    id="numeroNota"
-                                    class="form-control toUpperCase"
-                                    value="{{ old('numeroNota') }}"
-                                    placeholder="0000000000"
-                                    max="9999999999"
-                                    min="0"
-                                    oninput="limitInputLength(this, 10)"
-                                    required>
-                            </div>
-                            <div class="col-md-1">
-                                <label for="modelo" class="form-label toUpperCase">Modelo <span
-                                        class="labelRequired">*</span></label>
-                                <input
-                                    type="number"
-                                    name="modelo"
-                                    id="modelo"
-                                    class="form-control toUpperCase"
-                                    value="{{ old('modelo') }}"
-                                    placeholder="00"
-                                    max="99"
-                                    min="0"
-                                    oninput="limitInputLength(this, 2)"
-                                    required>
-                            </div>
-                            <div class="col-md-1">
-                                <label for="serie" class="form-label toUpperCase">Série <span
-                                        class="labelRequired">*</span></label>
-                                <input
-                                    type="number"
-                                    name="serie"
-                                    placeholder="000"
-                                    max="999"
-                                    min="0"
-                                    oninput="limitInputLength(this, 3)"
-                                    id="serie"
-                                    class="form-control toUpperCase"
-                                    value="{{ old('serie') }}"
-                                    required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label toUpperCase" for="supplier_id">Fornecedor<span
-                                        class="labelRequired">*</span></label>
-                                <div class="input-group">
-                                    <select
-                                        required
-                                        name="supplier_id"
-                                        class="form-select toUpperCase"
-                                        id="supplier_id">
-                                        <option value="" disabled selected>Selecione</option>
-                                        @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->id }}"
-                                                {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
-                                                {{ $supplier->id }} -
-                                                {{ $supplier->fornecedorRazaoSocial }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    {{-- Botão de ação do modal de selecionar forma de pagamento --}}
-                                    <button class="btn btn-outline-secondary"
-                                        style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#supplierModal">
-                                        <span class="tf-icons bx bx-search bx-18px"></span>
-                                    </button>
-                                    {{-- End Button --}}
-                                </div>
-                                @error('supplier_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-
-
-                            <div class="col-md-2">
-                                <label for="dataEmissao" class="form-label toUpperCase">Data Emissão <span
-                                        class="labelRequired">*</span></label>
-                                <input
-                                    type="date"
-                                    name="dataEmissao"
-                                    id="dataEmissao"
-                                    class="form-control toUpperCase"
-                                    value="{{ old('dataEmissao') }}"
-                                    required>
-                            </div>
-
-
-
-                            <div class="col-md-2">
-                                <label for="dataChegada" class="form-label toUpperCase">Data Chegada <span
-                                        class="labelRequired">*</span></label>
-                                <input
-                                    type="date"
-                                    name="dataChegada"
-                                    id="dataChegada"
-                                    class="form-control toUpperCase"
-                                    value="{{ old('dataChegada') }}"
-                                    required>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-10">
-
-                            <div class="supplier-details-block">
-                                <h6 class="mb-2">Dados do fornecedor</h6>
-                                <div class="d-flex">
-                                    <p class="mb-0">Selecione um fornecedor</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                {{-- <a href="{{ route('purchase.index') }}"
-                                    class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
-                                <button type="button" id="actionEtapa1"
-                                    class="btn btn-primary toUpperCase">PROSSEGUIR</button> --}}
-                                <button type="button"
-                                    class="btn btn-primary toUpperCase" id="verificarNota">Verificar nota</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card mb-8 d-none">
-
+            <div id="etapa1" class="card mb-8">
                 <div class="card-header d-flex justify-content-between">
-                    <h5>Produtos</h5>
-                    <p class="badge bg-label-primary">Etapa 2</p>
+                    <h4 class="mb-0">Registrar Nota Fiscal de Compra</h4>
+
+                    <p class="badge bg-label-primary">Etapa 1</p>
                 </div>
-                <div class="card-body ">
-                    <span class="d-flex justify-content-center">
-                        Para adicionar produtos, primeiro informe os dados da nota fiscal.
-                    </span>
+                <div class="card-body mt-1" id="step1Content">
+                    <h5 class="mb-4">Dados da Nota Fiscal</h5>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="numeroNota" class="form-label toUpperCase">Número <span
+                                    class="labelRequired">*</span></label>
+                            <input
+                                type="number"
+                                name="numeroNota"
+                                id="numeroNota"
+                                class="form-control toUpperCase elementsEtapa1"
+                                value="{{ old('numeroNota') }}"
+                                placeholder="0000000000"
+                                max="9999999999"
+                                min="0"
+                                oninput="limitInputLength(this, 10)"
+                                required>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="modelo" class="form-label toUpperCase">Modelo <span
+                                    class="labelRequired">*</span></label>
+                            <input
+                                type="number"
+                                name="modelo"
+                                id="modelo"
+                                class="form-control toUpperCase elementsEtapa1"
+                                value="{{ old('modelo') }}"
+                                placeholder="00"
+                                max="99"
+                                min="0"
+                                oninput="limitInputLength(this, 2)"
+                                required>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="serie" class="form-label toUpperCase">Série <span
+                                    class="labelRequired">*</span></label>
+                            <input
+                                type="number"
+                                name="serie"
+                                placeholder="000"
+                                max="999"
+                                min="0"
+                                oninput="limitInputLength(this, 3)"
+                                id="serie"
+                                class="form-control toUpperCase elementsEtapa1"
+                                value="{{ old('serie') }}"
+                                required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label toUpperCase" for="supplier_id">Fornecedor<span
+                                    class="labelRequired">*</span></label>
+                            <div class="input-group">
+                                <select
+                                    required
+                                    name="supplier_id"
+                                    class="form-select toUpperCase elementsEtapa1"
+                                    id="supplier_id">
+                                    <option value="" disabled selected>Selecione</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}"
+                                            {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
+                                            {{ $supplier->id }} -
+                                            {{ $supplier->fornecedorRazaoSocial }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                {{-- Botão de ação do modal de selecionar forma de pagamento --}}
+                                <button class="btn btn-outline-secondary elementsEtapa1"
+                                    style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#supplierModal">
+                                    <span class="tf-icons bx bx-search bx-18px"></span>
+                                </button>
+                                {{-- End Button --}}
+                            </div>
+                            @error('supplier_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+
+                        <div class="col-md-2">
+                            <label for="dataEmissao" class="form-label toUpperCase">Data Emissão <span
+                                    class="labelRequired">*</span></label>
+                            <input
+                                type="date"
+                                name="dataEmissao"
+                                id="dataEmissao"
+                                class="form-control toUpperCase elementsEtapa1"
+                                value="{{ old('dataEmissao') }}"
+                                required>
+                        </div>
+
+
+
+                        <div class="col-md-2">
+                            <label for="dataChegada" class="form-label toUpperCase">Data Chegada <span
+                                    class="labelRequired">*</span></label>
+                            <input
+                                type="date"
+                                name="dataChegada"
+                                id="dataChegada"
+                                class="form-control toUpperCase elementsEtapa1"
+                                value="{{ old('dataChegada') }}"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-10">
+
+                        <div class="supplier-details-block">
+                            <h6 class="mb-2">Dados do fornecedor</h6>
+                            <div class="d-flex">
+                                <p class="mb-0">Selecione um fornecedor</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center" id="actionsEtapa1">
+                            <a href="{{ route('purchase.index') }}"
+                                class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                            <button type="button"
+                                class="btn btn-primary toUpperCase" id="verificarNota">Prosseguir</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {{-- Etapa 2: Produtos e Condições --}}
-            <div class="card mb-8">
+            <div id="etapa2" class="card mb-8">
                 <div class="card-header d-flex justify-content-between pb-0">
                     <h5 class="mb-0">Produtos</h5>
 
                     <p class="badge bg-label-primary">Etapa 2</p>
                 </div>
-                <div class="container">
-                    <div class="alert alert-secondary text-center toUpperCase">Complete a etapa 1 para adicionar produtos
+                <div class="container" id="alertEtapa2">
+                    <div class="alert alert-secondary text-center toUpperCase">
+                        Complete a etapa 1 para adicionar produtos
                     </div>
-
                 </div>
                 <div class="card-body" id="step2Content">
                     <div class="d-flex justify-content-between align-items-end">
@@ -184,7 +164,7 @@
                             <div class="col-md-6">
                                 <label class="form-label toUpperCase" for="product_id">Produto</label>
                                 <div class="input-group">
-                                    <select name="product_id" disabled class="form-select toUpperCase"
+                                    <select name="product_id" class="form-select toUpperCase elementsEtapa2"
                                         id="product_id">
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($products as $product)
@@ -199,7 +179,7 @@
                                     </select>
 
                                     {{-- Botão de ação do modal de selecionar forma de pagamento --}}
-                                    <button class="btn btn-outline-secondary" disabled
+                                    <button class="btn btn-outline-secondary elementsEtapa2"
                                         style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
                                         type="button"
                                         data-bs-toggle="modal"
@@ -217,14 +197,14 @@
                                 <label for="qtdProduto" class="form-label toUpperCase">Quantidade</label>
                                 <input type="number" name="qtdProduto" id="qtdProduto" placeholder="0"
                                     max="9999" min="0"
-                                    oninput="limitInputLength(this, 4)" class="form-control toUpperCase">
+                                    oninput="limitInputLength(this, 4)" class="form-control toUpperCase elementsEtapa2">
                             </div>
 
                             <div class="col-md-2">
                                 <label for="precoProduto" class="form-label toUpperCase preco">Preço </label>
                                 <input type="text" name="precoProduto" placeholder="R$ 00,00" maxlength="17"
                                     id="precoProduto"
-                                    class="form-control preco toUpperCase" value="{{ old('preco') }}">
+                                    class="form-control preco toUpperCase elementsEtapa2" value="{{ old('preco') }}">
                             </div>
 
                             <div class="col-md-2">
@@ -232,18 +212,16 @@
                                 <input type="number" name="descontoProduto" placeholder="0" max="100"
                                     min="0"
                                     oninput="limitInputLength(this, 3)" id="descontoProduto"
-                                    class="form-control desconto toUpperCase"
+                                    class="form-control desconto toUpperCase elementsEtapa2"
                                     value="{{ old('desconto') }}">
                             </div>
 
                         </div>
                         <div class="ms-6">
-                            <button type="button" class="btn btn-outline-primary toUpperCase"
+                            <button type="button" class="btn btn-outline-primary toUpperCase elementsEtapa2"
                                 id="add-product">Adicionar Produto</button>
                         </div>
                     </div>
-
-
 
                     <div class="table-responsive mt-4">
                         <table class="table">
@@ -266,13 +244,14 @@
 
                     <div class="d-flex justify-content-between align-items-start mt-10">
                         <!-- Seção Frete -->
-                        <div class="">
+                        <div>
                             <h5>Frete</h5>
                             <div class="d-flex">
                                 <div class="col-md-2 mb-3">
                                     <label class="form-label toUpperCase" for="tipoFrete">Tipo Frete<span
                                             class="labelRequired">*</span></label>
-                                    <select required name="tipoFrete" class="form-select toUpperCase" id="tipoFrete">
+                                    <select required name="tipoFrete" class="form-select toUpperCase elementsEtapa2"
+                                        id="tipoFrete">
                                         <option value="CIF" selected>CIF</option>
                                         <option value="FOB">FOB</option>
                                     </select>
@@ -289,7 +268,7 @@
                                         placeholder="R$ 00,00"
                                         maxlength="17"
                                         id="valorFrete"
-                                        class="form-control preco toUpperCase"
+                                        class="form-control preco toUpperCase elementsEtapa2"
                                         value="{{ old('valorFrete') }}">
                                 </div>
                                 <div class="col-md-3 ms-4">
@@ -301,7 +280,7 @@
                                         placeholder="R$ 00,00"
                                         maxlength="17"
                                         id="valorSeguro"
-                                        class="form-control preco toUpperCase"
+                                        class="form-control preco toUpperCase elementsEtapa2"
                                         value="{{ old('valorSeguro') }}">
                                 </div>
                                 <div class="col-md-3 ms-4">
@@ -313,7 +292,7 @@
                                         placeholder="R$ 00,00"
                                         maxlength="17"
                                         id="outrasDespesas"
-                                        class="form-control preco toUpperCase"
+                                        class="form-control preco toUpperCase elementsEtapa2"
                                         value="{{ old('outrasDespesas') }}">
                                 </div>
                             </div>
@@ -367,61 +346,63 @@
                     </div>
 
 
-                    <div class="d-flex justify-content-end mt-10 d-none">
+                    <div class="d-flex justify-content-end mt-10" id="actionsEtapa2">
                         <a href="{{ route('purchase.index') }}"
-                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
-                        {{-- <button type="button" id="turnEtapa1"
-                          class="btn btn-secondary toUpperCase me-4 ">Etapa
-                          anterior</button> --}}
+                            class="btn btn-outline-secondary me-4 toUpperCase ">Cancelar</a>
 
                         <!-- Botão que abre o modal de exclusão -->
                         <button
                             data-bs-toggle="modal"
-                            data-bs-target="#turnStepConfirmation"
+                            data-bs-target="#confirmarVoltarEtapa2"
                             type="button"
-                            class="btn btn-secondary toUpperCase me-4 ">Etapa
-                            anterior</i>
+                            class="btn btn-secondary toUpperCase me-4  ">Voltar Etapa</i>
                         </button>
 
-                        <button type="button" id="actionEtapa2"
+                        <button type="button" id="prosseguirEstapa3"
                             class="btn btn-primary toUpperCase">PROSSEGUIR</button>
 
                         <!-- Componente de modal de confirmação -->
-                        @include('components.modalTurnStep', [
-                            'objId' => 'step1',
-                            'objNome' => 'Etapa 1',
-                        ])
+                        <div class="modal fade" id="confirmarVoltarEtapa2" tabindex="-1"
+                            aria-labelledby="modalConfirmarVoltarEtapa2" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalConfirmarVoltarEtapa2">Remover Produtos e
+                                            Voltar</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Para alterar os dados da nota fiscal, nenhum poduto pode estar adicionado. Deseja
+                                        remover os produtos e voltar?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary toUpperCase me-4"
+                                            data-bs-dismiss="modal">Fechar </button>
+
+                                        <button type="button" class="btn btn-primary toUpperCase"
+                                            id="limparDadosEtapa2">Sim, remover e
+                                            voltar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-
-            <div class="card mb-8 d-none">
-
-                <div class="card-header d-flex justify-content-between">
-                    <h5 class="mb-0">Condição de Pagamento</h5>
-
-                    <p class="badge bg-label-primary">Etapa 3</p>
-                </div>
-                <div class="card-body ">
-                    <span class="d-flex justify-content-center">
-                        Para definir a condição de pagamento, primeiro preencha as etapas 1 e 2.
-                    </span>
-                </div>
-            </div>
-
             {{-- Etapa 3: Gerar Parcelas --}}
-            <div id="step3" class="step">
+            <div id="etapa3" class="step">
                 <div class="card mb-8">
                     <div class="card-header d-flex justify-content-between pb-0">
                         <h5 class="mb-0">Condição de Pagamento</h5>
 
                         <p class="badge bg-label-primary">Etapa 2</p>
                     </div>
-                    <div class="container">
-                        <div class="alert alert-secondary text-center toUpperCase">Complete as etapas 1 e 2 para prosseguir
+                    <div class="container" id="alertEtapa3">
+                        <div class="alert alert-secondary text-center toUpperCase">
+                            Complete as etapas 1 e 2 para prosseguir
                         </div>
-
                     </div>
                     <div class="card-body" id="step3Content">
                         <div class="d-flex justify-content-between align-items-end">
@@ -432,7 +413,7 @@
                                     <select
                                         required
                                         name="payment_term_id"
-                                        class="form-select toUpperCase"
+                                        class="form-select toUpperCase elementsEtapa3"
                                         id="payment_term_id">
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($paymentTerms as $paymentTerm)
@@ -445,7 +426,7 @@
                                         @endforeach
                                     </select>
 
-                                    <button class="btn btn-outline-secondary"
+                                    <button class="btn btn-outline-secondary elementsEtapa3"
                                         style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
                                         type="button"
                                         data-bs-toggle="modal"
@@ -460,7 +441,8 @@
                             </div>
 
                             <div class="ms-6">
-                                <button type="button" class="btn btn-outline-primary toUpperCase"id="addParcela">Gerar
+                                <button type="button"
+                                    class="btn btn-outline-primary toUpperCase elementsEtapa3 "id="addParcela">Gerar
                                     Parcelas
                                 </button>
                             </div>
@@ -480,14 +462,47 @@
                             </table>
                         </div>
 
-                        <div class="d-flex justify-content-end mt-10">
-
+                        <div class="d-flex justify-content-end mt-10" id="actionsEtapa3">
                             <a href="{{ route('purchase.index') }}"
-                                class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
-                            {{-- <button type="button" id="turnEtapa2" class="btn btn-secondary toUpperCase me-4">Etapa
-                                anterior</button> --}}
-                            <button type="submmit" class="btn btn-success toUpperCase">cadastrar
-                                nota</button>
+                                class="btn btn-outline-secondary me-4 toUpperCase ">Cancelar</a>
+
+                            <!-- Botão que abre o modal de exclusão -->
+                            <button
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmarVoltarEtapa3"
+                                type="button"
+                                class="btn btn-secondary toUpperCase me-4  ">Voltar Etapa</i>
+                            </button>
+
+                            <button type="submit" class="btn btn-success toUpperCase">Registrar compra</button>
+
+                            <!-- Componente de modal de confirmação -->
+                            <div class="modal fade" id="confirmarVoltarEtapa3" tabindex="-1"
+                                aria-labelledby="modalConfirmarVoltarEtapa3" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalConfirmarVoltarEtapa3">Remover Condição de
+                                                Pagamento e Voltar?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Para alterar produtos, nenhuma condição de pagamento pode estar selecionada.
+                                            Deseja
+                                            remover a condição de pagamento e voltar?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary toUpperCase me-4"
+                                                data-bs-dismiss="modal">Fechar </button>
+
+                                            <button type="button" class="btn btn-primary toUpperCase"
+                                                id="limparDadosEtapa3">Sim, remover e
+                                                voltar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -500,6 +515,18 @@
     @include('content.purchase.modal.selectPaymentTerm')
 
     <script>
+        // Elementos das etapas para manipular
+        const elementosEtapa1 = $('#etapa1');
+        const actionButtonsE1 = $('#actionsEtapa1');
+
+        const elementosEtapa2 = $('#etapa2');
+        const alertEtapa2 = $('#alertEtapa2');
+        const actionButtonsE2 = $('#actionsEtapa2');
+
+        const elementosEtapa3 = $('#etapa3');
+        const alertEtapa3 = $('#alertEtapa3');
+        const actionButtonsE3 = $('#actionsEtapa3');
+
         // Variáveis globais para controle
         let valorTotalProdutos = 0;
         let valorFrete = 0;
@@ -510,11 +537,154 @@
         let paymentTermsData = {};
         let parcelasAtivas = false;
 
+
         // Limita o tamanho dos campos
         function limitInputLength(input, length) {
             if (input.value.length > length) {
                 input.value = input.value.slice(0, length);
             }
+        }
+
+        // Função para liberar a Etapa 1
+        function liberarEtapa1() {
+
+            const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
+            const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
+            const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
+
+            // Liberando inputs da Etapa 1
+            actionButtonsE1.removeClass('d-none'); // Exibe os botões da Etapa 1
+            inputsE1.each(function() {
+                $(this).prop('disabled', false); // Habilita os campos da Etapa 1
+            });
+
+            // Desabilitando inputs e escondendo botões da Etapa 2
+            alertEtapa2.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 2
+            actionButtonsE2.addClass('d-none'); // Esconde os botões da Etapa 2
+            inputsE2.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 2
+            });
+
+            // Desabilitando inputs e escondendo botões da Etapa 3
+            alertEtapa3.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 3
+            actionButtonsE3.addClass('d-none'); // Esconde os botões da Etapa 3
+            inputsE3.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 3
+            });
+        }
+
+        // Função para liberar a Etapa 2
+        function liberarEtapa2() {
+
+            const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
+            const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
+            const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
+
+            // Desabilitando inputs e escondendo botões da Etapa 1
+            inputsE1.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 1
+            });
+            actionButtonsE1.addClass('d-none'); // Esconde os botões da Etapa 1
+
+            // Liberando inputs da Etapa 2
+            alertEtapa2.addClass('d-none'); // Esconde a mensagem de alerta da Etapa 2
+            actionButtonsE2.removeClass('d-none'); // Exibe os botões de ação da Etapa 2
+            inputsE2.each(function() {
+                $(this).prop('disabled', false); // Habilita os campos da Etapa 2
+            });
+
+            // Desabilitando inputs e escondendo botões da Etapa 3
+            alertEtapa3.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 3
+            actionButtonsE3.addClass('d-none'); // Esconde os botões da Etapa 3
+            inputsE3.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 3
+            });
+        }
+
+        // Função para liberar a Etapa 3
+        function liberarEtapa3() {
+
+            const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
+            const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
+            const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
+
+            // Desabilitando inputs e escondendo botões da Etapa 1
+            actionButtonsE1.addClass('d-none'); // Esconde os botões da Etapa 1
+            inputsE1.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 1
+            });
+
+            // Desabilitando inputs e escondendo botões da Etapa 2
+            actionButtonsE2.addClass('d-none'); // Esconde os botões da Etapa 2
+            inputsE2.each(function() {
+                $(this).prop('disabled', true); // Desabilita os campos da Etapa 2
+            });
+
+            // Liberando inputs da Etapa 3
+            alertEtapa3.addClass('d-none'); // Esconde a mensagem de alerta da Etapa 3
+            actionButtonsE3.removeClass('d-none'); // Exibe os botões de ação da Etapa 3
+            inputsE3.each(function() {
+                $(this).prop('disabled', false); // Habilita os campos da Etapa 3
+            });
+        }
+
+        function limparDadosEtapa2() {
+            $('#limparDadosEtapa2').on('click', function() {
+                // Limpa os campos de produto
+                $('#product_id').val('').trigger('change');
+                $('#qtdProduto').val('');
+                $('#precoProduto').val('');
+                $('#descontoProduto').val('');
+
+                // Limpa os campos de valores adicionais
+                $('#valorFrete').val('').trigger('change');
+                $('#valorSeguro').val('').trigger('change');
+                $('#outrasDespesas').val('').trigger('change');
+
+                // Limpa os campos de totais
+                $('#qtdTotalProdutos').val('');
+                $('#totalProdutos').val('');
+                $('#totalPagar').val('');
+                $('#totalProdutosHidden').val('');
+                $('#totalPagarHidden').val('');
+
+                // Limpa a tabela de produtos
+                $('#product-list').empty();
+
+                // Reseta as variáveis globais
+                valorTotalProdutos = 0;
+                valorFrete = 0;
+                valorSeguro = 0;
+                outrasDespesas = 0;
+                produtosAdicionados.clear();
+
+                // Fecha o modal
+                $('#confirmarVoltarEtapa2').modal('hide');
+
+                // Libera etapa 1
+                liberarEtapa1();
+            });
+        }
+
+        function limparDadosEtapa3() {
+            $('#limparDadosEtapa3').on('click', function() {
+                // Limpa os campos de produto
+                $('#payment_term_id').val('');
+
+                // Limpa a tabela de produtos
+                $('#parcelaList').empty();
+
+                // Reseta as variáveis globais
+                parcelasGeradas = new Set();
+                paymentTermsData = {};
+                parcelasAtivas = false;
+
+                // Fecha o modal
+                $('#confirmarVoltarEtapa3').modal('hide');
+
+                // Libera etapa 1
+                liberarEtapa2();
+            });
         }
 
         // Função para arredondar valores para 2 casas decimais
@@ -665,6 +835,8 @@
             });
         }
 
+
+
         // Verificar nota fiscal
         function verificarNotaFiscal() {
             $('#verificarNota').on('click', function(e) {
@@ -690,7 +862,7 @@
                         if (response.data.exists) {
                             alert("Esta nota fiscal já está cadastrada no sistema!");
                         } else {
-                            alert("Nota fiscal válida!");
+                            liberarEtapa2();
                         }
                     })
                     .catch(error => {
@@ -739,7 +911,7 @@
                 <td>${descontoProduto}%</td>
                 <td>${formatarMoeda(precoTotal)}</td>
                 <td class="size-col-action">
-                    <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product">
+                    <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product elementsEtapa2">
                         <span class="tf-icons bx bx-trash bx-22px"></span>
                     </button>
                 </td>
@@ -780,17 +952,6 @@
         // Função para gerar parcelas
         function gerarParcelas(recalculo = false) {
             const processarParcelas = async () => {
-                // Se já existem parcelas e não é recálculo, confirma cancelamento
-                // if (parcelasAtivas && !recalculo) {
-                //     if (confirm('Deseja cancelar as parcelas geradas? Isso permitirá modificar os produtos.')) {
-                //         $('#parcelaList').empty();
-                //         parcelasGeradas.clear();
-                //         parcelasAtivas = false;
-                //         controlarEstadoElementos();
-                //         return;
-                //     }
-                //     return;
-                // }
 
                 const payment_term_id = $('#payment_term_id').val();
 
@@ -919,9 +1080,11 @@
             $('#valorSeguro').val('R$ 25,00').trigger('change');
             $('#outrasDespesas').val('R$ 15,00').trigger('change');
         }
+
         // Inicialização
         $(document).ready(function() {
 
+            liberarEtapa1();
 
             // Inicialização das variáveis
             produtosAdicionados.clear();
@@ -946,9 +1109,34 @@
             // APENAS PARA DEVS
             popularCamposTeste();
 
+            limparDadosEtapa2();
+            limparDadosEtapa3()
 
             gerarParcelas();
             validarFormulario();
+
+            $('#prosseguirEstapa3').on('click', function() {
+                if (produtosAdicionados.size === 0) {
+                    alert('Adicione ao menos 1 produto para prosseguir.');
+                    return;
+                }
+                liberarEtapa3();
+            });
+
+            $('#purchaseForm').on('submit', function(e) {
+                // Remove o disabled de todos os campos antes do submit
+                const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
+                const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
+                const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
+
+                // Habilita todos os campos
+                inputsE1.prop('disabled', false);
+                inputsE2.prop('disabled', false);
+                inputsE3.prop('disabled', false);
+
+                // O formulário será enviado normalmente após habilitar os campos
+                return true;
+            });
 
             // Formatação dos campos de preço
             $('.preco').on('input', function(e) {
@@ -964,132 +1152,5 @@
             });
         });
     </script>
-
-
-
-
-
-
-
-    {{-- <script>
-        // Seletores das etapas
-        const step1 = document.getElementById("step1");
-        const step2 = document.getElementById("step2");
-        const actionEtapa1 = document.getElementById("actionEtapa1");
-
-        // Função para alternar entre as etapas
-        function toggleSteps(currentStep, nextStep) {
-            currentStep.classList.add("d-none");
-            nextStep.classList.remove("d-none");
-        }
-
-        // Função do botão PROSSEGUIR na Etapa 1
-        actionEtapa1.addEventListener("click", () => {
-            // Captura os valores dos campos do formulário
-            const numeroNota = document.getElementById("numeroNota").value;
-            const modelo = document.getElementById("modelo").value;
-            const serie = document.getElementById("serie").value;
-            const supplier_id = document.getElementById("supplier_id").value;
-
-            // Valida os campos obrigatórios
-            if (!numeroNota || !modelo || !serie || !supplier_id) {
-                alert(
-                    "Por favor, preencha testeeeeeeeeeeeeeeeee 33333 todos os campos obrigatórios antes de prosseguir."
-                );
-                return;
-            }
-
-            // Faz a requisição usando Axios
-            axios.post('/verificar-nota-fiscal', {
-                    numeroNota: numeroNota,
-                    modelo: modelo,
-                    serie: serie,
-                    supplier_id: supplier_id
-                })
-                .then(response => {
-                    if (response.data.existe) {
-                        alert("Esta nota fiscal já está cadastrada no sistema!");
-                    } else {
-                        toggleSteps(step1, step2); // Avança para a próxima etapa
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao verificar nota fiscal:", error);
-                    alert("Ocorreu um erro ao verificar a nota fiscal. Tente novamente.");
-                });
-        });
-    </script> --}}
-
-    {{-- <script>
-        // Função para habilitar os campos e botões da etapa atual e desativar os da etapa anterior
-        function toggleSteps(currentStep, nextStep) {
-            // Oculta os botões da etapa atual e desativa os campos
-            const currentButtons = currentStep.querySelectorAll(".btn");
-            currentButtons.forEach(button => button.classList.add("d-none"));
-
-            const currentFields = currentStep.querySelectorAll("input, button, select");
-            currentFields.forEach(field => field.setAttribute("disabled", "true"));
-
-            // Exibe os botões da próxima etapa e ativa os campos
-            const nextButtons = nextStep.querySelectorAll(".btn");
-            nextButtons.forEach(button => button.classList.remove("d-none"));
-
-            const nextFields = nextStep.querySelectorAll("input, button, select");
-            nextFields.forEach(field => field.removeAttribute("disabled"));
-        }
-
-        // Seletores das etapas e botões
-        const step1 = document.getElementById("step1");
-        const step2 = document.getElementById("step2");
-        const step3 = document.getElementById("step3");
-
-        const actionEtapa1 = document.getElementById("actionEtapa1");
-        const actionEtapa2 = document.getElementById("actionEtapa2");
-        const actionEtapa3 = document.getElementById("actionEtapa3");
-        const submitButton = document.getElementById("submitButton");
-
-        // Inicializa os estados das etapas
-        window.onload = () => {
-            // Etapa 1 inicia ativa
-            const step1Fields = step1.querySelectorAll("input, button, select");
-            step1Fields.forEach(field => field.removeAttribute("disabled"));
-
-            // Etapas 2 e 3 começam inativas
-            [step2, step3].forEach(step => {
-                const fields = step.querySelectorAll("input, button, select");
-                fields.forEach(field => field.setAttribute("disabled", "true"));
-
-                const buttons = step.querySelectorAll(".btn");
-                buttons.forEach(button => button.classList.add("d-none"));
-            });
-        };
-
-        // Eventos para avançar entre as etapas
-        actionEtapa1.addEventListener("click", () => {
-            toggleSteps(step1, step2);
-        });
-
-        // Eventos para avançar entre as etapas
-        turnEtapa1.addEventListener("click", () => {
-            toggleSteps(step2, step1);
-        });
-
-        actionEtapa2.addEventListener("click", () => {
-            toggleSteps(step2, step3);
-        });
-
-        // Eventos para avançar entre as etapas
-        turnEtapa2.addEventListener("click", () => {
-            toggleSteps(step3, step2);
-        });
-
-        submitButton.addEventListener("click", () => {
-            // Lógica de envio do formulário
-            document.getElementById("purchaseForm").submit();
-        });
-    </script> --}}
-
-
-
 
 @endsection

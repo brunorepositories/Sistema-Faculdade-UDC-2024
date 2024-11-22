@@ -12,11 +12,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
-// use App\Models\AccountReceivable;
+// use App\Models\AccountReceivable;v
 
 // Main Page Route
 Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
-
 
 
 // Contas a receber

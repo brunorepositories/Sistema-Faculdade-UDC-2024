@@ -39,13 +39,18 @@ class AccountPayable extends Model
     'desconto' => 'decimal:2',
   ];
 
+  public function purchase()
+  {
+    return $this->belongsTo(Purchase::class, ['numeroNota', 'modelo', 'serie', 'supplier_id']);
+  }
+
   public function supplier()
   {
-    return $this->belongsTo(Supplier::class, 'supplier_id');
+    return $this->belongsTo(Supplier::class);
   }
 
   public function paymentForm()
   {
-    return $this->belongsTo(PaymentForm::class, 'payment_form_id');
+    return $this->belongsTo(PaymentForm::class);
   }
 }

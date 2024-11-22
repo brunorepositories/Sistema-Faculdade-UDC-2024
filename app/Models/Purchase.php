@@ -62,6 +62,26 @@ class Purchase extends Model
     return $this->belongsTo(Supplier::class, 'supplier_id');
   }
 
+
+  public function products()
+  {
+    return $this->belongsToMany(Product::class, 'purchase_products')
+      ->withPivot([
+        'precoProduto',
+        'qtdProduto',
+        'descontoProduto',
+        'custoMedio',
+        'custoUltCompra',
+        'rateio'
+      ])
+      ->withTimestamps();
+  }
+
+  public function accountPayables()
+  {
+    return $this->hasMany(AccountPayable::class, ['numeroNota', 'modelo', 'serie', 'supplier_id']);
+  }
+
   /**
    * Obtém a condição de pagamento associada à nota de compra.
    */
