@@ -36,7 +36,6 @@ class PaymentTermRequest extends FormRequest
       'parcelas' => new CheckArray,
       'ativo' => ['required', 'boolean'],
       'padrao' => ['required', 'boolean'],
-      'percentualTotal' => ['required', 'min:100'],
     ];
   }
 

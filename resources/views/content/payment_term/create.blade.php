@@ -165,7 +165,8 @@
                         </div>
 
                         <div class="ms-6">
-                            <button type="button" class="btn btn-primary" id="add-parcela">Adicionar</button>
+                            <button type="button" class="btn btn-outline-primary toUpperCase"
+                                id="add-parcela">Adicionar</button>
                         </div>
 
                         @error('percentualTotal')
@@ -246,8 +247,21 @@
                 input.value = input.value.slice(0, length);
             }
         }
+
         $(document).ready(function() {
 
+            // Adiciona validação no envio do formulário
+            $('form').on('submit', function(e) {
+                // Verifica se o percentual total é diferente de 100
+                if (percentualTotal !== 100) {
+                    e.preventDefault(); // Impede o envio do formulário
+                    alert(
+                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.'
+                    );
+                    return false;
+                }
+                return true;
+            });
 
             $('#add-parcela').on('click', function() {
 
@@ -363,8 +377,6 @@
                 }
 
             });
-
-
 
             function reorderParcelas() {
                 const rows = $('#parcelas-list .parcela-item').get();

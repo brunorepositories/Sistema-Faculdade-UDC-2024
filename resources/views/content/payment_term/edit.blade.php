@@ -59,17 +59,17 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="multa">Multa (%)<span
-                            class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="multa">Multa (%)</label>
                     <input
                         required
-                        name="multa"
-                        type="number"
-                        step="0,001"
                         class="form-control toUpperCase"
+                        name="multa"
                         id="multa"
-                        placeholder="0,00"
+                        type="number"
                         min="0"
+                        max="100"
+                        oninput="limitInputLength(this, 5)"
+                        placeholder="0"
                         value="{{ old('multa', $paymentTerm->multa) }}">
                     @error('multa')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -77,17 +77,17 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="juros">Juros (%)<span
-                            class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="juros">Juros (%)</label>
                     <input
                         required
                         name="juros"
                         type="number"
-                        step="0,001"
                         class="form-control toUpperCase"
                         id="juros"
                         min="0"
-                        placeholder="0,00"
+                        max="100"
+                        oninput="limitInputLength(this, 5)"
+                        placeholder="0"
                         value="{{ old('juros', $paymentTerm->juros) }}">
                     @error('juros')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -95,17 +95,17 @@
                 </div>
 
                 <div class="col-2">
-                    <label class="form-label toUpperCase" for="desconto">Desconto (%)<span
-                            class="labelRequired">*</span></label>
+                    <label class="form-label toUpperCase" for="desconto">Desconto (%)</label>
                     <input
                         required
                         name="desconto"
                         type="number"
-                        step="0,001"
                         class="form-control toUpperCase"
                         id="desconto"
                         min="0"
-                        placeholder="0,00"
+                        max="100"
+                        oninput="limitInputLength(this, 5)"
+                        placeholder="0"
                         value="{{ old('desconto', $paymentTerm->desconto) }}">
                     @error('desconto')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -122,6 +122,8 @@
                                     class="form-control toUpperCase"
                                     id="parcela"
                                     min="0"
+                                    max="100"
+                                    oninput="limitInputLength(this, 3)"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
@@ -131,6 +133,8 @@
                                     class="form-control toUpperCase"
                                     id="dias"
                                     min="0"
+                                    max="100"
+                                    oninput="limitInputLength(this, 3)"
                                     placeholder="0">
                             </div>
                             <div class="col-2">
@@ -141,7 +145,8 @@
                                     id="percentual"
                                     min="0"
                                     max="100"
-                                    placeholder="0,00">
+                                    oninput="limitInputLength(this, 5)"
+                                    placeholder="0">
                             </div>
 
                             <div class="col flex-grow-1">
@@ -283,9 +288,29 @@
         let parcelaCount = {{ count($paymentTerm->installments) }};
         let percentualTotal = {{ $paymentTerm->installments->sum('percentual') }};
 
+        // Limita o tamanho dos campos
+        function limitInputLength(input, length) {
+            if (input.value.length > length) {
+                input.value = input.value.slice(0, length);
+            }
+        }
+
         $(document).ready(function() {
             // Atualiza o campo de percentual total inicialmente
-            $('#percentualTotal').val(percentualTotal.toFixed(2));
+            $('#percentualTotal').val(percentualTotal);
+
+            // Adiciona validação no envio do formulário
+            $('form').on('submit', function(e) {
+                // Verifica se o percentual total é diferente de 100
+                if (percentualTotal !== 100) {
+                    e.preventDefault(); // Impede o envio do formulário
+                    alert(
+                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.'
+                    );
+                    return false;
+                }
+                return true;
+            });
 
             $('#add-parcela').on('click', function() {
                 const parcela = $('#parcela').val();
@@ -348,6 +373,44 @@
                 $(this).closest('.parcela-item').remove();
 
                 reorderParcelas();
+            });
+
+            $('#desconto').on('change', function() {
+                const desconto = parseFloat($('#desconto').val() || 0);
+
+                if (desconto > 100 || desconto < 0) {
+                    $('#desconto').val('');
+                    return alert('O desconto deve estar entre 0 e 100%.');
+                }
+            });
+
+            $('#multa').on('change', function() {
+                const multa = parseFloat($('#multa').val() || 0);
+
+                if (multa > 100 || multa < 0) {
+                    $('#multa').val('');
+                    return alert('A multa deve estar entre 0 e 100%.');
+                }
+            });
+
+            $('#juros').on('change', function() {
+                const juros = parseFloat($('#juros').val() || 0);
+
+                if (juros > 100 || juros < 0) {
+                    $('#juros').val('');
+                    return alert('O juros deve estar entre 0 e 100%.');
+                }
+
+            });
+
+            $('#percentual').on('change', function() {
+                const percentual = parseFloat($('#percentual').val() || 0);
+
+                if (percentual > 100 || percentual < 0) {
+                    $('#percentual').val('');
+                    return alert('O percentual deve estar entre 0 e 100%.');
+                }
+
             });
 
             function reorderParcelas() {
