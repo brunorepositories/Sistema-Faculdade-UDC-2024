@@ -30,7 +30,7 @@
                             <th>Série</th>
                             <th>Data Emissão</th>
                             <th>Data Chegada</th>
-                            <th>Total a Pagar</th>
+                            <th>Valor da Nota</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
@@ -44,7 +44,7 @@
                                 <!-- Assumindo que 'supplier' é o relacionamento com o fornecedor -->
                                 <td>{{ $purchase->dataEmissao->format('d/m/Y') }}</td>
                                 <td>{{ $purchase->dataChegada->format('d/m/Y') }}</td>
-                                <td>{{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
+                                <td>R$ {{ number_format($purchase->totalPagar, 2, ',', '.') }}</td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('purchase.edit', $purchase->id) }}">

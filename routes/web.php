@@ -13,7 +13,9 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
 
 // Main Page Route
-Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
+Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
+
+
 
 // Funcionários
 // Route::resource('employee', EmployeeController::class);
@@ -38,6 +40,9 @@ Route::get('/suppliers/findId/{id}', [SupplierController::class, 'findId'])->nam
 
 // Condição de Pagamento
 Route::resource('payment_term', PaymentTermController::class);
+Route::get('/payment_term/installments/{id}', [PaymentTermController::class, 'getInstallments'])->name('payment_term.installments');
+
+
 // Forma de Pagamento
 Route::resource('payment_form', PaymentFormController::class);
 

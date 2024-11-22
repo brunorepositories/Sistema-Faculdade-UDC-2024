@@ -7,10 +7,9 @@
         @include('components.errorMessage')
 
         {{-- Formulário principal --}}
-        {{-- <div id="purchaseForm" method="POST" action="{{ route('purchase.store') }}">
-            @csrf --}}
+        <form id="purchaseForm" method="POST" action="{{ route('purchase.store') }}">
+            @csrf
 
-        <div>
             {{-- Etapa 1: Informações Básicas --}}
             <div id="step1" class="step">
                 <div class="card mb-8">
@@ -20,7 +19,8 @@
 
                         <p class="badge bg-label-primary">Etapa 1</p>
                     </div>
-                    <div class="card-body" id="step1Content">
+                    <div class="card-body mt-1" id="step1Content">
+                        <h5 class="mb-4">Dados da Nota Fiscal</h5>
                         <div class="row">
                             <div class="col-md-2">
                                 <label for="numeroNota" class="form-label toUpperCase">Número <span
@@ -176,10 +176,9 @@
                         <div class="d-flex justify-content-between align-items-end">
                             <div class="row flex-grow-1">
                                 <div class="col-md-6">
-                                    <label class="form-label toUpperCase" for="product_id">Produto<span
-                                            class="labelRequired">*</span></label>
+                                    <label class="form-label toUpperCase" for="product_id">Produto</label>
                                     <div class="input-group">
-                                        <select required name="product_id" class="form-select toUpperCase"
+                                        <select name="product_id" class="form-select toUpperCase"
                                             id="product_id">
                                             <option value="" disabled selected>Selecione</option>
                                             @foreach ($products as $product)
@@ -196,7 +195,9 @@
                                         {{-- Botão de ação do modal de selecionar forma de pagamento --}}
                                         <button class="btn btn-outline-secondary"
                                             style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
-                                            type="button" data-bs-toggle="modal" data-bs-target="#supplierModal">
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#productModal">
                                             <span class="tf-icons bx bx-search bx-18px"></span>
                                         </button>
                                         {{-- End Button --}}
@@ -207,16 +208,14 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <label for="qtdProduto" class="form-label toUpperCase">Quantidade <span
-                                            class="labelRequired">*</span></label>
+                                    <label for="qtdProduto" class="form-label toUpperCase">Quantidade</label>
                                     <input type="number" name="qtdProduto" id="qtdProduto" placeholder="0"
                                         max="9999" min="0"
                                         oninput="limitInputLength(this, 4)" class="form-control toUpperCase">
                                 </div>
 
                                 <div class="col-md-2">
-                                    <label for="precoProduto" class="form-label toUpperCase preco">Preço <span
-                                            class="labelRequired">*</span></label>
+                                    <label for="precoProduto" class="form-label toUpperCase preco">Preço </label>
                                     <input type="text" name="precoProduto" placeholder="R$ 00,00" maxlength="17"
                                         id="precoProduto"
                                         class="form-control preco toUpperCase" value="{{ old('preco') }}">
@@ -300,16 +299,16 @@
                                             value="{{ old('valorSeguro') }}">
                                     </div>
                                     <div class="col-md-3 ms-4">
-                                        <label for="outrasDepesas" class="form-label toUpperCase preco">Outras despesas
+                                        <label for="outrasDespesas" class="form-label toUpperCase preco">Outras despesas
                                             <span class="labelRequired">*</span></label>
                                         <input
                                             type="text"
-                                            name="outrasDepesas"
+                                            name="outrasDespesas"
                                             placeholder="R$ 00,00"
                                             maxlength="17"
-                                            id="outrasDepesas"
+                                            id="outrasDespesas"
                                             class="form-control preco toUpperCase"
-                                            value="{{ old('outrasDepesas') }}">
+                                            value="{{ old('outrasDespesas') }}">
                                     </div>
                                 </div>
                             </div>
@@ -336,31 +335,33 @@
                                         <input
                                             disabled
                                             type="text"
-                                            name="totalProdutos"
+                                            name="totalPagarDisplay"
                                             placeholder="R$ 00,00"
                                             maxlength="17"
                                             id="totalProdutos"
                                             class="form-control preco toUpperCase text-end"
                                             value="{{ old('totalProdutos') }}">
+                                        <input type="hidden" name="totalProdutos" id="totalProdutosHidden">
                                     </div>
                                     <div class="ms-4">
                                         <label for="totalPagar" class="form-label toUpperCase preco">valor da nota</label>
                                         <input
                                             disabled
                                             type="text"
-                                            name="totalPagar"
+                                            name="totalPagarDisplay"
                                             placeholder="R$ 00,00"
                                             maxlength="17"
                                             id="totalPagar"
                                             class="form-control preco toUpperCase text-end"
                                             value="{{ old('totalPagar') }}">
+                                        <input type="hidden" name="totalPagar" id="totalPagarHidden">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
 
-                        <div class="d-flex justify-content-end mt-10">
+                        <div class="d-flex justify-content-end mt-10 d-none">
                             <a href="{{ route('purchase.index') }}"
                                 class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                             {{-- <button type="button" id="turnEtapa1"
@@ -426,6 +427,7 @@
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($paymentTerms as $paymentTerm)
                                             <option value="{{ $paymentTerm->id }}"
+                                                data-installments="{{ $paymentTerm->installments }}"
                                                 {{ old('payment_term_id') == $paymentTerm->id ? 'selected' : '' }}>
                                                 {{ $paymentTerm->id }} -
                                                 {{ $paymentTerm->condicaoPagamento }}
@@ -459,9 +461,9 @@
                                 <thead>
                                     <tr>
                                         <th>Nº Parcela</th>
-                                        <th>Valor</th>
+                                        <th>Forma de pagamento</th>
                                         <th>Data de Vencimento</th>
-                                        <th>Ações</th>
+                                        <th>Valor</th>
                                     </tr>
                                 </thead>
                                 <tbody id="parcelaList"></tbody>
@@ -474,272 +476,481 @@
                                 class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
                             {{-- <button type="button" id="turnEtapa2" class="btn btn-secondary toUpperCase me-4">Etapa
                                 anterior</button> --}}
-                            <button type="button" id="actionEtapa3" class="btn btn-success toUpperCase">cadastrar
+                            <button type="submmit" class="btn btn-success toUpperCase">cadastrar
                                 nota</button>
                         </div>
                     </div>
                 </div>
             </div>
-            </form>
-        </div>
+        </form>
+    </div>
 
-        @include('content.product.modal.selectSupplier')
+    @include('content.product.modal.selectSupplier')
+    @include('content.purchase.modal.selectProduct')
+    @include('content.purchase.modal.selectPaymentTerm')
 
-        {{-- Limita o tamanho dos campos --}}
-        <script>
-            function limitInputLength(input, length) {
-                if (input.value.length > length) {
-                    input.value = input.value.slice(0, length);
-                }
+    <script>
+        // Variáveis globais para controle
+        let valorTotalProdutos = 0;
+        let valorFrete = 0;
+        let valorSeguro = 0;
+        let outrasDespesas = 0;
+        let produtosAdicionados = new Set();
+        let parcelasGeradas = new Set();
+        let paymentTermsData = {};
+        let parcelasAtivas = false;
+
+        // Limita o tamanho dos campos
+        function limitInputLength(input, length) {
+            if (input.value.length > length) {
+                input.value = input.value.slice(0, length);
             }
-        </script>
+        }
 
-        {{-- Busca dados do fornecedor --}}
-        <script>
-            $(document).ready(function() {
-                $('#supplier_id').on('change', function() {
-                    const supplierId = $(this).val(); // Captura o ID do fornecedor
-                    const supplierDetailsBlock = $('.supplier-details-block');
+        // Função para arredondar valores para 2 casas decimais
+        function arredondar(valor) {
+            return Math.round(valor * 100) / 100;
+        }
+
+        // Função para formatar valores monetários no padrão brasileiro
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        }
+
+        // Função para converter valor em formato brasileiro para número
+        function converterValorParaNumero(valorStr) {
+            if (!valorStr) return 0;
+            return parseFloat(valorStr.replace('R$', '').replace(/\./g, '').replace(',', '.') || 0);
+        }
+
+        // Função para calcular data de vencimento
+        function calcularDataVencimento(dias) {
+            const data = new Date();
+            data.setDate(data.getDate() + dias);
+            return data;
+        }
+
+        // Função para formatar data
+        function formatarData(data) {
+            return data.toLocaleDateString('pt-BR');
+        }
+
+        // Função para atualizar os valores totais
+        function atualizarTotais() {
+            const totalSemFrete = valorTotalProdutos;
+            const totalComFrete = arredondar(totalSemFrete + valorFrete + valorSeguro + outrasDespesas);
+
+            $('#qtdTotalProdutos').val(produtosAdicionados.size);
+            $('#totalProdutos').val(formatarMoeda(totalSemFrete));
+            $('#totalPagar').val(formatarMoeda(totalComFrete));
+
+            // Atualiza o campo hidden com o valor sem formatação
+            $('#totalProdutosHidden').val(formatarMoeda(totalSemFrete));
+            $('#totalPagarHidden').val(formatarMoeda(totalComFrete));
 
 
+            // Atualiza os campos de valores adicionais com a formatação correta
+            $('#valorFrete').val(formatarMoeda(valorFrete));
+            $('#valorSeguro').val(formatarMoeda(valorSeguro));
+            $('#outrasDespesas').val(formatarMoeda(outrasDespesas));
+        }
 
-                    // Chamada Axios para buscar detalhes
-                    axios.get(`{{ route('supplier.findId', ':id') }}`.replace(':id',
-                            supplierId)) // Substitui ':id' pelo supplierId
+        // Função para inicializar os dados das condições de pagamento
+        function initializePaymentTerms() {
+            const paymentTerms = document.querySelectorAll('[data-installments]');
+
+            paymentTerms.forEach(term => {
+                const termId = term.dataset.paymentTermId;
+                const installments = JSON.parse(term.dataset.installments);
+                paymentTermsData[termId] = installments;
+            });
+        }
+
+        // Validação de datas
+        function validaDatas() {
+            function criarDataLocal(dateString) {
+                const partes = dateString.split('-');
+                return new Date(partes[0], partes[1] - 1, partes[2]);
+            }
+
+            // Validação da Data de Chegada
+            $('#dataChegada').on('change', function() {
+                const dataEmissaoString = document.getElementById('dataEmissao').value;
+                const dataChegadaString = document.getElementById('dataChegada').value;
+                const dataAtual = new Date();
+                dataAtual.setHours(0, 0, 0, 0);
+
+                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
+                const dataChegada = dataChegadaString ? criarDataLocal(dataChegadaString) : null;
+
+                document.querySelectorAll('.error-message').forEach(element => element.remove());
+
+                if (dataChegada) {
+                    if (dataChegada > dataAtual) {
+                        alert('A data de chegada não pode ser maior que o dia atual.');
+                        document.getElementById('dataChegada').value = '';
+                        return;
+                    }
+
+                    if (dataEmissao && dataChegada < dataEmissao) {
+                        alert('A data de chegada não pode ser anterior à data de emissão.');
+                        document.getElementById('dataChegada').value = '';
+                    }
+                }
+            });
+
+            // Validação da Data de Emissão
+            $('#dataEmissao').on('change', function() {
+                const dataEmissaoString = $('#dataEmissao').val();
+                const dataChegadaString = $('#dataChegada').val();
+                const dataAtual = new Date();
+                dataAtual.setHours(0, 0, 0, 0);
+
+                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
+                const dataChegada = dataChegadaString ? criarDataLocal(dataChegadaString) : null;
+
+                $('.error-message').remove();
+
+                if (dataEmissao) {
+                    if (dataEmissao > dataAtual) {
+                        alert('A data de emissão não pode ser maior que o dia atual.');
+                        $('#dataEmissao').val('');
+                        return;
+                    }
+
+                    if (dataChegada && dataChegada < dataEmissao) {
+                        alert('A data de chegada não pode ser anterior à data de emissão.');
+                        $('#dataEmissao').val('');
+                    }
+                }
+            });
+        }
+
+        // Busca dados do fornecedor
+        function buscarDadosFornecedor() {
+            $('#supplier_id').on('change', function() {
+                const supplierId = $(this).val();
+                const supplierDetailsBlock = $('.supplier-details-block');
+
+                axios.get(`{{ route('supplier.findId', ':id') }}`.replace(':id', supplierId))
+                    .then(response => {
+                        if (response.data.success) {
+                            const supplier = response.data.supplier;
+                            const documentoLabel = supplier.tipoPessoa === 'F' ? 'CPF' : 'CNPJ';
+
+                            supplierDetailsBlock.html(`
+                        <h6 class="mb-2">Dados do fornecedor</h6>
+                        <div class="d-flex">
+                            <p class="mb-0">Telefone: ${supplier.celular}</p>
+                            <p class="mb-0 ms-4">E-mail: ${supplier.email}</p>
+                            <p class="mb-0 ms-4">${documentoLabel}: ${supplier.cpfCnpj}</p>
+                        </div>
+                    `);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar dados:', error);
+                    });
+            });
+        }
+
+        // Verificar nota fiscal
+        function verificarNotaFiscal() {
+            if (verificarCompra) {
+                verificarCompra.addEventListener("click", function(e) {
+                    e.preventDefault();
+
+                    const numeroNota = document.getElementById("numeroNota").value;
+                    const modelo = document.getElementById("modelo").value;
+                    const serie = document.getElementById("serie").value;
+                    const supplier_id = document.getElementById("supplier_id").value;
+
+                    if (!numeroNota || !modelo || !serie || !supplier_id) {
+                        alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
+                        return;
+                    }
+
+                    axios.post('{{ route('purchase.check') }}', {
+                            numeroNota: numeroNota,
+                            modelo: modelo,
+                            serie: serie,
+                            supplier_id: supplier_id
+                        })
                         .then(response => {
-                            console.log(response.data);
-                            if (response.data.success) {
-                                const supplier = response.data.supplier;
-                                // Verifica o tipoPessoa e ajusta o título do documento
-                                const documentoLabel = supplier.tipoPessoa === 'F' ? 'CPF' : 'CNPJ';
-
-                                supplierDetailsBlock.html(`
-                                    <h6 class="mb-2">Dados do fornecedor</h6>
-                                    <div class="d-flex">
-                                        <p class="mb-0">Telefone: ${supplier.celular}</p>
-                                        <p class="mb-0 ms-4">E-mail: ${supplier.email}</p>
-                                        <p class="mb-0 ms-4">${documentoLabel}: ${supplier.cpfCnpj}</p>
-                                    </div>
-                                `);
+                            if (response.data.exists) {
+                                alert("Esta nota fiscal já está cadastrada no sistema!");
+                            } else {
+                                alert("Nota fiscal válida!");
                             }
                         })
                         .catch(error => {
-                            console.error('Erro ao buscar dados:', error);
+                            console.error("Erro ao verificar nota fiscal:", error);
+                            alert("Ocorreu um erro ao verificar a nota fiscal. Tente novamente.");
                         });
                 });
+            }
+        }
+
+        // Adicionar produto
+        function adicionarProduto() {
+            $('#add-product').on('click', function() {
+                const product_id = $('#product_id').val();
+                const qtdProduto = parseInt($('#qtdProduto').val());
+                const precoProduto = converterValorParaNumero($('#precoProduto').val());
+                const descontoProduto = parseFloat($('#descontoProduto').val() || 0);
+                const produtoNome = $('#product_id option:selected').data('nome');
+                const unidadeProduto = $('#product_id option:selected').data('medida');
+
+                if (!product_id || !qtdProduto || isNaN(precoProduto)) {
+                    return alert('Preencha todos os campos obrigatórios.');
+                }
+
+                if (descontoProduto > 100 || descontoProduto < 0) {
+                    return alert('O desconto deve estar entre 0 e 100%.');
+                }
+
+                if (produtosAdicionados.has(product_id.toString())) {
+                    return alert('Este produto já foi adicionado.');
+                }
+
+                const precoTotalProduto = arredondar(precoProduto * qtdProduto);
+                const valorDesconto = arredondar((descontoProduto / 100) * precoTotalProduto);
+                const precoTotal = arredondar(precoTotalProduto - valorDesconto);
+
+                valorTotalProdutos = arredondar(valorTotalProdutos + precoTotal);
+                produtosAdicionados.add(product_id.toString());
+
+                $('#product-list').append(`
+            <tr class="product-item" data-id="${product_id}" data-price="${precoTotal}">
+                <td>${product_id}</td>
+                <td>${produtoNome}</td>
+                <td>${unidadeProduto}</td>
+                <td>${qtdProduto}</td>
+                <td>${formatarMoeda(precoProduto)}</td>
+                <td>${descontoProduto}%</td>
+                <td>${formatarMoeda(precoTotal)}</td>
+                <td class="size-col-action">
+                    <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product">
+                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                    </button>
+                </td>
+                <input type="hidden" name="produtos[${product_id}][product_id]" value="${product_id}">
+                <input type="hidden" name="produtos[${product_id}][produtoNome]" value="${produtoNome}">
+                <input type="hidden" name="produtos[${product_id}][unidadeProduto]" value="${unidadeProduto}">
+                <input type="hidden" name="produtos[${product_id}][qtdProduto]" value="${qtdProduto}">
+                <input type="hidden" name="produtos[${product_id}][precoProduto]" value="${precoProduto}">
+                <input type="hidden" name="produtos[${product_id}][descontoProduto]" value="${descontoProduto}">
+                <input type="hidden" name="produtos[${product_id}][precoTotal]" value="${precoTotal}">
+            </tr>
+        `);
+
+                atualizarTotais();
+
+                $('#product_id').val('').trigger('change');
+                $('#qtdProduto').val('');
+                $('#precoProduto').val('');
+                $('#descontoProduto').val('');
             });
-        </script>
+        }
 
-        {{-- Formata campos de preço --}}
-        <script>
-            document.querySelectorAll('.preco').forEach(function(input) {
-                input.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    value = (value / 100).toFixed(2).replace('.', ',');
-                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                    e.target.value = 'R$ ' + value;
-                });
+        // Remover produtos
+        function removeProdutos() {
+            $(document).on('click', '.remove-product', function() {
+                const productItem = $(this).closest('.product-item');
+                const product_id = productItem.data('id').toString();
+                const precoTotal = parseFloat(productItem.data('price'));
+
+                produtosAdicionados.delete(product_id);
+                valorTotalProdutos = arredondar(valorTotalProdutos - precoTotal);
+
+                productItem.remove();
+                atualizarTotais();
             });
-        </script>
+        }
 
-        {{-- Verifica nota fiscal --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const verificarCompra = document.getElementById("verificarCompra");
+        // Função para gerar parcelas
+        function gerarParcelas(recalculo = false) {
+            const processarParcelas = async () => {
+                // Se já existem parcelas e não é recálculo, confirma cancelamento
+                if (parcelasAtivas && !recalculo) {
+                    if (confirm('Deseja cancelar as parcelas geradas? Isso permitirá modificar os produtos.')) {
+                        $('#parcelaList').empty();
+                        parcelasGeradas.clear();
+                        parcelasAtivas = false;
+                        controlarEstadoElementos();
+                        return;
+                    }
+                    return;
+                }
 
-                if (verificarCompra) {
-                    verificarCompra.addEventListener("click", function(e) {
-                        e.preventDefault();
+                const payment_term_id = $('#payment_term_id').val();
 
-                        // Captura os valores dos campos do formulário
-                        const numeroNota = document.getElementById("numeroNota").value;
-                        const modelo = document.getElementById("modelo").value;
-                        const serie = document.getElementById("serie").value;
-                        const supplier_id = document.getElementById("supplier_id").value;
+                if (!payment_term_id) {
+                    if (!recalculo) alert('Selecione uma condição de pagamento.');
+                    return;
+                }
 
-                        // Valida os campos obrigatórios
-                        if (!numeroNota || !modelo || !serie || !supplier_id) {
-                            alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
-                            return;
-                        }
+                const valorTotal = converterValorParaNumero($('#totalPagar').val());
 
-                        // Faz a requisição usando Axios
-                        axios.post('{{ route('purchase.check') }}', {
-                                numeroNota: numeroNota,
-                                modelo: modelo,
-                                serie: serie,
-                                supplier_id: supplier_id
-                            })
-                            .then(response => {
-                                if (response.data.exists) {
-                                    alert("Esta nota fiscal já está cadastrada no sistema!");
-                                } else {
-                                    alert("Fui e voltei");
+                if (valorTotal <= 0) {
+                    if (!recalculo) alert('Não há valor a ser parcelado.');
+                    return;
+                }
 
+                try {
+                    // Busca as parcelas via GET
+                    const response = await axios.get(`{{ route('payment_term.installments', ':id') }}`.replace(
+                        ':id', payment_term_id));
+                    const parcelas = response.data.installments;
 
-                                    // Código se o fornecedor não foi cadastrado
-                                    // toggleSteps(step1, step2); // Avança para a próxima etapa
-
+                    console.log(parcelas);
 
 
-                                }
-                            })
-                            .catch(error => {
-                                console.error("Erro ao verificar nota fiscal:", error);
-                                alert("Ocorreu um erro ao verificar a nota fiscal. Tente novamente.");
-                            });
+                    if (!parcelas || parcelas.length === 0) {
+                        if (!recalculo) alert('Nenhuma parcela configurada para esta condição de pagamento.');
+                        return;
+                    }
+
+                    $('#parcelaList').empty();
+                    parcelasGeradas.clear();
+
+                    let totalPercentual = 0;
+
+                    parcelas.forEach((parcela) => {
+                        const valorParcela = arredondar((valorTotal * parcela.percentual) / 100);
+                        const dataVencimento = calcularDataVencimento(parcela.dias);
+                        totalPercentual += parseFloat(parcela.percentual);
+
+                        $('#parcelaList').append(`<tr class="parcela-item" data-parcela="${parcela.parcela}">
+                                                      <td>${parcela.parcela}ª Parcela</td>
+                                                      <td>${parcela.payment_form.formaPagamento}</td>
+                                                      <td>${formatarData(dataVencimento)}</td>
+                                                      <td>${formatarMoeda(valorParcela)}</td>
+
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][payment_form_id]" value="${parcela.payment_form.id}">
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][parcela]" value="${parcela.parcela}">
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][dias]" value="${parcela.dias}">
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][percentual]" value="${parcela.percentual}">
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][valor]" value="${valorParcela}">
+                                                      <input type="hidden" name="parcelas[${parcela.parcela}][dataVencimento]" value="${dataVencimento.toISOString().split('T')[0]}">
+                                                  </tr>
+                              `);
+
+                        parcelasGeradas.add(parcela.parcela);
                     });
+
+                    // Validação do percentual total
+                    if (Math.abs(totalPercentual - 100) > 0.01) {
+                        alert('Atenção: O percentual total das parcelas não soma 100%.');
+                    }
+
+                    // Ativa o estado de parcelas geradas se não for recálculo
+                    if (!recalculo) {
+                        parcelasAtivas = true;
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao buscar parcelas:', error);
+                    if (!recalculo) {
+                        alert('Erro ao gerar parcelas. Tente novamente.');
+                    }
+                }
+            };
+
+            if (recalculo) {
+                processarParcelas();
+            } else {
+                $('#addParcela').on('click', processarParcelas);
+            }
+        }
+
+        // Atualizar valores adicionais
+        function atualizarValoresAdicionais() {
+            $('#valorFrete').on('change', function() {
+                valorFrete = converterValorParaNumero($(this).val());
+                atualizarTotais();
+            });
+
+            $('#valorSeguro').on('change', function() {
+                valorSeguro = converterValorParaNumero($(this).val());
+                atualizarTotais();
+            });
+
+            $('#outrasDespesas').on('change', function() {
+                outrasDespesas = converterValorParaNumero($(this).val());
+                atualizarTotais();
+            });
+        }
+
+        // Validação do formulário
+        function validarFormulario() {
+            $('#actionEtapa3').on('click', function(e) {
+                if (parcelasGeradas.size === 0) {
+                    e.preventDefault();
+                    alert('Gere as parcelas antes de cadastrar a nota.');
+                    return false;
+                }
+
+                const valorTotal = converterValorParaNumero($('#totalPagar').val());
+                const totalParcelas = Array.from(document.querySelectorAll('input[name$="[valor]"]'))
+                    .reduce((total, input) => total + parseFloat(input.value), 0);
+
+                if (Math.abs(totalParcelas - valorTotal) > 0.01) {
+                    e.preventDefault();
+                    alert('O valor total das parcelas não corresponde ao valor da nota.');
+                    return false;
                 }
             });
-        </script>
+        }
 
+        // Inicialização
+        $(document).ready(function() {
+            // Inicialização das variáveis
+            produtosAdicionados.clear();
+            parcelasGeradas.clear();
+            valorTotalProdutos = 0;
+            valorFrete = 0;
+            valorSeguro = 0;
+            outrasDespesas = 0;
 
-        {{-- Adiciona produtos na listagem --}}
-        <script>
-            let produtosAdicionados = new Set(); // Conjunto para controlar produtos adicionados
-            let valorTotalProdutos = 0;
+            // Inicializa os dados das condições de pagamento
+            initializePaymentTerms();
 
-            // Função para arredondar valores para 2 casas decimais
-            function arredondar(valor) {
-                return parseFloat(valor.toFixed(2));
-            }
+            // Inicializa todas as funcionalidades
+            buscarDadosFornecedor();
+            verificarNotaFiscal();
+            validaDatas();
+            adicionarProduto();
+            removeProdutos();
+            atualizarValoresAdicionais();
+            gerarParcelas();
+            validarFormulario();
 
-            // Função para formatar valores monetários no padrão brasileiro
-            function formatarMoeda(valor) {
-                return new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                }).format(valor);
-            }
-
-            // Função para atualizar os valores totais
-            function atualizarTotais() {
-                $('#valorTotalProdutos').val(formatarMoeda(valorTotalProdutos)); // Atualiza o total dos produtos
-                $('#totalProdutos').val(produtosAdicionados.size); // Atualiza a quantidade de produtos
-                $('#totalPagar').val(formatarMoeda(valorTotalProdutos)); // Atualiza o total a pagar com máscara
-            }
-
-            $(document).ready(function() {
-                // Adicionar produto
-                $('#add-product').on('click', function() {
-                    const product_id = $('#product_id').val();
-                    const qtdProduto = parseInt($('#qtdProduto').val());
-                    const precoProduto = parseFloat($('#precoProduto').val().replace('R$', '').replace(',', '.')
-                        .trim());
-                    const descontoProduto = parseFloat($('#descontoProduto').val() || 0);
-                    const produtoNome = $('#product_id option:selected').data('nome');
-                    const unidadeProduto = $('#product_id option:selected').data('medida');
-
-                    // Validações
-                    if (!product_id || !qtdProduto || isNaN(precoProduto)) {
-                        return alert('Preencha todos os campos obrigatórios.');
-                    }
-
-                    if (descontoProduto > 100 || descontoProduto < 0) {
-                        return alert('O desconto deve estar entre 0 e 100%.');
-                    }
-
-                    if (produtosAdicionados.has(product_id)) {
-                        return alert('Este produto já foi adicionado.');
-                    }
-
-                    // Cálculos com arredondamento
-                    const precoTotalProduto = arredondar(precoProduto * qtdProduto);
-                    const valorDesconto = arredondar((descontoProduto / 100) * precoTotalProduto);
-                    const precoTotal = arredondar(precoTotalProduto - valorDesconto);
-
-                    // Atualiza o valor total dos produtos
-                    valorTotalProdutos = arredondar(valorTotalProdutos + precoTotal);
-
-                    // Adiciona o produto ao conjunto de IDs
-                    produtosAdicionados.add(product_id);
-
-                    // Adiciona a linha na tabela
-                    $('#product-list').append(`
-                      <tr class="product-item" data-id="${product_id}">
-                          <td>${product_id}</td>
-                          <td>${produtoNome}</td>
-                          <td>${unidadeProduto}</td>
-                          <td>${qtdProduto}</td>
-                          <td>R$ ${precoProduto.toFixed(2).replace('.', ',')}</td>
-                          <td>${descontoProduto} %</td>
-                          <td>R$ ${precoTotal.toFixed(2).replace('.', ',')}</td>
-                          <td class="size-col-action">
-                              <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product">
-                                  <span class="tf-icons bx bx-trash bx-22px"></span>
-                              </button>
-                          </td>
-                          <!-- Inputs escondidos para envio dos dados -->
-                          <input type="hidden" name="produtos[${product_id}][product_id]" value="${product_id}">
-                          <input type="hidden" name="produtos[${product_id}][produtoNome]" value="${produtoNome}">
-                          <input type="hidden" name="produtos[${product_id}][unidadeProduto]" value="${unidadeProduto}">
-                          <input type="hidden" name="produtos[${product_id}][qtdProduto]" value="${qtdProduto}">
-                          <input type="hidden" name="produtos[${product_id}][precoProduto]" value="${precoProduto}">
-                          <input type="hidden" name="produtos[${product_id}][descontoProduto]" value="${descontoProduto}">
-                          <input type="hidden" name="produtos[${product_id}][precoTotal]" value="${precoTotal.toFixed(2)}">
-                      </tr>
-                  `);
-
-                    // Atualiza os valores totais
-                    atualizarTotais();
-
-                    // Limpa os campos após adicionar o produto
-                    $('#product_id').val('');
-                    $('#qtdProduto').val('');
-                    $('#precoProduto').val('');
-                    $('#descontoProduto').val('');
-                });
-
-                // Remover produto
-                $(document).on('click', '.remove-product', function() {
-                    const row = $(this).closest('.product-item');
-                    const product_id = row.data('id').toString(); // Garante que o ID seja uma string
-                    const precoTotal = parseFloat(row.find('input[name$="[precoTotal]"]').val());
-
-                    // Atualiza o valor total
-                    valorTotalProdutos = arredondar(valorTotalProdutos - precoTotal);
-
-                    // Remove o produto do conjunto
-                    if (produtosAdicionados.has(product_id)) {
-                        produtosAdicionados.delete(product_id);
-                    } else {
-                        console.warn(`Produto ${product_id} não encontrado no conjunto.`);
-                    }
-
-                    // Remove a linha da tabela
-                    row.remove();
-
-                    // Atualiza os valores totais
-                    atualizarTotais();
-                });
-
-                // $('#valorFrete').on('change', function() {
-                //     const valorFrete = $(this).val().replace('R$', '').replace(',', '.');
-
-                //     atualizarTotais();
-                //     valorTotalProdutos = arredondar(valorTotalProdutos + parseFloat(valorFrete));
-                //     atualizarTotais();
-
-                // });
-
-                // $('#valorSeguro').on('change', function() {
-                //     const supplierId = $(this).val(); // Captura o ID do fornecedor
-                //     const supplierDetailsBlock = $('.supplier-details-block');
-                // });
-
-                // $('#outrasDespesas').on('change', function() {
-                //     const supplierId = $(this).val(); // Captura o ID do fornecedor
-                //     const supplierDetailsBlock = $('.supplier-details-block');
-                // });
+            // Formatação dos campos de preço
+            $('.preco').on('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2);
+                e.target.value = formatarMoeda(parseFloat(value));
             });
-        </script>
+
+            // Limpa parcelas ao mudar a condição de pagamento
+            $('#payment_term_id').on('change', function() {
+                $('#parcelaList').empty();
+                parcelasGeradas.clear();
+            });
+        });
+    </script>
 
 
 
 
 
 
-        {{-- <script>
+
+    {{-- <script>
         // Seletores das etapas
         const step1 = document.getElementById("step1");
         const step2 = document.getElementById("step2");
@@ -788,7 +999,7 @@
         });
     </script> --}}
 
-        {{-- <script>
+    {{-- <script>
         // Função para habilitar os campos e botões da etapa atual e desativar os da etapa anterior
         function toggleSteps(currentStep, nextStep) {
             // Oculta os botões da etapa atual e desativa os campos
@@ -860,4 +1071,4 @@
 
 
 
-    @endsection
+@endsection

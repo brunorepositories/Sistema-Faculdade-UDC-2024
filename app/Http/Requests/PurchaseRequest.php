@@ -36,6 +36,7 @@ class PurchaseRequest extends FormRequest
       'outrasDespesas' => ['nullable', 'numeric', 'min:0'],
       'totalProdutos' => ['required', 'numeric', 'min:0.01'],
       'produtos' => new CheckArray,
+      'parcelas' => new CheckArray,
       'totalPagar' => ['required', 'numeric', 'min:0.01'],
       'payment_term_id' => ['required', 'exists:payment_terms,id'],
       'observacao' => ['nullable', 'max:1000'],
@@ -45,6 +46,7 @@ class PurchaseRequest extends FormRequest
 
   protected function prepareForValidation()
   {
+    dd($this->all());
     $this->merge([
       'numeroNota' => strtoupper($this->numeroNota),
       'modelo' => strtoupper($this->modelo),

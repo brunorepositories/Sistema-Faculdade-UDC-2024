@@ -1,14 +1,14 @@
 <!-- Modal para listagem de formas de pagamento -->
 <div class="modal fade"
     data-bs-backdrop="static"
-    id="paymentFormModal"
+    id="paymentTermModal"
     tabindex="-1"
-    aria-labelledby="paymentFormModalLabel"
+    aria-labelledby="paymentTermModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title" id="paymentFormModalLabel">Selecione a Forma de Pagamento</h5>
+                <h5 class="modal-title" id="paymentTermModalLabel">Selecione a Forma de Pagamento</h5>
             </div>
             <div class="modal-body">
                 <div class="table-responsive text-nowrap">
@@ -20,11 +20,11 @@
                             </tr>
                         </thead>
                         <tbody id="payment-form-list">
-                            @foreach ($paymentForms as $paymentForm)
-                                <tr class="select-payment-form" data-id="{{ $paymentForm->id }}"
-                                    data-name="{{ $paymentForm->formaPagamento }}">
-                                    <td>{{ $paymentForm->id }}</td>
-                                    <td>{{ $paymentForm->formaPagamento }}</td>
+                            @foreach ($paymentTerms as $paymentTerm)
+                                <tr class="select-payment-form" data-id="{{ $paymentTerm->id }}"
+                                    data-name="{{ $paymentTerm->condicaoPagamento }}">
+                                    <td>{{ $paymentTerm->id }}</td>
+                                    <td>{{ $paymentTerm->condicaoPagamento }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -39,19 +39,18 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         // Captura o clique na linha da tabela de formas de pagamento para selecionar a forma de pagamento
         $('.select-payment-form').on('click', function() {
-            var paymentFormId = $(this).data('id');
-            var paymentFormName = $(this).data('name');
+            var paymentTermId = $(this).data('id');
+            var paymentTermName = $(this).data('name');
 
             // Atualiza o campo de seleção de forma de pagamento
-            $('#payment_form_id').val(paymentFormId);
+            $('#payment_term_id').val(paymentTermId);
 
             // Fecha o modal de seleção de formas de pagamento
-            $('#paymentFormModal').modal('hide');
+            $('#paymentTermModal').modal('hide');
         });
     });
 </script>

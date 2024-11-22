@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\FormatData;
 use App\Http\Requests\PaymentTermRequest;
 use App\Models\Installment;
 use App\Models\PaymentForm;
 use App\Models\PaymentTerm;
-use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +13,18 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentTermController extends Controller
 {
+
+
+  public function getInstallments($id)
+  {
+    $paymentTerm = PaymentTerm::with(['installments.paymentForm'])
+      ->findOrFail($id);
+
+    return response()->json([
+      'installments' => $paymentTerm->installments
+    ]);
+  }
+
   /**
    * Display a listing of the resource.
    */

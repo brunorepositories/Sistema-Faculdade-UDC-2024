@@ -23,6 +23,6 @@ class PaymentTerm extends Model
 
   public function installments()
   {
-    return $this->hasMany(Installment::class);
+    return $this->hasMany(Installment::class, 'payment_term_id');
   }
 }
