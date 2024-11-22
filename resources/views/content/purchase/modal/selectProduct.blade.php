@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title" id="productModalLabel">Selecione a Forma de Pagamento</h5>
+                <h5 class="modal-title" id="productModalLabel">Selecione o produto</h5>
             </div>
             <div class="modal-body">
                 <div class="table-responsive text-nowrap">

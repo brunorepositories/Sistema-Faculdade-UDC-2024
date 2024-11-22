@@ -17,6 +17,8 @@
                             <tr>
                                 <th>Código</th>
                                 <th>Fornecedor</th>
+                                <th>Documento</th>
+
                             </tr>
                         </thead>
                         <tbody id="supplier-list">
@@ -25,6 +27,7 @@
                                     data-name="{{ $supplier->nome }}">
                                     <td>{{ $supplier->id }}</td>
                                     <td>{{ $supplier->fornecedorRazaoSocial }}</td>
+                                    <td>{{ $supplier->tipoPessoa }}: {{ $supplier->cpfCnpj }} </td>
                                 </tr>
                             @endforeach
                         </tbody>

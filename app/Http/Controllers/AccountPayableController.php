@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountReceivable;
+use App\Models\AccountPayable;
 use Illuminate\Http\Request;
 
-class AccountReceivableController extends Controller
+class AccountPayableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class AccountReceivableController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AccountReceivable $accountReceivable)
+    public function show(AccountPayable $accountPayable)
     {
         //
     }
@@ -42,7 +42,7 @@ class AccountReceivableController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AccountReceivable $accountReceivable)
+    public function edit(AccountPayable $accountPayable)
     {
         //
     }
@@ -50,7 +50,7 @@ class AccountReceivableController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AccountReceivable $accountReceivable)
+    public function update(Request $request, AccountPayable $accountPayable)
     {
         //
     }
@@ -58,7 +58,7 @@ class AccountReceivableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AccountReceivable $accountReceivable)
+    public function destroy(AccountPayable $accountPayable)
     {
         //
     }

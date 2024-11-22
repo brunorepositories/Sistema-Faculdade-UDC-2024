@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Supplier;
-use App\Models\PaymentForm;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AccountReceivable extends Model
+class AccountPayable extends Model
 {
   use HasFactory;
-
-  protected $table = 'accounts_receivable';
+  protected $table = 'account_payables';
 
   protected $fillable = [
     'numeroNota',

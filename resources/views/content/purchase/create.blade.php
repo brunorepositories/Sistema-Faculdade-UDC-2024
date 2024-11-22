@@ -114,6 +114,9 @@
                                     value="{{ old('dataEmissao') }}"
                                     required>
                             </div>
+
+
+
                             <div class="col-md-2">
                                 <label for="dataChegada" class="form-label toUpperCase">Data Chegada <span
                                         class="labelRequired">*</span></label>
@@ -141,7 +144,7 @@
                                 <button type="button" id="actionEtapa1"
                                     class="btn btn-primary toUpperCase">PROSSEGUIR</button> --}}
                                 <button type="button"
-                                    class="btn btn-primary toUpperCase" id="verificarCompra">Verificar nota</button>
+                                    class="btn btn-primary toUpperCase" id="verificarNota">Verificar nota</button>
 
                             </div>
                         </div>
@@ -586,8 +589,6 @@
                 const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
                 const dataChegada = dataChegadaString ? criarDataLocal(dataChegadaString) : null;
 
-                document.querySelectorAll('.error-message').forEach(element => element.remove());
-
                 if (dataChegada) {
                     if (dataChegada > dataAtual) {
                         alert('A data de chegada não pode ser maior que o dia atual.');
@@ -659,39 +660,37 @@
 
         // Verificar nota fiscal
         function verificarNotaFiscal() {
-            if (verificarCompra) {
-                verificarCompra.addEventListener("click", function(e) {
-                    e.preventDefault();
+            $('#verificarNota').on('click', function(e) {
+                e.preventDefault();
 
-                    const numeroNota = document.getElementById("numeroNota").value;
-                    const modelo = document.getElementById("modelo").value;
-                    const serie = document.getElementById("serie").value;
-                    const supplier_id = document.getElementById("supplier_id").value;
+                const numeroNota = document.getElementById("numeroNota").value;
+                const modelo = document.getElementById("modelo").value;
+                const serie = document.getElementById("serie").value;
+                const supplier_id = document.getElementById("supplier_id").value;
 
-                    if (!numeroNota || !modelo || !serie || !supplier_id) {
-                        alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
-                        return;
-                    }
+                if (!numeroNota || !modelo || !serie || !supplier_id) {
+                    alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
+                    return;
+                }
 
-                    axios.post('{{ route('purchase.check') }}', {
-                            numeroNota: numeroNota,
-                            modelo: modelo,
-                            serie: serie,
-                            supplier_id: supplier_id
-                        })
-                        .then(response => {
-                            if (response.data.exists) {
-                                alert("Esta nota fiscal já está cadastrada no sistema!");
-                            } else {
-                                alert("Nota fiscal válida!");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Erro ao verificar nota fiscal:", error);
-                            alert("Ocorreu um erro ao verificar a nota fiscal. Tente novamente.");
-                        });
-                });
-            }
+                axios.post('{{ route('purchase.check') }}', {
+                        numeroNota: numeroNota,
+                        modelo: modelo,
+                        serie: serie,
+                        supplier_id: supplier_id
+                    })
+                    .then(response => {
+                        if (response.data.exists) {
+                            alert("Esta nota fiscal já está cadastrada no sistema!");
+                        } else {
+                            alert("Nota fiscal válida!");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao verificar nota fiscal:", error);
+                        alert("Ocorreu um erro ao verificar a nota fiscal. Tente novamente.");
+                    });
+            });
         }
 
         // Adicionar produto

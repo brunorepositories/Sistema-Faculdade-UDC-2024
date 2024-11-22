@@ -58,7 +58,7 @@ class ProductController extends Controller
     try {
       DB::transaction(function () use ($request) {
 
-        Product::create($request); // Cria o produto com dados validados
+        Product::create($request->all()); // Cria o produto com dados validados
       });
 
       return to_route('product.index')->with('success', 'Produto cadastrado com sucesso.');

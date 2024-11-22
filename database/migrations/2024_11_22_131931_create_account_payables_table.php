@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\PaymentForm;
-use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,7 +13,7 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('accounts_receivable', function (Blueprint $table) {
+    Schema::create('account_payables', function (Blueprint $table) {
       $table->id(); // Adiciona um ID auto-incremento como chave primária única
 
       // Campos para referência à purchase (chave composta)
@@ -59,6 +58,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('accounts_receivable');
+    Schema::dropIfExists('account_payables');
   }
 };

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseRequest;
-use App\Models\AccountReceivable;
+use App\Models\AccountPayable;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\PaymentTerm;
@@ -288,7 +288,7 @@ class PurchaseController extends Controller
         if (isset($request->parcelas) && !empty($request->parcelas)) {
           foreach ($request->parcelas as $parcela) {
             // Cria o registro no contas a receber
-            AccountReceivable::create([
+            AccountPayable::create([
               // Campos de identificação
               'numeroNota' => $purchase->numeroNota,
               'modelo' => $purchase->modelo,
