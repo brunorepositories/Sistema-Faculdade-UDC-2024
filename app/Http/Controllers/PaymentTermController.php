@@ -55,7 +55,8 @@ class PaymentTermController extends Controller
           'condicaoPagamento',
           'multa',
           'juros',
-          'desconto'
+          'desconto',
+          'padrao'
         ]);
 
         // Adiciona 'qtdParcelas' ao array $paymentTermObj
@@ -131,7 +132,8 @@ class PaymentTermController extends Controller
           'multa',
           'juros',
           'desconto',
-          'ativo'
+          'ativo',
+          'padrao'
         ]);
 
         // Atualiza a quantidade de parcelas com base na entrada

@@ -30,12 +30,13 @@ class PaymentTermRequest extends FormRequest
 
     return [
       'condicaoPagamento' => ['required', $createOrUpdate['condicaoPagamento'], 'max:100'],
-      'multa' => ['required', 'min:0'],
-      'juros' => ['required', 'min:0'],
+      'multa' => ['required', 'min:0', 'max:100'],
+      'juros' => ['required', 'min:0', 'max:100'],
       'desconto' => ['required', 'min:0', 'max:100'],
       'parcelas' => new CheckArray,
       'ativo' => ['required', 'boolean'],
-      'percentualTotal' => ['min:100'],
+      'padrao' => ['required', 'boolean'],
+      'percentualTotal' => ['required', 'min:100'],
     ];
   }
 
@@ -43,6 +44,9 @@ class PaymentTermRequest extends FormRequest
   {
     $this->merge([
       'condicaoPagamento' => strtoupper($this->condicaoPagamento),
+      'multa' => $this->juros ? $this->juros : 0,
+      'juros' => $this->multa ? $this->multa : 0,
+      'desconto' => $this->desconto ? $this->desconto : 0,
     ]);
   }
 }

@@ -51,7 +51,6 @@ class PurchaseRequest extends FormRequest
       'modelo' => strtoupper($this->modelo),
       'serie' => strtoupper($this->serie),
       'tipoFrete' => strtoupper($this->tipoFrete),
-      'observacao' => $this->observacao ? strtoupper($this->observacao) : null,
       // Formatação de valores numéricos se necessário
       'valorFrete' => $this->formatDecimalValue($this->valorFrete),
       'valorSeguro' => $this->formatDecimalValue($this->valorSeguro),

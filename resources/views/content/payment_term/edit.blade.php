@@ -239,16 +239,29 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-10">
-                    <div>
-                        <input type="hidden" name="ativo" value="0">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="ativo"
-                            id="ativo"
-                            value="1"
-                            {{ $paymentTerm->ativo ? 'checked' : '' }}>
-                        <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
+                    <div class="d-flex">
+                        <div>
+                            <input type="hidden" name="ativo" value="0" class="ms-4">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="ativo"
+                                id="ativo"
+                                value="1"
+                                {{ $paymentTerm->ativo ? 'checked' : '' }}>
+                            <label class="form-check-label toUpperCase" for="ativo">Ativo</label>
+                        </div>
+                        <div class="ms-4">
+                            <input type="hidden" name="padrao" value="0">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="padrao"
+                                id="padrao"
+                                value="1"
+                                {{ $paymentTerm->padrao ? 'checked' : '' }}>
+                            <label class="form-check-label toUpperCase" for="padrao">Condição padrão</label>
+                        </div>
                     </div>
                     <div>
                         <a
