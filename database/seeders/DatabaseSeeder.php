@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
       CustomerSeeder::class,
       MeasureSeeder::class,        // Medidas podem ser preenchidas sem dependências
       ProductSeeder::class,        // Produtos não têm dependências de outras tabelas, mas usam Measure
-      PurchaseSeeder::class,        // Produtos não têm dependências de outras tabelas, mas usam Measure
+      // PurchaseSeeder::class,        // Produtos não têm dependências de outras tabelas, mas usam Measure
     ]);
   }
 }

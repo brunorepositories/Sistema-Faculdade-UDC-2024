@@ -20,6 +20,8 @@ Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
 
 // Contas a receber
 Route::resource('account_payable', AccountPayableController::class);
+Route::put('/account_payable/pay/{id}', [AccountPayableController::class, 'pay'])->name('account_payable.pay');
+Route::put('/account_payable/cancel/{id}', [AccountPayableController::class, 'cancel'])->name('account_payable.cancel');
 
 // Compras
 Route::resource('purchase', PurchaseController::class)->except(['show']);

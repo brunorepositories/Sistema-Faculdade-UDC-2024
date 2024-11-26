@@ -397,7 +397,7 @@
                     <div class="card-header d-flex justify-content-between pb-0">
                         <h5 class="mb-0">Condição de Pagamento</h5>
 
-                        <p class="badge bg-label-primary">Etapa 2</p>
+                        <p class="badge bg-label-primary">Etapa 3</p>
                     </div>
                     <div class="container" id="alertEtapa3">
                         <div class="alert alert-secondary text-center toUpperCase">
@@ -1106,8 +1106,8 @@
             atualizarValoresAdicionais();
 
 
-            // APENAS PARA DEVS
-            popularCamposTeste();
+            // // APENAS PARA DEVS
+            // popularCamposTeste();
 
             limparDadosEtapa2();
             limparDadosEtapa3()

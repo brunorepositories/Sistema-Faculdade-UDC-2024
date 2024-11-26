@@ -60,12 +60,6 @@ class PurchaseRequest extends FormRequest
     ]);
   }
 
-  /**
-   * Formata valores decimais, removendo caracteres não numéricos e convertendo vírgula para ponto
-   *
-   * @param mixed $value
-   * @return float|null
-   */
   protected function formatDecimalValue($value)
   {
     if (is_null($value)) {

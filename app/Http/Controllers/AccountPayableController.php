@@ -63,10 +63,19 @@ class AccountPayableController extends Controller
         AccountPayable::create($request->all());
       });
 
-      return to_route('account-payable.index')->with('success', "Conta a pagar cadastrada com sucesso.");
+
+
+
+      // CONVERTER OS VALORES COM O REQUEST
+
+
+
+
+
+      return to_route('account_payable.index')->with('success', "Conta a pagar cadastrada com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao cadastrar conta a pagar >>> ' . $ex->getMessage());
-      return to_route('account-payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+      return to_route('account_payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
@@ -93,25 +102,25 @@ class AccountPayableController extends Controller
         $accountPayable->update($request->all());
       });
 
-      return to_route('account-payable.index')->with('success', "Conta a pagar atualizada com sucesso.");
+      return to_route('account_payable.index')->with('success', "Conta a pagar atualizada com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao atualizar conta a pagar >>> ' . $ex->getMessage());
-      return to_route('account-payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+      return to_route('account_payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
   /**
    * Registra o pagamento de uma conta.
    */
-  public function pay(Request $request, AccountPayable $accountPayable)
+  public function pay(Request $request, AccountPayable $id)
   {
     try {
-      if ($accountPayable->status !== 'pendente') {
+      if ($id->status !== 'pendente') {
         return back()->with('failed', 'Esta conta não está pendente para pagamento.');
       }
 
-      DB::transaction(function () use ($request, $accountPayable) {
-        $accountPayable->update([
+      DB::transaction(function () use ($request, $id) {
+        $id->update([
           'valorPago' => $request->valorPago,
           'dataPagamento' => $request->dataPagamento,
           'juros' => $request->juros ?? 0,
@@ -121,34 +130,34 @@ class AccountPayableController extends Controller
         ]);
       });
 
-      return to_route('account-payable.index')->with('success', "Pagamento registrado com sucesso.");
+      return to_route('account_payable.index')->with('success', "Pagamento registrado com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao registrar pagamento >>> ' . $ex->getMessage());
-      return to_route('account-payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+      return to_route('account_payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
   /**
    * Cancela uma conta a pagar.
    */
-  public function cancel(Request $request, AccountPayable $accountPayable)
+  public function cancel(Request $request, AccountPayable $id)
   {
     try {
-      if ($accountPayable->status !== 'pendente') {
+      if ($id->status !== 'pendente') {
         return back()->with('failed', 'Apenas contas pendentes podem ser canceladas.');
       }
 
-      DB::transaction(function () use ($request, $accountPayable) {
-        $accountPayable->update([
+      DB::transaction(function () use ($request, $id) {
+        $id->update([
           'dataCancelamento' => $request->dataCancelamento,
           'status' => 'cancelado'
         ]);
       });
 
-      return to_route('account-payable.index')->with('success', "Conta cancelada com sucesso.");
+      return to_route('account_payable.index')->with('success', "Conta cancelada com sucesso.");
     } catch (QueryException $ex) {
       Log::error('Erro ao cancelar conta >>> ' . $ex->getMessage());
-      return to_route('account-payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
+      return to_route('account_payable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 

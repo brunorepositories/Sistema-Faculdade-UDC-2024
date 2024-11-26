@@ -57,11 +57,11 @@
                                 <td class="text-end"> R$ {{ number_format($product->precoVenda, 2, ',', '.') }}</td>
                                 <td class="text-end"> R$ {{ number_format($product->precoCusto, 2, ',', '.') }}</td>
                                 <td class="text-center">
-                                    {{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-' }}
+                                    {{ $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y') : '-' }}
                                 </td>
                                 <!-- Formatação para R$ -->
                                 <td class="text-center">
-                                    {{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-' }}
+                                    {{ $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y') : '-' }}
                                 </td>
                                 <!-- Alteração para exibir o checkbox -->
                                 <td>

@@ -41,26 +41,29 @@ class ProductRequest extends FormRequest
   public function prepareForValidation()
   {
     $this->merge([
-      'precoCusto' => $this->convertCurrencyToFloat($this->precoCusto),
-      'precoVenda' => $this->convertCurrencyToFloat($this->precoVenda),
-      'custoUltimaCompra' => $this->convertCurrencyToFloat($this->custoUltimaCompra),
-      'custoUltimaVenda' => $this->convertCurrencyToFloat($this->custoUltimaVenda),
+      'precoCusto' => $this->formatDecimalValue($this->precoCusto),
+      'precoVenda' => $this->formatDecimalValue($this->precoVenda),
+      'custoUltimaCompra' => $this->formatDecimalValue($this->custoUltimaCompra),
+      'custoUltimaVenda' => $this->formatDecimalValue($this->custoUltimaVenda),
       'nome' => strtoupper($this->nome),
     ]);
   }
 
-  private function convertCurrencyToFloat(?string $value): ?float
+  protected function formatDecimalValue($value)
   {
-    if ($value) {
-      // Remove "R$", substitui vírgula por ponto e remove caracteres não numéricos
-      $value = preg_replace('/[^0-9,]/', '', $value);
-      // Substitui a vírgula por ponto para que o valor seja aceito como decimal
-      $value = str_replace(',', '.', $value);
-
-      // Converte para float
-      return (float) $value;
+    if (is_null($value)) {
+      return null;
     }
 
-    return null; // Se o valor for nulo, retorna nulo
+    // Remove todos os caracteres exceto números, ponto e vírgula
+    $value = preg_replace('/[^\d.,]/', '', $value);
+
+    // Substitui vírgula por ponto
+    $value = str_replace(',', '.', $value);
+
+    // Se houver mais de um ponto, mantém apenas o último
+    $value = preg_replace('/\.(?=.*\.)/', '', $value);
+
+    return $value ? (float) $value : null;
   }
 }

@@ -17,53 +17,6 @@ use Illuminate\Support\Facades\Log;
 
 class PurchaseController extends Controller
 {
-  /**
-   * Calcula o rateio das despesas adicionais para cada produto
-   */
-  private function calcularRateio($produtos, $valorFrete, $valorSeguro, $outrasDespesas)
-  {
-    $totalDespesas = $valorFrete + $valorSeguro + $outrasDespesas;
-
-    if ($totalDespesas <= 0) {
-      return array_fill_keys(array_keys($produtos), 0);
-    }
-
-    $valorTotalCompra = array_reduce($produtos, function ($total, $produto) {
-      return $total + ($produto['precoProduto'] * $produto['qtdProduto']);
-    }, 0);
-
-    $rateios = [];
-    foreach ($produtos as $id => $produto) {
-      $valorProduto = $produto['precoProduto'] * $produto['qtdProduto'];
-      $percentual = $valorProduto / $valorTotalCompra;
-      $rateios[$id] = round($totalDespesas * $percentual, 2);
-    }
-
-    return $rateios;
-  }
-
-  /**
-   * Calcula o novo custo médio do produto
-   */
-  private function calcularCustoMedio($produto_id, $qtdNova, $custoNovo, $valorRateio = 0)
-  {
-    $produto = Product::find($produto_id);
-
-    // Custo unitário considerando o rateio
-    $custoUnitarioTotal = $custoNovo + ($valorRateio / $qtdNova);
-
-    // Cálculo do custo médio ponderado
-    $valorEstoqueAtual = $produto->estoque * $produto->custoMedio;
-    $valorNovaCompra = $qtdNova * $custoUnitarioTotal;
-
-    $novaQuantidadeTotal = $produto->estoque + $qtdNova;
-
-    if ($novaQuantidadeTotal == 0) {
-      return $custoUnitarioTotal;
-    }
-
-    return round(($valorEstoqueAtual + $valorNovaCompra) / $novaQuantidadeTotal, 2);
-  }
 
   /**
    * Exibe o dashboard com as compras
@@ -82,6 +35,7 @@ class PurchaseController extends Controller
    */
   public function index(Purchase $purchase)
   {
+
     $purchases = $purchase->with('paymentTerm', 'supplier')
       ->orderBy('updated_at', 'desc')
       ->paginate(10);
@@ -200,14 +154,110 @@ class PurchaseController extends Controller
     return view('content.purchase.create', compact('fornecedores', 'paymentTerms', 'products', 'suppliers'));
   }
 
+  private function calcularRateio($produtos, $valorFrete, $valorSeguro, $outrasDespesas)
+  {
+    $totalDespesas = $valorFrete + $valorSeguro + $outrasDespesas;
+
+    if ($totalDespesas <= 0) {
+      return array_fill_keys(array_keys($produtos), 0);
+    }
+
+    // Calcula o valor total já considerando descontos
+    $valorTotalCompra = array_reduce($produtos, function ($total, $produto) {
+      $valorComDesconto = $produto['precoProduto'] * (1 - ($produto['descontoProduto'] ?? 0) / 100);
+      return $total + ($valorComDesconto * $produto['qtdProduto']);
+    }, 0);
+
+    $rateios = [];
+    foreach ($produtos as $id => $produto) {
+      $valorComDesconto = $produto['precoProduto'] * (1 - ($produto['descontoProduto'] ?? 0) / 100);
+      $valorProduto = $valorComDesconto * $produto['qtdProduto'];
+      $percentual = $valorProduto / $valorTotalCompra;
+      $rateios[$id] = round($totalDespesas * $percentual, 2);
+    }
+
+    return $rateios;
+  }
+
+  private function calcularCustoMedio($produto_id, $qtdNova, $custoNovo, $valorRateio = 0, $desconto = 0)
+  {
+    $produto = Product::find($produto_id);
+
+    // Aplica o desconto ao custo
+    $custoComDesconto = $custoNovo * (1 - ($desconto / 100));
+
+    // Custo unitário considerando o rateio
+    $custoUnitarioTotal = $custoComDesconto + ($valorRateio / $qtdNova);
+
+    // Cálculo do custo médio ponderado
+    $valorEstoqueAtual = $produto->estoque * ($produto->custoMedio ?? 0);
+    $valorNovaCompra = $qtdNova * $custoUnitarioTotal;
+
+    $novaQuantidadeTotal = $produto->estoque + $qtdNova;
+
+    if ($novaQuantidadeTotal == 0) {
+      return $custoUnitarioTotal;
+    }
+
+    return round(($valorEstoqueAtual + $valorNovaCompra) / $novaQuantidadeTotal, 2);
+  }
+
+
+  protected function formatDecimalValue($value)
+  {
+    if (is_null($value)) {
+      return null;
+    }
+
+    // Remove todos os caracteres exceto números, ponto e vírgula
+    $value = preg_replace('/[^\d.,]/', '', $value);
+
+    // Substitui vírgula por ponto
+    $value = str_replace(',', '.', $value);
+
+    // Se houver mais de um ponto, mantém apenas o último
+    $value = preg_replace('/\.(?=.*\.)/', '', $value);
+
+    return $value ? (float) $value : null;
+  }
+
+  protected function formatPurchaseData($data)
+  {
+    // Formata valores monetários
+    $data['valorFrete'] = $this->formatDecimalValue($data['valorFrete']);
+    $data['valorSeguro'] = $this->formatDecimalValue($data['valorSeguro']);
+    $data['outrasDespesas'] = $this->formatDecimalValue($data['outrasDespesas']);
+    $data['totalProdutos'] = $this->formatDecimalValue($data['totalProdutos']);
+    $data['totalPagar'] = $this->formatDecimalValue($data['totalPagar']);
+
+    // Formata produtos
+    if (isset($data['produtos']) && is_array($data['produtos'])) {
+      foreach ($data['produtos'] as $key => $produto) {
+        $data['produtos'][$key]['precoProduto'] = $this->formatDecimalValue($produto['precoProduto']);
+        $data['produtos'][$key]['descontoProduto'] = $this->formatDecimalValue($produto['descontoProduto'] ?? 0);
+        $data['produtos'][$key]['qtdProduto'] = $this->formatDecimalValue($produto['qtdProduto']);
+      }
+    }
+
+    // Formata parcelas
+    if (isset($data['parcelas']) && is_array($data['parcelas'])) {
+      foreach ($data['parcelas'] as $key => $parcela) {
+        $data['parcelas'][$key]['valor'] = $this->formatDecimalValue($parcela['valor']);
+      }
+    }
+
+    return $data;
+  }
+
   public function store(PurchaseRequest $request)
   {
-
-    // dd($request->all());
     try {
-      DB::transaction(function () use ($request) {
+      // Formata os dados antes de prosseguir
+      $formattedData = $this->formatPurchaseData($request->all());
+
+      DB::transaction(function () use ($formattedData) {
         // Dados da compra
-        $purchaseData = $request->only([
+        $purchaseData = collect($formattedData)->only([
           'numeroNota',
           'modelo',
           'serie',
@@ -221,16 +271,14 @@ class PurchaseController extends Controller
           'totalProdutos',
           'totalPagar',
           'payment_term_id',
-        ]);
+        ])->toArray();
 
         // Criação da compra
         $purchase = Purchase::create($purchaseData);
 
         // Prepara dados para cálculo do rateio
         $produtosParaRateio = [];
-
-        // dd($request->all());
-        foreach ($request->produtos as $product) {
+        foreach ($formattedData['produtos'] as $product) {
           $produtosParaRateio[$product['product_id']] = [
             'precoProduto' => $product['precoProduto'],
             'qtdProduto' => $product['qtdProduto']
@@ -246,7 +294,7 @@ class PurchaseController extends Controller
         );
 
         // Processa cada produto
-        foreach ($request->produtos as $productData) {
+        foreach ($formattedData['produtos'] as $productData) {
           $product_id = $productData['product_id'];
           $valorRateio = $rateios[$product_id] ?? 0;
 
@@ -255,12 +303,15 @@ class PurchaseController extends Controller
             $product_id,
             $productData['qtdProduto'],
             $productData['precoProduto'],
-            $valorRateio
+            $valorRateio,
+            $productData['descontoProduto'] ?? 0  // Passa o desconto
           );
 
           // Custo unitário com rateio
-          $custoUltCompra = $productData['precoProduto'] +
-            ($valorRateio / $productData['qtdProduto']);
+          // Custo unitário com rateio (também considerando desconto)
+          $custoUltCompra = ($productData['precoProduto'] * (1 - ($productData['descontoProduto'] ?? 0) / 100))
+            + ($valorRateio / $productData['qtdProduto']);
+
 
           // Criação do relacionamento na tabela purchase_products
           PurchaseProducts::create([
@@ -281,38 +332,29 @@ class PurchaseController extends Controller
           Product::where('id', $product_id)->update([
             'precoCusto' => $custoMedio,
             'custoUltimaCompra' => round($custoUltCompra, 2),
-            'estoque' => DB::raw("estoque + {$productData['qtdProduto']}")
+            'estoque' => DB::raw("estoque + {$productData['qtdProduto']}"),
+            'dtUltimaCompra' => $purchase->dataChegada,
           ]);
         }
 
-        // Processa as parcelas e cria o contas a receber
-        if (isset($request->parcelas) && !empty($request->parcelas)) {
-          foreach ($request->parcelas as $parcela) {
-            // Cria o registro no contas a receber
+        // Processa as parcelas
+        if (isset($formattedData['parcelas']) && !empty($formattedData['parcelas'])) {
+          foreach ($formattedData['parcelas'] as $parcela) {
             AccountPayable::create([
-              // Campos de identificação
               'numeroNota' => $purchase->numeroNota,
               'modelo' => $purchase->modelo,
               'serie' => $purchase->serie,
               'supplier_id' => $purchase->supplier_id,
               'parcela' => $parcela['parcela'],
-
-              // Campos de valor
               'valorParcela' => $parcela['valor'],
               'valorPago' => null,
               'juros' => null,
               'multa' => null,
               'desconto' => null,
-
-              // Datas
               'dataVencimento' => $parcela['dataVencimento'],
               'dataPagamento' => null,
               'dataCancelamento' => null,
-
-              // Relacionamentos
               'payment_form_id' => $parcela['payment_form_id'],
-
-              // Status e observações
               'status' => 'pendente',
             ]);
           }
