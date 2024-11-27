@@ -1,17 +1,19 @@
 {
   "menu": [
     {
-      "menuHeader": "Movimentações"
+      "url": "/",
+      "name": "Análise financeira",
+      "slug": "dashboard.index"
     },
     {
-      "url": "/sale.index",
+      "url": "/sale",
       "name": "Vendas",
       "slug": "sale.index"
     },
     {
-      "url": "/accountsReceivable.index",
+      "url": "/account_receivable",
       "name": "Contas a Receber",
-      "slug": "accountsReceivable.index"
+      "slug": "account_receivable.index"
     },
     {
       "url": "/purchase",

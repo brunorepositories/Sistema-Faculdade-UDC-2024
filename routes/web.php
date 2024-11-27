@@ -1,21 +1,40 @@
 <?php
 
 use App\Http\Controllers\AccountPayableController;
+use App\Http\Controllers\AccountReceivableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PaymentFormController;
 use App\Http\Controllers\PaymentTermController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\SupplierController;
+use App\Models\AccountReceivable;
+
 // use App\Models\AccountReceivable;v
 
 // Main Page Route
-Route::get('/', [PurchaseController::class, 'dashboard'])->name('dash.index');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/api/vendas/chart/{days}', [DashboardController::class, 'getChartData']);
+Route::get('/api/vendas/contadores', [DashboardController::class, 'getCounters']);
+
+
+// Contas a receber
+Route::resource('account_receivable', AccountReceivableController::class);
+Route::put('/account_receivable/pay/{id}', [AccountReceivableController::class, 'pay'])->name('account_receivable.pay');
+Route::put('/account_receivable/cancel/{id}', [AccountReceivableController::class, 'cancel'])->name('account_receivable.cancel');
+
+// Compras
+Route::resource('sale', SaleController::class)->except(['show']);
+Route::get('/sales/export', [SaleController::class, 'export'])->name('sale.export');
+Route::post('/check-sale', [SaleController::class, 'checkPurchase'])->name('sale.check');
+Route::get('/sale/{numeroNota}/{modelo}/{serie}/{supplier_id}', [SaleController::class, 'show'])->name('sale.show');
 
 
 // Contas a receber

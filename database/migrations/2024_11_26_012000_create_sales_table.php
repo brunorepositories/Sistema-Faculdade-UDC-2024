@@ -29,6 +29,8 @@ return new class extends Migration
       $table->decimal('totalProdutos', 15, 2);
       $table->decimal('totalPagar', 15, 2);
 
+      $table->enum('status', ['processado', 'faturado', 'cancelado'])->default('processado');
+
       $table->text('observacao')->nullable();
 
       $table->foreignIdFor(Customer::class, 'customer_id')->constrained()->onDelete('restrict');

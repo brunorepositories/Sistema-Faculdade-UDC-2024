@@ -21,7 +21,7 @@ return new class extends Migration
       $table->foreignIdFor(Product::class, 'product_id')->constrained()->onDelete('restrict');
 
       // Campos de valor e quantidade
-      $table->decimal('precoVenda', 10, 2);
+      $table->decimal('precoProduto', 10, 2);
       $table->integer('qtdProduto');
       $table->decimal('descontoProduto', 10, 2)->nullable();
       $table->decimal('acrescimoProduto', 10, 2)->nullable();

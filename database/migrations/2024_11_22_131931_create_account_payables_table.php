@@ -37,7 +37,9 @@ return new class extends Migration
 
       // Relacionamentos e status
       $table->foreignIdFor(PaymentForm::class, 'payment_form_id')->constrained()->onDelete('restrict');
-      $table->string('status', 20)->default('pendente');
+
+      // Status
+      $table->enum('status', ['pendente', 'pago', 'cancelado'])->default('pendente');
 
       // Timestamps padrão do Laravel
       $table->timestamps();

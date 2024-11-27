@@ -34,6 +34,8 @@ return new class extends Migration
 
       $table->text('observacao')->nullable(); // Observação (opcional)
 
+      $table->enum('status', ['processado', 'faturado', 'cancelado'])->default('processado');
+
       $table->foreignIdFor(Supplier::class, 'supplier_id')->constrained()->onDelete('restrict');
       $table->foreignIdFor(PaymentTerm::class, 'payment_term_id')->constrained()->onDelete('restrict');
 
