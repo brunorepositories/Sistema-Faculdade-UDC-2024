@@ -29,6 +29,30 @@ class CustomerController extends Controller
     return view('content.customer.index', compact('customers'));
   }
 
+  public function findId($id)
+  {
+    // Tenta encontrar o cliente pelo ID
+    $customer = Customer::find($id);
+
+    // Verifica se o cliente foi encontrado
+    if ($customer) {
+      return response()->json([
+        'success' => true,
+        'message' => 'Cliente encontrado.',
+        'exists' => true,
+        'customer' => $customer
+      ], 200);
+    }
+
+    // Se não encontrar o cliente, retorna uma mensagem de erro
+    return response()->json([
+      'success' => false,
+      'message' => 'Nenhum registro encontrado.',
+      'exists' => false,
+      'customer' => null
+    ], 404);
+  }
+
   /**
    * Show the form for creating a new resource.
    */

@@ -100,7 +100,7 @@ class ProductController extends Controller
         number_format($product->custoUltimaCompra, 2, ',', '.'),
         $product->dtUltimaCompra ? \Carbon\Carbon::parse($product->dtUltimaCompra)->format('d/m/Y H:i') : '-',
         number_format($product->precoVenda, 2, ',', '.'),
-        number_format($product->custoUltimaVenda, 2, ',', '.'),
+        number_format($product->precoUltimaVenda, 2, ',', '.'),
         $product->dtUltimaVenda ? \Carbon\Carbon::parse($product->dtUltimaVenda)->format('d/m/Y H:i') : '-',
         $product->ativo ? 'Sim' : 'Não',
         $product->measure->nome . ' (' . $product->measure->sigla . ')', // Nome e sigla da medida

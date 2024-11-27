@@ -18,14 +18,11 @@ return new class extends Migration
       $table->integer('serie');
 
       $table->date('dataEmissao');
-      $table->date('dataSaida');
       $table->decimal('valorFrete', 10, 2)->nullable();
       $table->decimal('valorSeguro', 10, 2)->nullable();
       $table->decimal('outrasDespesas', 10, 2)->nullable();
 
-      $table->decimal('subTotal', 15, 2);
       $table->decimal('desconto', 10, 2)->nullable();
-      $table->decimal('acrescimo', 10, 2)->nullable();
       $table->decimal('totalProdutos', 15, 2);
       $table->decimal('totalPagar', 15, 2);
 

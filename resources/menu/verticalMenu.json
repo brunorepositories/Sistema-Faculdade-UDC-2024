@@ -2,27 +2,33 @@
   "menu": [
     {
       "url": "/",
-      "name": "Análise financeira",
-      "slug": "dashboard.index"
+      "name": "Resumo do mês",
+      "slug": "dashboard.index",
+      "icon": "bx bx-bar-chart-square"
     },
     {
       "url": "/sale",
       "name": "Vendas",
-      "slug": "sale.index"
-    },
-    {
-      "url": "/account_receivable",
-      "name": "Contas a Receber",
-      "slug": "account_receivable.index"
+      "slug": "sale.index",
+      "icon": "bx bx-cart-add"
     },
     {
       "url": "/purchase",
       "name": "Compras",
-      "slug": "purchase.index"
+      "slug": "purchase.index",
+      "icon": "bx bx-purchase-tag-alt"
+    },
+    {
+      "menuHeader": "Financeiro"
+    },
+    {
+      "url": "/account_receivable",
+      "name": "Contas a receber",
+      "slug": "account_receivable.index"
     },
     {
       "url": "/account_payable",
-      "name": "Contas a Pagar",
+      "name": "Contas a pagar",
       "slug": "account_payable.index"
     },
     {

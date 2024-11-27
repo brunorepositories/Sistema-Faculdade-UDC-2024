@@ -13,13 +13,11 @@ class Sale extends Model
     'serie',
     'customer_id',
     'dataEmissao',
-    'dataSaida',
     'valorFrete',
     'valorSeguro',
     'outrasDespesas',
     'subTotal',
     'desconto',
-    'acrescimo',
     'totalProdutos',
     'totalPagar',
     'payment_term_id',
@@ -29,13 +27,11 @@ class Sale extends Model
 
   protected $casts = [
     'dataEmissao' => 'date',
-    'dataSaida' => 'date',
     'valorFrete' => 'decimal:2',
     'valorSeguro' => 'decimal:2',
     'outrasDespesas' => 'decimal:2',
     'subTotal' => 'decimal:2',
     'desconto' => 'decimal:2',
-    'acrescimo' => 'decimal:2',
     'totalProdutos' => 'decimal:2',
     'totalPagar' => 'decimal:2',
     'dataCancelamento' => 'datetime'
@@ -50,14 +46,10 @@ class Sale extends Model
   {
     return $this->belongsToMany(Product::class, 'sale_products')
       ->withPivot([
-        'precoVenda',
+        'precoProduto',
         'qtdProduto',
         'descontoProduto',
-        'acrescimoProduto',
         'custoMedio',
-        'custoUltVenda',
-        'valorComissao',
-        'percentualComissao'
       ])
       ->withTimestamps();
   }

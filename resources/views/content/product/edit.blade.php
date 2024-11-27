@@ -147,15 +147,15 @@
                 </div>
 
                 <div class="col-2 mt-4">
-                    <label class="form-label toUpperCase preco" for="custoUltimaVenda">Preço da Última Venda</label>
+                    <label class="form-label toUpperCase preco" for="precoUltimaVenda">Preço da Última Venda</label>
                     <input
                         disabled
-                        name="custoUltimaVenda"
+                        name="precoUltimaVenda"
                         type="text"
                         class="form-control preco"
-                        id="custoUltimaVenda"
+                        id="precoUltimaVenda"
                         placeholder="R$ 0,00"
-                        value="{{ 'R$ ' . number_format($product->custoUltimaVenda, 2, ',', '.') }}">
+                        value="{{ 'R$ ' . number_format($product->precoUltimaVenda, 2, ',', '.') }}">
                 </div>
 
                 <div class="col-2 mt-4">

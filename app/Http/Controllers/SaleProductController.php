@@ -156,7 +156,7 @@ class SaleProductController extends Controller
             'desconto' => $item->descontoProduto,
             'acrescimo' => $item->acrescimoProduto,
             'custoMedio' => $item->custoMedio,
-            'custoUltVenda' => $item->custoUltVenda,
+            'precoUltVenda' => $item->precoUltVenda,
             'valorComissao' => $item->valorComissao
           ];
         });

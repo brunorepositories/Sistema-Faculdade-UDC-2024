@@ -307,7 +307,6 @@ class PurchaseController extends Controller
             $productData['descontoProduto'] ?? 0  // Passa o desconto
           );
 
-          // Custo unitário com rateio
           // Custo unitário com rateio (também considerando desconto)
           $custoUltCompra = ($productData['precoProduto'] * (1 - ($productData['descontoProduto'] ?? 0) / 100))
             + ($valorRateio / $productData['qtdProduto']);

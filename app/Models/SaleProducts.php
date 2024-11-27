@@ -15,24 +15,14 @@ class SaleProducts extends Model
     'serie',
     'customer_id',
     'product_id',
-    'precoVenda',
+    'precoProduto',
     'qtdProduto',
     'descontoProduto',
-    'acrescimoProduto',
-    'custoMedio',
-    'custoUltVenda',
-    'valorComissao',
-    'percentualComissao'
   ];
 
   protected $casts = [
-    'precoVenda' => 'decimal:2',
-    'descontoProduto' => 'decimal:2',
-    'acrescimoProduto' => 'decimal:2',
-    'custoMedio' => 'decimal:2',
-    'custoUltVenda' => 'decimal:2',
-    'valorComissao' => 'decimal:2',
-    'percentualComissao' => 'decimal:2'
+    'precoProduto' => 'decimal:2',
+    'descontoProduto' => 'decimal:2'
   ];
 
   public function customer()
@@ -47,10 +37,9 @@ class SaleProducts extends Model
 
   public function getValorTotal()
   {
-    $valorBase = $this->precoVenda * $this->qtdProduto;
+    $valorBase = $this->precoProduto * $this->qtdProduto;
     $desconto = ($valorBase * ($this->descontoProduto ?? 0)) / 100;
-    $acrescimo = ($valorBase * ($this->acrescimoProduto ?? 0)) / 100;
 
-    return $valorBase - $desconto + $acrescimo;
+    return $valorBase - $desconto;
   }
 }

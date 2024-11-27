@@ -24,13 +24,6 @@ return new class extends Migration
       $table->decimal('precoProduto', 10, 2);
       $table->integer('qtdProduto');
       $table->decimal('descontoProduto', 10, 2)->nullable();
-      $table->decimal('acrescimoProduto', 10, 2)->nullable();
-      $table->decimal('custoMedio', 10, 2);
-      $table->decimal('custoUltVenda', 10, 2);
-
-      // Campos adicionais específicos da venda
-      $table->decimal('valorComissao', 10, 2)->nullable();
-      $table->decimal('percentualComissao', 5, 2)->nullable();
 
       $table->timestamps();
 

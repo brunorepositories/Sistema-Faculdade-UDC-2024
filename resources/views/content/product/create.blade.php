@@ -128,17 +128,17 @@
                 </div>
 
                 <div class="col-2 mt-4">
-                    <label class="form-label toUpperCase preco" for="custoUltimaVenda">Preço da Última Venda</label>
+                    <label class="form-label toUpperCase preco" for="precoUltimaVenda">Preço da Última Venda</label>
                     <input
                         disabled
-                        name="custoUltimaVenda"
+                        name="precoUltimaVenda"
                         type="text"
                         class="form-control preco"
-                        id="custoUltimaVenda"
+                        id="precoUltimaVenda"
                         placeholder="R$ 0,00"
                         maxlength="17"
-                        value="{{ old('custoUltimaVenda') }}">
-                    @error('custoUltimaVenda')
+                        value="{{ old('precoUltimaVenda') }}">
+                    @error('precoUltimaVenda')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

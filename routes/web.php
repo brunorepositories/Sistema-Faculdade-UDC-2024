@@ -27,14 +27,15 @@ Route::get('/api/vendas/contadores', [DashboardController::class, 'getCounters']
 
 // Contas a receber
 Route::resource('account_receivable', AccountReceivableController::class);
-Route::put('/account_receivable/pay/{id}', [AccountReceivableController::class, 'pay'])->name('account_receivable.pay');
+Route::put('/account_receivable/pay/{id}', [AccountReceivableController::class, 'receive'])->name('account_receivable.receive');
 Route::put('/account_receivable/cancel/{id}', [AccountReceivableController::class, 'cancel'])->name('account_receivable.cancel');
 
 // Compras
 Route::resource('sale', SaleController::class)->except(['show']);
 Route::get('/sales/export', [SaleController::class, 'export'])->name('sale.export');
-Route::post('/check-sale', [SaleController::class, 'checkPurchase'])->name('sale.check');
-Route::get('/sale/{numeroNota}/{modelo}/{serie}/{supplier_id}', [SaleController::class, 'show'])->name('sale.show');
+Route::post('/check-sale', [SaleController::class, 'checkSale'])->name('sale.check');
+Route::get('/sale/{numeroNota}/{modelo}/{serie}/{customer_id}', [SaleController::class, 'show'])->name('sale.show');
+Route::get('/sale/cancel/{numeroNota}/{modelo}/{serie}/{customer_id}', [SaleController::class, 'cancel'])->name('sale.cancel');
 
 
 // Contas a receber
@@ -52,6 +53,7 @@ Route::get('/purchase/{numeroNota}/{modelo}/{serie}/{supplier_id}', [PurchaseCon
 // Clientes
 Route::resource('customer', CustomerController::class);
 Route::get('/customers/export', [CustomerController::class, 'export'])->name('customer.export');
+Route::get('/customers/findId/{id}', [CustomerController::class, 'findId'])->name('customer.findId');
 
 
 

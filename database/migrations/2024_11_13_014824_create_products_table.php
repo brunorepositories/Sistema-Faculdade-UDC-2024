@@ -23,7 +23,7 @@ return new class extends Migration
       $table->decimal('custoUltimaCompra', 10, 2)->nullable();
       $table->dateTime('dtUltimaCompra')->nullable();
       $table->decimal('precoVenda', 10, 2);
-      $table->decimal('custoUltimaVenda', 10, 2)->nullable();
+      $table->decimal('precoUltimaVenda', 10, 2)->nullable();
       $table->dateTime('dtUltimaVenda')->nullable();
       $table->boolean('ativo')->default(true);
 

@@ -92,7 +92,7 @@
                                             aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('sale.cancel', $sale->id) }}" method="POST">
+                                                    <form action="{{ route('sale.delete', $sale->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-header">

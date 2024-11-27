@@ -29,8 +29,7 @@
                             <th>Modelo</th>
                             <th>Série</th>
                             <th class="text-center">Data Emissão</th>
-                            <th class="text-center">Data Saída</th>
-                            <th>Valor da Nota</th>
+                            <th class="text-end">Valor da Nota</th>
                             <th>Status</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
@@ -38,38 +37,12 @@
                     <tbody class="table-border-bottom-0">
                         @foreach ($sales as $sale)
                             <tr>
-                                <td>{{ $sale->customer->id }} - {{ $sale->customer->nome }}</td>
+                                <td>{{ $sale->customer->id }} - {{ $sale->customer->clienteRazaoSocial }}</td>
                                 <td>{{ $sale->numeroNota }}</td>
                                 <td>{{ $sale->modelo }}</td>
                                 <td>{{ $sale->serie }}</td>
                                 <td class="text-center">{{ $sale->dataEmissao->format('d/m/Y') }}</td>
-                                <td class="text-center">{{ $sale->dataSaida->format('d/m/Y') }}</td>
                                 <td class="text-end">R$ {{ number_format($sale->totalPagar, 2, ',', '.') }}</td>
-                                <td>
-                                    @if ($sale->dataCancelamento)
-                                        <span class="badge bg-label-danger">Cancelada</span>
-                                    @else
-                                        @php
-                                            $statusPagamento = 'pendente';
-                                            $badgeColor = 'warning';
-                                            $recebido = $sale->accountReceivables
-                                                ->where('status', 'pago')
-                                                ->sum('valorPago');
-                                            $total = $sale->totalPagar;
-
-                                            if ($recebido >= $total) {
-                                                $statusPagamento = 'pago';
-                                                $badgeColor = 'success';
-                                            } elseif ($recebido > 0) {
-                                                $statusPagamento = 'parcial';
-                                                $badgeColor = 'info';
-                                            }
-                                        @endphp
-                                        <span class="badge bg-label-{{ $badgeColor }}">
-                                            {{ ucfirst($statusPagamento) }}
-                                        </span>
-                                    @endif
-                                </td>
                                 <td class="size-col-action">
                                     <a class="btn btn-outline-primary rounded-pill border-0"
                                         href="{{ route('sale.show', [
@@ -92,7 +65,14 @@
                                             aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('sale.cancel', $sale->id) }}" method="POST">
+                                                    <form
+                                                        action="{{ route('sale.show', [
+                                                            'numeroNota' => $sale->numeroNota,
+                                                            'modelo' => $sale->modelo,
+                                                            'serie' => $sale->serie,
+                                                            'customer_id' => $sale->customer_id,
+                                                        ]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-header">

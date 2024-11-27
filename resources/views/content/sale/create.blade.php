@@ -1,225 +1,370 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Registrar Nota de Compra')
+@section('title', 'Registrar Nota de Venda')
 
 @section('content')
-    <div>
-        @include('components.errorMessage')
+    @include('components.errorMessage')
 
-        {{-- Formulário principal --}}
-        <form id="purchaseForm" method="POST" action="{{ route('purchase.store') }}">
-            @csrf
+    {{-- Formulário principal --}}
+    <form id="saleForm" method="POST" action="{{ route('sale.store') }}">
+        @csrf
 
-            {{-- Etapa 1: Informações Básicas --}}
-            <div id="etapa1" class="card mb-8">
-                <div class="card-header d-flex justify-content-between">
-                    <h4 class="mb-0">Registrar Nota Fiscal de Compra</h4>
+        {{-- Etapa 1: Informações Básicas --}}
+        <div id="etapa1" class="card mb-8">
+            <div class="card-header d-flex justify-content-between">
+                <h4 class="mb-0">Registrar Nota Fiscal de Venda</h4>
+                <p class="badge bg-label-primary">Etapa 1</p>
+            </div>
+            <div class="card-body mt-1" id="step1Content">
+                <h5 class="mb-4">Dados da Nota Fiscal</h5>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="numeroNota" class="form-label toUpperCase">Número <span
+                                class="labelRequired">*</span></label>
+                        <input
+                            type="number"
+                            name="numeroNota"
+                            id="numeroNota"
+                            class="form-control toUpperCase elementsEtapa1"
+                            value="{{ old('numeroNota') }}"
+                            placeholder="0000000000"
+                            max="9999999999"
+                            min="0"
+                            oninput="limitInputLength(this, 10)"
+                            required>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="modelo" class="form-label toUpperCase">Modelo <span
+                                class="labelRequired">*</span></label>
+                        <input
+                            type="number"
+                            name="modelo"
+                            id="modelo"
+                            class="form-control toUpperCase elementsEtapa1"
+                            value="{{ old('modelo') }}"
+                            placeholder="00"
+                            max="99"
+                            min="0"
+                            oninput="limitInputLength(this, 2)"
+                            required>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="serie" class="form-label toUpperCase">Série <span
+                                class="labelRequired">*</span></label>
+                        <input
+                            type="number"
+                            name="serie"
+                            placeholder="000"
+                            max="999"
+                            min="0"
+                            oninput="limitInputLength(this, 3)"
+                            id="serie"
+                            class="form-control toUpperCase elementsEtapa1"
+                            value="{{ old('serie') }}"
+                            required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label toUpperCase" for="customer_id">Cliente<span
+                                class="labelRequired">*</span></label>
+                        <div class="input-group">
+                            <select
+                                required
+                                name="customer_id"
+                                class="form-select toUpperCase elementsEtapa1"
+                                id="customer_id">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach ($customers as $customer)
+                                    <option value="{{ $customer->id }}"
+                                        {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                        {{ $customer->id }} -
+                                        {{ $customer->clienteRazaoSocial }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                    <p class="badge bg-label-primary">Etapa 1</p>
+                            <button class="btn btn-outline-secondary elementsEtapa1"
+                                style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#customerModal">
+                                <span class="tf-icons bx bx-search bx-18px"></span>
+                            </button>
+                        </div>
+                        @error('customer_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="dataEmissao" class="form-label toUpperCase">Data Emissão</label>
+                        <input
+                            disabled
+                            type="date"
+                            name="dataEmissaoLabel"
+                            id="dataEmissao"
+                            class="form-control toUpperCase"
+                            value="{{ now()->format('Y-m-d') }}"
+                            required>
+                        <input type="hidden" name="dataEmissao" value="{{ now()->format('Y-m-d') }}">
+
+                    </div>
                 </div>
-                <div class="card-body mt-1" id="step1Content">
-                    <h5 class="mb-4">Dados da Nota Fiscal</h5>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="numeroNota" class="form-label toUpperCase">Número <span
-                                    class="labelRequired">*</span></label>
-                            <input
-                                type="number"
-                                name="numeroNota"
-                                id="numeroNota"
-                                class="form-control toUpperCase elementsEtapa1"
-                                value="{{ old('numeroNota') }}"
-                                placeholder="0000000000"
-                                max="9999999999"
-                                min="0"
-                                oninput="limitInputLength(this, 10)"
-                                required>
+
+                <div class="d-flex justify-content-between mt-10">
+                    <div class="customer-details-block">
+                        <h6 class="mb-2">Dados do cliente</h6>
+                        <div class="d-flex">
+                            <p class="mb-0">Selecione um cliente</p>
                         </div>
-                        <div class="col-md-1">
-                            <label for="modelo" class="form-label toUpperCase">Modelo <span
-                                    class="labelRequired">*</span></label>
-                            <input
-                                type="number"
-                                name="modelo"
-                                id="modelo"
-                                class="form-control toUpperCase elementsEtapa1"
-                                value="{{ old('modelo') }}"
-                                placeholder="00"
-                                max="99"
-                                min="0"
-                                oninput="limitInputLength(this, 2)"
-                                required>
-                        </div>
-                        <div class="col-md-1">
-                            <label for="serie" class="form-label toUpperCase">Série <span
-                                    class="labelRequired">*</span></label>
-                            <input
-                                type="number"
-                                name="serie"
-                                placeholder="000"
-                                max="999"
-                                min="0"
-                                oninput="limitInputLength(this, 3)"
-                                id="serie"
-                                class="form-control toUpperCase elementsEtapa1"
-                                value="{{ old('serie') }}"
-                                required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label toUpperCase" for="supplier_id">Fornecedor<span
-                                    class="labelRequired">*</span></label>
+                    </div>
+                    <div class="d-flex align-items-center" id="actionsEtapa1">
+                        <a href="{{ route('sale.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+                        <button type="button" class="btn btn-primary toUpperCase"
+                            id="verificarNota">Prosseguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Etapa 2: Produtos e Condições --}}
+        <div id="etapa2" class="card mb-8">
+            <div class="card-header d-flex justify-content-between pb-0">
+                <h5 class="mb-0">Produtos</h5>
+                <p class="badge bg-label-primary">Etapa 2</p>
+            </div>
+            <div class="container" id="alertEtapa2">
+                <div class="alert alert-secondary text-center toUpperCase">
+                    Complete a etapa 1 para adicionar produtos
+                </div>
+            </div>
+            <div class="card-body" id="step2Content">
+                <div class="d-flex justify-content-between align-items-end">
+                    <div class="row flex-grow-1">
+                        <div class="col-md-8">
+                            <label class="form-label toUpperCase" for="product_id">Produto</label>
                             <div class="input-group">
-                                <select
-                                    required
-                                    name="supplier_id"
-                                    class="form-select toUpperCase elementsEtapa1"
-                                    id="supplier_id">
+                                <select name="product_id" class="form-select toUpperCase elementsEtapa2"
+                                    id="product_id">
                                     <option value="" disabled selected>Selecione</option>
-                                    @foreach ($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}"
-                                            {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
-                                            {{ $supplier->id }} -
-                                            {{ $supplier->fornecedorRazaoSocial }}
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->id }}"
+                                            data-nome="{{ $product->nome }}"
+                                            data-medida="{{ $product->measure->sigla }}"
+                                            data-comissao="{{ $product->percentualComissao }}"
+                                            {{ old('product_id') == $product->id ? 'selected' : '' }}>
+                                            {{ $product->id }} - {{ $product->nome }}
+                                            ({{ $product->measure->sigla }})
                                         </option>
                                     @endforeach
                                 </select>
 
-                                {{-- Botão de ação do modal de selecionar forma de pagamento --}}
-                                <button class="btn btn-outline-secondary elementsEtapa1"
+                                <button class="btn btn-outline-secondary elementsEtapa2"
                                     style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
                                     type="button"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#supplierModal">
+                                    data-bs-target="#productModal">
                                     <span class="tf-icons bx bx-search bx-18px"></span>
                                 </button>
-                                {{-- End Button --}}
                             </div>
-                            @error('supplier_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
-
-
                         <div class="col-md-2">
-                            <label for="dataEmissao" class="form-label toUpperCase">Data Emissão <span
-                                    class="labelRequired">*</span></label>
-                            <input
-                                type="date"
-                                name="dataEmissao"
-                                id="dataEmissao"
-                                class="form-control toUpperCase elementsEtapa1"
-                                value="{{ old('dataEmissao') }}"
-                                required>
+                            <label for="qtdProduto" class="form-label toUpperCase">Quantidade</label>
+                            <input type="number" name="qtdProduto" id="qtdProduto" placeholder="0"
+                                max="9999" min="0"
+                                oninput="limitInputLength(this, 4)" class="form-control toUpperCase elementsEtapa2">
                         </div>
 
-
-
                         <div class="col-md-2">
-                            <label for="dataChegada" class="form-label toUpperCase">Data Chegada <span
-                                    class="labelRequired">*</span></label>
-                            <input
-                                type="date"
-                                name="dataChegada"
-                                id="dataChegada"
-                                class="form-control toUpperCase elementsEtapa1"
-                                value="{{ old('dataChegada') }}"
-                                required>
+                            <label for="precoProduto" class="form-label toUpperCase preco">Preço</label>
+                            <input type="text" name="precoProduto" placeholder="R$ 00,00" maxlength="17"
+                                id="precoProduto"
+                                class="form-control preco toUpperCase elementsEtapa2" value="{{ old('preco') }}">
+                        </div>
+                    </div>
+                    <div class="ms-6">
+                        <button type="button" class="btn btn-outline-primary toUpperCase elementsEtapa2"
+                            id="add-product">Adicionar Produto</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Produto</th>
+                                <th>Unidade</th>
+                                <th>Quantidade</th>
+                                <th>Preço Unitário</th>
+                                <th>Preço total</th>
+                                <th>Remover</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-list" class="table-border"></tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-start mt-10">
+                    <!-- Seção Frete e Observações -->
+                    <div class="flex-grow-1">
+                        <h5>Frete</h5>
+                        <div class="d-flex">
+                            <div style="width: 120px;">
+                                <label class="form-label toUpperCase"
+                                    for="tipoFrete">Tipo Frete</label>
+                                <select required name="tipoFrete" class="form-select toUpperCase elementsEtapa2"
+                                    id="tipoFrete">
+                                    <option value="CIF" selected>CIF</option>
+                                    <option value="FOB">FOB</option>
+                                </select>
+                            </div>
+                            <div class="ms-4">
+                                <label for="valorFrete" class="form-label toUpperCase preco">Valor Frete</label>
+                                <input type="text" name="valorFrete" placeholder="R$ 00,00" maxlength="17"
+                                    id="valorFrete" class="form-control preco toUpperCase elementsEtapa2"
+                                    value="{{ old('valorFrete') }}">
+                            </div>
+                            <div class="ms-4">
+                                <label for="valorSeguro" class="form-label toUpperCase preco">Valor Seguro</label>
+                                <input type="text" name="valorSeguro" placeholder="R$ 00,00" maxlength="17"
+                                    id="valorSeguro" class="form-control preco toUpperCase elementsEtapa2"
+                                    value="{{ old('valorSeguro') }}">
+                            </div>
+                            <div class="ms-4">
+                                <label for="outrasDespesas" class="form-label toUpperCase preco">Outras despesas</label>
+                                <input type="text" name="outrasDespesas" placeholder="R$ 00,00" maxlength="17"
+                                    id="outrasDespesas" class="form-control preco toUpperCase elementsEtapa2"
+                                    value="{{ old('outrasDespesas') }}">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-10">
+                    <!-- Seção Totais -->
+                    <div class="ms-4" style="width: 170px;">
+                        <h5>Desconto</h5>
+                        <div class="">
+                            <label for="desconto" class="form-label toUpperCase">Desconto (%)</label>
+                            <input type="number" name="desconto" placeholder="0" max="100"
+                                min="0"
+                                oninput="limitInputLength(this, 3)" id="desconto"
+                                class="form-control toUpperCase text-end elementsEtapa2"
+                                value="{{ old('desconto') }}">
+                        </div>
+                    </div>
 
-                        <div class="supplier-details-block">
-                            <h6 class="mb-2">Dados do fornecedor</h6>
-                            <div class="d-flex">
-                                <p class="mb-0">Selecione um fornecedor</p>
+                    <!-- Seção Totais -->
+                    <div class="ms-4">
+                        <h5>Totais</h5>
+                        <div class="d-flex">
+                            <div>
+                                <label for="qtdTotalProdutos"
+                                    class="form-label toUpperCase">QTD. produtos</label>
+                                <input disabled type="text" name="qtdTotalProdutos" placeholder="0"
+                                    id="qtdTotalProdutos" class="form-control toUpperCase text-end"
+                                    value="{{ old('qtdTotalProdutos') }}">
+                            </div>
+                            <div class="ms-4">
+                                <label for="totalProdutos" class="form-label toUpperCase preco">Total
+                                    produtos</label>
+                                <input disabled type="text" name="totalProdutosDisplay" placeholder="R$ 00,00"
+                                    id="totalProdutos" class="form-control preco toUpperCase text-end"
+                                    value="{{ old('totalProdutos') }}">
+                                <input type="hidden" name="totalProdutos" id="totalProdutosHidden">
+                            </div>
+                            <div class="ms-4">
+                                <label for="totalPagar" class="form-label toUpperCase preco">Valor da nota</label>
+                                <input disabled type="text" name="totalPagarDisplay" placeholder="R$ 00,00"
+                                    id="totalPagar" class="form-control preco toUpperCase text-end"
+                                    value="{{ old('totalPagar') }}">
+                                <input type="hidden" name="totalPagar" id="totalPagarHidden">
                             </div>
                         </div>
-                        <div class="d-flex align-items-center" id="actionsEtapa1">
-                            <a href="{{ route('purchase.index') }}"
-                                class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
-                            <button type="button"
-                                class="btn btn-primary toUpperCase" id="verificarNota">Prosseguir</button>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-10" id="actionsEtapa2">
+                    <a href="{{ route('sale.index') }}"
+                        class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
+
+                    <button data-bs-toggle="modal" data-bs-target="#confirmarVoltarEtapa2"
+                        type="button" class="btn btn-secondary toUpperCase me-4">Voltar Etapa</button>
+
+                    <button type="button" id="prosseguirEstapa3"
+                        class="btn btn-primary toUpperCase">Prosseguir</button>
+
+                    <!-- Modal de confirmação para voltar etapa -->
+                    <div class="modal fade" id="confirmarVoltarEtapa2" tabindex="-1"
+                        aria-labelledby="modalConfirmarVoltarEtapa2" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalConfirmarVoltarEtapa2">Remover Produtos e Voltar
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Para alterar os dados da nota fiscal, nenhum produto pode estar adicionado. Deseja
+                                    remover os produtos e voltar?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary toUpperCase me-4"
+                                        data-bs-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn-primary toUpperCase"
+                                        id="limparDadosEtapa2">Sim, remover e voltar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            {{-- Etapa 2: Produtos e Condições --}}
-            <div id="etapa2" class="card mb-8">
+        {{-- Etapa 3: Condições de Pagamento --}}
+        <div id="etapa3" class="step">
+            <div class="card mb-8">
                 <div class="card-header d-flex justify-content-between pb-0">
-                    <h5 class="mb-0">Produtos</h5>
-
-                    <p class="badge bg-label-primary">Etapa 2</p>
+                    <h5 class="mb-0">Condição de Pagamento</h5>
+                    <p class="badge bg-label-primary">Etapa 3</p>
                 </div>
-                <div class="container" id="alertEtapa2">
+                <div class="container" id="alertEtapa3">
                     <div class="alert alert-secondary text-center toUpperCase">
-                        Complete a etapa 1 para adicionar produtos
+                        Complete as etapas 1 e 2 para prosseguir
                     </div>
                 </div>
-                <div class="card-body" id="step2Content">
+                <div class="card-body" id="step3Content">
                     <div class="d-flex justify-content-between align-items-end">
-                        <div class="row flex-grow-1">
-                            <div class="col-md-6">
-                                <label class="form-label toUpperCase" for="product_id">Produto</label>
-                                <div class="input-group">
-                                    <select name="product_id" class="form-select toUpperCase elementsEtapa2"
-                                        id="product_id">
-                                        <option value="" disabled selected>Selecione</option>
-                                        @foreach ($products as $product)
-                                            <option value="{{ $product->id }}"
-                                                data-nome="{{ $product->nome }}"
-                                                data-medida="{{ $product->measure->sigla }}"
-                                                {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                                {{ $product->id }} - {{ $product->nome }}
-                                                ({{ $product->measure->sigla }})
-                                            </option>
-                                        @endforeach
-                                    </select>
+                        <div class="flex-grow-1">
+                            <label class="form-label toUpperCase" for="payment_term_id">Condição de Pagamento<span
+                                    class="labelRequired">*</span></label>
+                            <div class="input-group">
+                                <select required name="payment_term_id" class="form-select toUpperCase elementsEtapa3"
+                                    id="payment_term_id">
+                                    <option value="" disabled selected>Selecione</option>
+                                    @foreach ($paymentTerms as $paymentTerm)
+                                        <option value="{{ $paymentTerm->id }}"
+                                            data-installments="{{ $paymentTerm->installments }}"
+                                            {{ old('payment_term_id') == $paymentTerm->id ? 'selected' : '' }}>
+                                            {{ $paymentTerm->id }} - {{ $paymentTerm->condicaoPagamento }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                                    {{-- Botão de ação do modal de selecionar forma de pagamento --}}
-                                    <button class="btn btn-outline-secondary elementsEtapa2"
-                                        style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#productModal">
-                                        <span class="tf-icons bx bx-search bx-18px"></span>
-                                    </button>
-                                    {{-- End Button --}}
-                                </div>
-                                @error('product_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <button class="btn btn-outline-secondary elementsEtapa3"
+                                    style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#paymentTermModal">
+                                    <span class="tf-icons bx bx-search bx-18px"></span>
+                                </button>
                             </div>
-
-                            <div class="col-md-2">
-                                <label for="qtdProduto" class="form-label toUpperCase">Quantidade</label>
-                                <input type="number" name="qtdProduto" id="qtdProduto" placeholder="0"
-                                    max="9999" min="0"
-                                    oninput="limitInputLength(this, 4)" class="form-control toUpperCase elementsEtapa2">
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="precoProduto" class="form-label toUpperCase preco">Preço </label>
-                                <input type="text" name="precoProduto" placeholder="R$ 00,00" maxlength="17"
-                                    id="precoProduto"
-                                    class="form-control preco toUpperCase elementsEtapa2" value="{{ old('preco') }}">
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="descontoProduto" class="form-label toUpperCase">Desconto (%)</label>
-                                <input type="number" name="descontoProduto" placeholder="0" max="100"
-                                    min="0"
-                                    oninput="limitInputLength(this, 3)" id="descontoProduto"
-                                    class="form-control desconto toUpperCase elementsEtapa2"
-                                    value="{{ old('desconto') }}">
-                            </div>
-
                         </div>
+
                         <div class="ms-6">
-                            <button type="button" class="btn btn-outline-primary toUpperCase elementsEtapa2"
-                                id="add-product">Adicionar Produto</button>
+                            <button type="button" class="btn btn-outline-primary toUpperCase elementsEtapa3"
+                                id="addParcela">
+                                Gerar Parcelas
+                            </button>
                         </div>
                     </div>
 
@@ -227,162 +372,45 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Produto</th>
-                                    <th>Unidade</th>
-                                    <th>Quantidade</th>
-                                    <th>Preço Unitário</th>
-                                    <th>Desconto</th>
-                                    <th>Preço total</th>
-                                    <th>Remover</th>
+                                    <th>Nº Parcela</th>
+                                    <th>Forma de pagamento</th>
+                                    <th>Data de Vencimento</th>
+                                    <th>Valor</th>
                                 </tr>
                             </thead>
-                            <tbody id="product-list" class="table-border"></tbody>
+                            <tbody id="parcelaList"></tbody>
                         </table>
                     </div>
 
+                    <div class="d-flex justify-content-end mt-10" id="actionsEtapa3">
+                        <a href="{{ route('sale.index') }}"
+                            class="btn btn-outline-secondary me-4 toUpperCase">Cancelar</a>
 
-                    <div class="d-flex justify-content-between align-items-start mt-10">
-                        <!-- Seção Frete -->
-                        <div>
-                            <h5>Frete</h5>
-                            <div class="d-flex">
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label toUpperCase" for="tipoFrete">Tipo Frete<span
-                                            class="labelRequired">*</span></label>
-                                    <select required name="tipoFrete" class="form-select toUpperCase elementsEtapa2"
-                                        id="tipoFrete">
-                                        <option value="CIF" selected>CIF</option>
-                                        <option value="FOB">FOB</option>
-                                    </select>
-                                    @error('tipoPessoa')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-3 ms-4">
-                                    <label for="valorFrete" class="form-label toUpperCase preco">Valor Frete <span
-                                            class="labelRequired">*</span></label>
-                                    <input
-                                        type="text"
-                                        name="valorFrete"
-                                        placeholder="R$ 00,00"
-                                        maxlength="17"
-                                        id="valorFrete"
-                                        class="form-control preco toUpperCase elementsEtapa2"
-                                        value="{{ old('valorFrete') }}">
-                                </div>
-                                <div class="col-md-3 ms-4">
-                                    <label for="valorSeguro" class="form-label toUpperCase preco">Valor Seguro <span
-                                            class="labelRequired">*</span></label>
-                                    <input
-                                        type="text"
-                                        name="valorSeguro"
-                                        placeholder="R$ 00,00"
-                                        maxlength="17"
-                                        id="valorSeguro"
-                                        class="form-control preco toUpperCase elementsEtapa2"
-                                        value="{{ old('valorSeguro') }}">
-                                </div>
-                                <div class="col-md-3 ms-4">
-                                    <label for="outrasDespesas" class="form-label toUpperCase preco">Outras despesas
-                                        <span class="labelRequired">*</span></label>
-                                    <input
-                                        type="text"
-                                        name="outrasDespesas"
-                                        placeholder="R$ 00,00"
-                                        maxlength="17"
-                                        id="outrasDespesas"
-                                        class="form-control preco toUpperCase elementsEtapa2"
-                                        value="{{ old('outrasDespesas') }}">
-                                </div>
-                            </div>
-                        </div>
+                        <button data-bs-toggle="modal" data-bs-target="#confirmarVoltarEtapa3"
+                            type="button" class="btn btn-secondary toUpperCase me-4">Voltar Etapa</button>
 
-                        <!-- Seção Totais -->
-                        <div class="ms-4">
-                            <h5>Totais</h5>
-                            <div class="d-flex">
-                                <div class="col-3">
-                                    <label for="qtdTotalProdutos" class="form-label toUpperCase">QTD.
-                                        produtos</label>
-                                    <input
-                                        disabled
-                                        type="text"
-                                        name="qtdTotalProdutos"
-                                        placeholder="0"
-                                        id="qtdTotalProdutos"
-                                        class="form-control toUpperCase text-end"
-                                        value="{{ old('qtdTotalProdutos') }}">
-                                </div>
-                                <div class="ms-4">
-                                    <label for="totalProdutos" class="form-label toUpperCase preco">valor
-                                        produtos</label>
-                                    <input
-                                        disabled
-                                        type="text"
-                                        name="totalPagarDisplay"
-                                        placeholder="R$ 00,00"
-                                        maxlength="17"
-                                        id="totalProdutos"
-                                        class="form-control preco toUpperCase text-end"
-                                        value="{{ old('totalProdutos') }}">
-                                    <input type="hidden" name="totalProdutos" id="totalProdutosHidden">
-                                </div>
-                                <div class="ms-4">
-                                    <label for="totalPagar" class="form-label toUpperCase preco">valor da nota</label>
-                                    <input
-                                        disabled
-                                        type="text"
-                                        name="totalPagarDisplay"
-                                        placeholder="R$ 00,00"
-                                        maxlength="17"
-                                        id="totalPagar"
-                                        class="form-control preco toUpperCase text-end"
-                                        value="{{ old('totalPagar') }}">
-                                    <input type="hidden" name="totalPagar" id="totalPagarHidden">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-success toUpperCase">Registrar venda</button>
 
-
-                    <div class="d-flex justify-content-end mt-10" id="actionsEtapa2">
-                        <a href="{{ route('purchase.index') }}"
-                            class="btn btn-outline-secondary me-4 toUpperCase ">Cancelar</a>
-
-                        <!-- Botão que abre o modal de exclusão -->
-                        <button
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmarVoltarEtapa2"
-                            type="button"
-                            class="btn btn-secondary toUpperCase me-4  ">Voltar Etapa</i>
-                        </button>
-
-                        <button type="button" id="prosseguirEstapa3"
-                            class="btn btn-primary toUpperCase">PROSSEGUIR</button>
-
-                        <!-- Componente de modal de confirmação -->
-                        <div class="modal fade" id="confirmarVoltarEtapa2" tabindex="-1"
-                            aria-labelledby="modalConfirmarVoltarEtapa2" aria-hidden="true">
+                        <!-- Modal de confirmação para voltar etapa -->
+                        <div class="modal fade" id="confirmarVoltarEtapa3" tabindex="-1"
+                            aria-labelledby="modalConfirmarVoltarEtapa3" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalConfirmarVoltarEtapa2">Remover Produtos e
-                                            Voltar</h5>
+                                        <h5 class="modal-title" id="modalConfirmarVoltarEtapa3">Remover Condição de
+                                            Pagamento e Voltar?</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Para alterar os dados da nota fiscal, nenhum poduto pode estar adicionado. Deseja
-                                        remover os produtos e voltar?
+                                        Para alterar produtos, nenhuma condição de pagamento pode estar selecionada.
+                                        Deseja remover a condição de pagamento e voltar?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary toUpperCase me-4"
-                                            data-bs-dismiss="modal">Fechar </button>
-
+                                            data-bs-dismiss="modal">Fechar</button>
                                         <button type="button" class="btn btn-primary toUpperCase"
-                                            id="limparDadosEtapa2">Sim, remover e
-                                            voltar</button>
+                                            id="limparDadosEtapa3">Sim, remover e voltar</button>
                                     </div>
                                 </div>
                             </div>
@@ -390,129 +418,13 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Etapa 3: Gerar Parcelas --}}
-            <div id="etapa3" class="step">
-                <div class="card mb-8">
-                    <div class="card-header d-flex justify-content-between pb-0">
-                        <h5 class="mb-0">Condição de Pagamento</h5>
-
-                        <p class="badge bg-label-primary">Etapa 3</p>
-                    </div>
-                    <div class="container" id="alertEtapa3">
-                        <div class="alert alert-secondary text-center toUpperCase">
-                            Complete as etapas 1 e 2 para prosseguir
-                        </div>
-                    </div>
-                    <div class="card-body" id="step3Content">
-                        <div class="d-flex justify-content-between align-items-end">
-                            <div class="flex-grow-1">
-                                <label class="form-label toUpperCase" for="payment_term_id">Condição de Pagamento<span
-                                        class="labelRequired">*</span></label>
-                                <div class="input-group">
-                                    <select
-                                        required
-                                        name="payment_term_id"
-                                        class="form-select toUpperCase elementsEtapa3"
-                                        id="payment_term_id">
-                                        <option value="" disabled selected>Selecione</option>
-                                        @foreach ($paymentTerms as $paymentTerm)
-                                            <option value="{{ $paymentTerm->id }}"
-                                                data-installments="{{ $paymentTerm->installments }}"
-                                                {{ old('payment_term_id') == $paymentTerm->id ? 'selected' : '' }}>
-                                                {{ $paymentTerm->id }} -
-                                                {{ $paymentTerm->condicaoPagamento }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <button class="btn btn-outline-secondary elementsEtapa3"
-                                        style="border-top-right-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#paymentTermModal">
-                                        <span class="tf-icons bx bx-search bx-18px"></span>
-                                    </button>
-                                </div>
-
-                                @error('payment_term_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="ms-6">
-                                <button type="button"
-                                    class="btn btn-outline-primary toUpperCase elementsEtapa3 "id="addParcela">Gerar
-                                    Parcelas
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive mt-4">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nº Parcela</th>
-                                        <th>Forma de pagamento</th>
-                                        <th>Data de Vencimento</th>
-                                        <th>Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="parcelaList"></tbody>
-                            </table>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-10" id="actionsEtapa3">
-                            <a href="{{ route('purchase.index') }}"
-                                class="btn btn-outline-secondary me-4 toUpperCase ">Cancelar</a>
-
-                            <!-- Botão que abre o modal de exclusão -->
-                            <button
-                                data-bs-toggle="modal"
-                                data-bs-target="#confirmarVoltarEtapa3"
-                                type="button"
-                                class="btn btn-secondary toUpperCase me-4  ">Voltar Etapa</i>
-                            </button>
-
-                            <button type="submit" class="btn btn-success toUpperCase">Registrar compra</button>
-
-                            <!-- Componente de modal de confirmação -->
-                            <div class="modal fade" id="confirmarVoltarEtapa3" tabindex="-1"
-                                aria-labelledby="modalConfirmarVoltarEtapa3" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalConfirmarVoltarEtapa3">Remover Condição de
-                                                Pagamento e Voltar?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Para alterar produtos, nenhuma condição de pagamento pode estar selecionada.
-                                            Deseja
-                                            remover a condição de pagamento e voltar?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary toUpperCase me-4"
-                                                data-bs-dismiss="modal">Fechar </button>
-
-                                            <button type="button" class="btn btn-primary toUpperCase"
-                                                id="limparDadosEtapa3">Sim, remover e
-                                                voltar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
+    </form>
     </div>
 
-    @include('content.product.modal.selectSupplier')
-    @include('content.purchase.modal.selectProduct')
-    @include('content.purchase.modal.selectPaymentTerm')
+    @include('content.sale.modal.selectCustomer')
+    @include('content.sale.modal.selectProduct')
+    @include('content.sale.modal.selectPaymentTerm')
 
     <script>
         // Elementos das etapas para manipular
@@ -528,17 +440,19 @@
         const actionButtonsE3 = $('#actionsEtapa3');
 
         // Variáveis globais para controle
+        let subTotal = 0;
         let valorTotalProdutos = 0;
         let valorFrete = 0;
         let valorSeguro = 0;
         let outrasDespesas = 0;
+        let descontoTotal = 0;
+        let acrescimoTotal = 0;
         let produtosAdicionados = new Set();
         let parcelasGeradas = new Set();
         let paymentTermsData = {};
         let parcelasAtivas = false;
 
-
-        // Limita o tamanho dos campos
+        // Função para limitar o tamanho dos campos
         function limitInputLength(input, length) {
             if (input.value.length > length) {
                 input.value = input.value.slice(0, length);
@@ -547,118 +461,127 @@
 
         // Função para liberar a Etapa 1
         function liberarEtapa1() {
-
             const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
             const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
             const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
 
             // Liberando inputs da Etapa 1
-            actionButtonsE1.removeClass('d-none'); // Exibe os botões da Etapa 1
+            actionButtonsE1.removeClass('d-none');
             inputsE1.each(function() {
-                $(this).prop('disabled', false); // Habilita os campos da Etapa 1
+                $(this).prop('disabled', false);
             });
 
-            // Desabilitando inputs e escondendo botões da Etapa 2
-            alertEtapa2.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 2
-            actionButtonsE2.addClass('d-none'); // Esconde os botões da Etapa 2
+            // Desabilitando Etapa 2
+            alertEtapa2.removeClass('d-none');
+            actionButtonsE2.addClass('d-none');
             inputsE2.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 2
+                $(this).prop('disabled', true);
             });
 
-            // Desabilitando inputs e escondendo botões da Etapa 3
-            alertEtapa3.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 3
-            actionButtonsE3.addClass('d-none'); // Esconde os botões da Etapa 3
+            // Desabilitando Etapa 3
+            alertEtapa3.removeClass('d-none');
+            actionButtonsE3.addClass('d-none');
             inputsE3.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 3
+                $(this).prop('disabled', true);
             });
         }
 
         // Função para liberar a Etapa 2
         function liberarEtapa2() {
-
             const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
             const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
             const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
 
-            // Desabilitando inputs e escondendo botões da Etapa 1
+            // Desabilitando Etapa 1
+            actionButtonsE1.addClass('d-none');
             inputsE1.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 1
+                $(this).prop('disabled', true);
             });
-            actionButtonsE1.addClass('d-none'); // Esconde os botões da Etapa 1
 
-            // Liberando inputs da Etapa 2
-            alertEtapa2.addClass('d-none'); // Esconde a mensagem de alerta da Etapa 2
-            actionButtonsE2.removeClass('d-none'); // Exibe os botões de ação da Etapa 2
+            // Liberando Etapa 2
+            alertEtapa2.addClass('d-none');
+            actionButtonsE2.removeClass('d-none');
             inputsE2.each(function() {
-                $(this).prop('disabled', false); // Habilita os campos da Etapa 2
+                $(this).prop('disabled', false);
             });
 
-            // Desabilitando inputs e escondendo botões da Etapa 3
-            alertEtapa3.removeClass('d-none'); // Mostra a mensagem de alerta para a Etapa 3
-            actionButtonsE3.addClass('d-none'); // Esconde os botões da Etapa 3
+            // Desabilitando Etapa 3
+            alertEtapa3.removeClass('d-none');
+            actionButtonsE3.addClass('d-none');
             inputsE3.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 3
+                $(this).prop('disabled', true);
             });
         }
 
         // Função para liberar a Etapa 3
         function liberarEtapa3() {
-
             const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
             const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
             const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
 
-            // Desabilitando inputs e escondendo botões da Etapa 1
-            actionButtonsE1.addClass('d-none'); // Esconde os botões da Etapa 1
+            // Desabilitando Etapa 1
+            actionButtonsE1.addClass('d-none');
             inputsE1.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 1
+                $(this).prop('disabled', true);
             });
 
-            // Desabilitando inputs e escondendo botões da Etapa 2
-            actionButtonsE2.addClass('d-none'); // Esconde os botões da Etapa 2
+            // Desabilitando Etapa 2
+            actionButtonsE2.addClass('d-none');
             inputsE2.each(function() {
-                $(this).prop('disabled', true); // Desabilita os campos da Etapa 2
+                $(this).prop('disabled', true);
             });
 
-            // Liberando inputs da Etapa 3
-            alertEtapa3.addClass('d-none'); // Esconde a mensagem de alerta da Etapa 3
-            actionButtonsE3.removeClass('d-none'); // Exibe os botões de ação da Etapa 3
+            // Liberando Etapa 3
+            alertEtapa3.addClass('d-none');
+            actionButtonsE3.removeClass('d-none');
             inputsE3.each(function() {
-                $(this).prop('disabled', false); // Habilita os campos da Etapa 3
+                $(this).prop('disabled', false);
             });
         }
 
+        // Função para limpar dados da Etapa 2
         function limparDadosEtapa2() {
             $('#limparDadosEtapa2').on('click', function() {
-                // Limpa os campos de produto
+                // Limpa campos de produto
                 $('#product_id').val('').trigger('change');
                 $('#qtdProduto').val('');
                 $('#precoProduto').val('');
                 $('#descontoProduto').val('');
+                $('#acrescimoProduto').val('');
 
-                // Limpa os campos de valores adicionais
+                // Limpa campos de valores adicionais
                 $('#valorFrete').val('').trigger('change');
                 $('#valorSeguro').val('').trigger('change');
                 $('#outrasDespesas').val('').trigger('change');
 
-                // Limpa os campos de totais
+                // Limpa campos de totais
                 $('#qtdTotalProdutos').val('');
+                $('#subTotal').val('');
                 $('#totalProdutos').val('');
                 $('#totalPagar').val('');
+                $('#subTotalHidden').val('');
                 $('#totalProdutosHidden').val('');
                 $('#totalPagarHidden').val('');
+                $('#desconto').val('');
+                $('#acrescimo').val('');
 
-                // Limpa a tabela de produtos
+                // Limpa observações
+                $('#observacao').val('');
+
+                // Limpa tabela de produtos
                 $('#product-list').empty();
 
-                // Reseta as variáveis globais
+                // Reseta variáveis globais
+                subTotal = 0;
                 valorTotalProdutos = 0;
                 valorFrete = 0;
                 valorSeguro = 0;
                 outrasDespesas = 0;
+                descontoTotal = 0;
+                acrescimoTotal = 0;
                 produtosAdicionados.clear();
 
-                // Fecha o modal
+                // Fecha modal
                 $('#confirmarVoltarEtapa2').modal('hide');
 
                 // Libera etapa 1
@@ -666,33 +589,31 @@
             });
         }
 
+        // Função para limpar dados da Etapa 3
         function limparDadosEtapa3() {
             $('#limparDadosEtapa3').on('click', function() {
-                // Limpa os campos de produto
+                // Limpa campos
                 $('#payment_term_id').val('');
-
-                // Limpa a tabela de produtos
                 $('#parcelaList').empty();
 
-                // Reseta as variáveis globais
-                parcelasGeradas = new Set();
+                // Reseta variáveis
+                parcelasGeradas.clear();
                 paymentTermsData = {};
                 parcelasAtivas = false;
 
-                // Fecha o modal
+                // Fecha modal
                 $('#confirmarVoltarEtapa3').modal('hide');
 
-                // Libera etapa 1
+                // Libera etapa 2
                 liberarEtapa2();
             });
         }
 
-        // Função para arredondar valores para 2 casas decimais
+        // Funções para formatação de valores
         function arredondar(valor) {
             return Math.round(valor * 100) / 100;
         }
 
-        // Função para formatar valores monetários no padrão brasileiro
         function formatarMoeda(valor) {
             return new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
@@ -700,131 +621,78 @@
             }).format(valor);
         }
 
-        // Função para converter valor em formato brasileiro para número
         function converterValorParaNumero(valorStr) {
             if (!valorStr) return 0;
             return parseFloat(valorStr.replace('R$', '').replace(/\./g, '').replace(',', '.') || 0);
         }
 
-        // Função para calcular data de vencimento
+        // Funções para datas
         function calcularDataVencimento(dias) {
             const data = new Date();
             data.setDate(data.getDate() + dias);
             return data;
         }
 
-        // Função para formatar data
         function formatarData(data) {
             return data.toLocaleDateString('pt-BR');
         }
 
-        // Função para atualizar os valores totais
-        function atualizarTotais() {
-            const totalSemFrete = valorTotalProdutos;
-            const totalComFrete = arredondar(totalSemFrete + valorFrete + valorSeguro + outrasDespesas);
+        // Função para calcular comissão
+        function calcularComissao(valor, percentualComissao) {
+            return arredondar((valor * percentualComissao) / 100);
+        }
 
+        // Função para atualizar totais
+        function atualizarTotais() {
+            // Calcula desconto total
+            const percentualDesconto = parseFloat($('#desconto').val() || 0);
+            descontoTotal = arredondar((subTotal * percentualDesconto) / 100);
+
+            // Calcula acréscimo total
+            const percentualAcrescimo = parseFloat($('#acrescimo').val() || 0);
+            acrescimoTotal = arredondar((subTotal * percentualAcrescimo) / 100);
+
+            // Calcula valor total dos produtos com desconto e acréscimo
+            valorTotalProdutos = arredondar(subTotal - descontoTotal + acrescimoTotal);
+
+            // Calcula valor total a pagar incluindo frete, seguro e outras despesas
+            const totalComFrete = arredondar(valorTotalProdutos + valorFrete + valorSeguro + outrasDespesas);
+
+            // Atualiza campos na interface
             $('#qtdTotalProdutos').val(produtosAdicionados.size);
-            $('#totalProdutos').val(formatarMoeda(totalSemFrete));
+            $('#subTotal').val(formatarMoeda(subTotal));
+            $('#totalProdutos').val(formatarMoeda(valorTotalProdutos));
             $('#totalPagar').val(formatarMoeda(totalComFrete));
 
-            // Atualiza o campo hidden com o valor sem formatação
-            $('#totalProdutosHidden').val(formatarMoeda(totalSemFrete));
-            $('#totalPagarHidden').val(formatarMoeda(totalComFrete));
+            // Atualiza campos hidden
+            $('#subTotalHidden').val(subTotal);
+            $('#totalProdutosHidden').val(valorTotalProdutos);
+            $('#totalPagarHidden').val(totalComFrete);
 
-
-            // Atualiza os campos de valores adicionais com a formatação correta
+            // Atualiza campos de valores adicionais
             $('#valorFrete').val(formatarMoeda(valorFrete));
             $('#valorSeguro').val(formatarMoeda(valorSeguro));
             $('#outrasDespesas').val(formatarMoeda(outrasDespesas));
         }
 
-        // Função para inicializar os dados das condições de pagamento
-        function initializePaymentTerms() {
-            const paymentTerms = document.querySelectorAll('[data-installments]');
+        // Função para buscar dados do cliente
+        function buscarDadosCliente() {
+            $('#customer_id').on('change', function() {
+                const customerId = $(this).val();
+                const customerDetailsBlock = $('.customer-details-block');
 
-            paymentTerms.forEach(term => {
-                const termId = term.dataset.paymentTermId;
-                const installments = JSON.parse(term.dataset.installments);
-                paymentTermsData[termId] = installments;
-            });
-        }
-
-        // Validação de datas
-        function validaDatas() {
-            function criarDataLocal(dateString) {
-                const partes = dateString.split('-');
-                return new Date(partes[0], partes[1] - 1, partes[2]);
-            }
-
-            // Validação da Data de Chegada
-            $('#dataChegada').on('change', function() {
-                const dataEmissaoString = document.getElementById('dataEmissao').value;
-                const dataChegadaString = document.getElementById('dataChegada').value;
-                const dataAtual = new Date();
-                dataAtual.setHours(0, 0, 0, 0);
-
-                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
-                const dataChegada = dataChegadaString ? criarDataLocal(dataChegadaString) : null;
-
-                if (dataChegada) {
-                    if (dataChegada > dataAtual) {
-                        alert('A data de chegada não pode ser maior que o dia atual.');
-                        document.getElementById('dataChegada').value = '';
-                        return;
-                    }
-
-                    if (dataEmissao && dataChegada < dataEmissao) {
-                        alert('A data de chegada não pode ser anterior à data de emissão.');
-                        document.getElementById('dataChegada').value = '';
-                    }
-                }
-            });
-
-            // Validação da Data de Emissão
-            $('#dataEmissao').on('change', function() {
-                const dataEmissaoString = $('#dataEmissao').val();
-                const dataChegadaString = $('#dataChegada').val();
-                const dataAtual = new Date();
-                dataAtual.setHours(0, 0, 0, 0);
-
-                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
-                const dataChegada = dataChegadaString ? criarDataLocal(dataChegadaString) : null;
-
-                $('.error-message').remove();
-
-                if (dataEmissao) {
-                    if (dataEmissao > dataAtual) {
-                        alert('A data de emissão não pode ser maior que o dia atual.');
-                        $('#dataEmissao').val('');
-                        return;
-                    }
-
-                    if (dataChegada && dataChegada < dataEmissao) {
-                        alert('A data de chegada não pode ser anterior à data de emissão.');
-                        $('#dataEmissao').val('');
-                    }
-                }
-            });
-        }
-
-        // Busca dados do fornecedor
-        function buscarDadosFornecedor() {
-            $('#supplier_id').on('change', function() {
-                const supplierId = $(this).val();
-                const supplierDetailsBlock = $('.supplier-details-block');
-
-                axios.get(`{{ route('supplier.findId', ':id') }}`.replace(':id', supplierId))
+                axios.get(`{{ route('customer.findId', ':id') }}`.replace(':id', customerId))
                     .then(response => {
                         if (response.data.success) {
-                            const supplier = response.data.supplier;
-                            const documentoLabel = supplier.tipoPessoa === 'F' ? 'CPF' : 'CNPJ';
+                            const customer = response.data.customer;
+                            const documentoLabel = customer.tipoPessoa === 'F' ? 'CPF' : 'CNPJ';
 
-                            supplierDetailsBlock.html(`
-                        <h6 class="mb-2">Dados do fornecedor</h6>
+                            customerDetailsBlock.html(`
+                        <h6 class="mb-2">Dados do cliente</h6>
                         <div class="d-flex">
-                            <p class="mb-0">Telefone: ${supplier.celular}</p>
-                            <p class="mb-0 ms-4">E-mail: ${supplier.email}</p>
-                            <p class="mb-0 ms-4">${documentoLabel}: ${supplier.cpfCnpj}</p>
+                            <p class="mb-0">Telefone: ${customer.celular}</p>
+                            <p class="mb-0 ms-4">E-mail: ${customer.email}</p>
+                            <p class="mb-0 ms-4">${documentoLabel}: ${customer.cpfCnpj}</p>
                         </div>
                     `);
                         }
@@ -835,9 +703,7 @@
             });
         }
 
-
-
-        // Verificar nota fiscal
+        // Função para verificar nota fiscal
         function verificarNotaFiscal() {
             $('#verificarNota').on('click', function(e) {
                 e.preventDefault();
@@ -845,18 +711,18 @@
                 const numeroNota = document.getElementById("numeroNota").value;
                 const modelo = document.getElementById("modelo").value;
                 const serie = document.getElementById("serie").value;
-                const supplier_id = document.getElementById("supplier_id").value;
+                const customer_id = document.getElementById("customer_id").value;
 
-                if (!numeroNota || !modelo || !serie || !supplier_id) {
+                if (!numeroNota || !modelo || !serie || !customer_id) {
                     alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
                     return;
                 }
 
-                axios.post('{{ route('purchase.check') }}', {
+                axios.post('{{ route('sale.check') }}', {
                         numeroNota: numeroNota,
                         modelo: modelo,
                         serie: serie,
-                        supplier_id: supplier_id
+                        customer_id: customer_id
                     })
                     .then(response => {
                         if (response.data.exists) {
@@ -872,15 +738,17 @@
             });
         }
 
-        // Adicionar produto
+        // Função para adicionar produto
         function adicionarProduto() {
             $('#add-product').on('click', function() {
                 const product_id = $('#product_id').val();
                 const qtdProduto = parseInt($('#qtdProduto').val());
                 const precoProduto = converterValorParaNumero($('#precoProduto').val());
                 const descontoProduto = parseFloat($('#descontoProduto').val() || 0);
+                const acrescimoProduto = parseFloat($('#acrescimoProduto').val() || 0);
                 const produtoNome = $('#product_id option:selected').data('nome');
                 const unidadeProduto = $('#product_id option:selected').data('medida');
+                const percentualComissao = parseFloat($('#product_id option:selected').data('comissao') || 0);
 
                 if (!product_id || !qtdProduto || isNaN(precoProduto)) {
                     return alert('Preencha todos os campos obrigatórios.');
@@ -890,15 +758,21 @@
                     return alert('O desconto deve estar entre 0 e 100%.');
                 }
 
+                if (acrescimoProduto > 100 || acrescimoProduto < 0) {
+                    return alert('O acréscimo deve estar entre 0 e 100%.');
+                }
+
                 if (produtosAdicionados.has(product_id.toString())) {
                     return alert('Este produto já foi adicionado.');
                 }
 
                 const precoTotalProduto = arredondar(precoProduto * qtdProduto);
                 const valorDesconto = arredondar((descontoProduto / 100) * precoTotalProduto);
-                const precoTotal = arredondar(precoTotalProduto - valorDesconto);
+                const valorAcrescimo = arredondar((acrescimoProduto / 100) * precoTotalProduto);
+                const precoTotal = arredondar(precoTotalProduto - valorDesconto + valorAcrescimo);
+                const valorComissao = calcularComissao(precoTotal, percentualComissao);
 
-                valorTotalProdutos = arredondar(valorTotalProdutos + precoTotal);
+                subTotal = arredondar(subTotal + precoTotal);
                 produtosAdicionados.add(product_id.toString());
 
                 $('#product-list').append(`
@@ -909,15 +783,15 @@
                 <td>${qtdProduto}</td>
                 <td>${formatarMoeda(precoProduto)}</td>
                 <td>${descontoProduto}%</td>
+                <td>${acrescimoProduto}%</td>
+                <td>${formatarMoeda(valorComissao)}</td>
                 <td>${formatarMoeda(precoTotal)}</td>
                 <td class="size-col-action">
-                    <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product elementsEtapa2">
-                        <span class="tf-icons bx bx-trash bx-22px"></span>
+                    <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-product elementsEtapa2"><span class="tf-icons bx bx-trash bx-22px"></span>
                     </button>
                 </td>
                 <input type="hidden" name="produtos[${product_id}][product_id]" value="${product_id}">
                 <input type="hidden" name="produtos[${product_id}][produtoNome]" value="${produtoNome}">
-                <input type="hidden" name="produtos[${product_id}][unidadeProduto]" value="${unidadeProduto}">
                 <input type="hidden" name="produtos[${product_id}][qtdProduto]" value="${qtdProduto}">
                 <input type="hidden" name="produtos[${product_id}][precoProduto]" value="${precoProduto}">
                 <input type="hidden" name="produtos[${product_id}][descontoProduto]" value="${descontoProduto}">
@@ -927,14 +801,14 @@
 
                 atualizarTotais();
 
+                // Limpa os campos do produto
                 $('#product_id').val('').trigger('change');
                 $('#qtdProduto').val('');
                 $('#precoProduto').val('');
-                $('#descontoProduto').val('');
             });
         }
 
-        // Remover produtos
+        // Função para remover produtos
         function removeProdutos() {
             $(document).on('click', '.remove-product', function() {
                 const productItem = $(this).closest('.product-item');
@@ -942,7 +816,7 @@
                 const precoTotal = parseFloat(productItem.data('price'));
 
                 produtosAdicionados.delete(product_id);
-                valorTotalProdutos = arredondar(valorTotalProdutos - precoTotal);
+                subTotal = arredondar(subTotal - precoTotal);
 
                 productItem.remove();
                 atualizarTotais();
@@ -952,7 +826,6 @@
         // Função para gerar parcelas
         function gerarParcelas(recalculo = false) {
             const processarParcelas = async () => {
-
                 const payment_term_id = $('#payment_term_id').val();
 
                 if (!payment_term_id) {
@@ -968,16 +841,11 @@
                 }
 
                 try {
-                    // Busca as parcelas via GET
                     const response = await axios.get(`{{ route('payment_term.installments', ':id') }}`.replace(
                         ':id', payment_term_id));
                     const parcelas = response.data.installments;
 
-                    console.log(parcelas);
-
-
                     $('#parcelaList').empty();
-
                     parcelasGeradas.clear();
 
                     let totalPercentual = 0;
@@ -987,25 +855,24 @@
                         const dataVencimento = calcularDataVencimento(parcela.dias);
                         totalPercentual += parseFloat(parcela.percentual);
 
-                        $('#parcelaList').append(`<tr class="parcela-item" data-parcela="${parcela.parcela}">
-                                                      <td>${parcela.parcela}ª Parcela</td>
-                                                      <td>${parcela.payment_form.formaPagamento}</td>
-                                                      <td>${formatarData(dataVencimento)}</td>
-                                                      <td>${formatarMoeda(valorParcela)}</td>
+                        $('#parcelaList').append(`
+                    <tr class="parcela-item" data-parcela="${parcela.parcela}">
+                        <td>${parcela.parcela}ª Parcela</td>
+                        <td>${parcela.payment_form.formaPagamento}</td>
+                        <td>${formatarData(dataVencimento)}</td>
+                        <td>${formatarMoeda(valorParcela)}</td>
 
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][payment_form_id]" value="${parcela.payment_form.id}">
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][parcela]" value="${parcela.parcela}">
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][dias]" value="${parcela.dias}">
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][percentual]" value="${parcela.percentual}">
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][valor]" value="${valorParcela}">
-                                                      <input type="hidden" name="parcelas[${parcela.parcela}][dataVencimento]" value="${dataVencimento.toISOString().split('T')[0]}">
-                                                  </tr>
-                              `);
+                        <input type="hidden" name="parcelas[${parcela.parcela}][payment_form_id]" value="${parcela.payment_form.id}">
+                        <input type="hidden" name="parcelas[${parcela.parcela}][parcela]" value="${parcela.parcela}">
+                        <input type="hidden" name="parcelas[${parcela.parcela}][dias]" value="${parcela.dias}">
+                        <input type="hidden" name="parcelas[${parcela.parcela}][percentual]" value="${parcela.percentual}">
+                        <input type="hidden" name="parcelas[${parcela.parcela}][valor]" value="${valorParcela}">
+                        <input type="hidden" name="parcelas[${parcela.parcela}][dataVencimento]" value="${dataVencimento.toISOString().split('T')[0]}">
+                    </tr>
+                `);
 
                         parcelasGeradas.add(parcela.parcela);
                     });
-
-
                 } catch (error) {
                     console.error('Erro ao buscar parcelas:', error);
                     if (!recalculo) {
@@ -1021,27 +888,40 @@
             }
         }
 
-        // Atualizar valores adicionais
+        // Função para atualizar valores adicionais
         function atualizarValoresAdicionais() {
+            // Atualização do frete
             $('#valorFrete').on('change', function() {
                 valorFrete = converterValorParaNumero($(this).val());
                 atualizarTotais();
             });
 
+            // Atualização do seguro
             $('#valorSeguro').on('change', function() {
                 valorSeguro = converterValorParaNumero($(this).val());
                 atualizarTotais();
             });
 
+            // Atualização de outras despesas
             $('#outrasDespesas').on('change', function() {
                 outrasDespesas = converterValorParaNumero($(this).val());
                 atualizarTotais();
             });
+
+            // Atualização do desconto geral
+            $('#desconto').on('change', function() {
+                atualizarTotais();
+            });
+
+            // Atualização do acréscimo geral
+            $('#acrescimo').on('change', function() {
+                atualizarTotais();
+            });
         }
 
-        // Validação do formulário
+        // Função para validar formulário
         function validarFormulario() {
-            $('#actionEtapa3').on('click', function(e) {
+            $('#saleForm').on('submit', function(e) {
                 if (parcelasGeradas.size === 0) {
                     e.preventDefault();
                     alert('Gere as parcelas antes de cadastrar a nota.');
@@ -1060,61 +940,91 @@
             });
         }
 
-        // APENAS PARA DEV
+        // Função para validar datas
+        function validaDatas() {
+            function criarDataLocal(dateString) {
+                const partes = dateString.split('-');
+                return new Date(partes[0], partes[1] - 1, partes[2]);
+            }
 
-        function popularCamposTeste() {
-            // Preenche campos básicos
-            $('#numeroNota').val('1234567890');
-            $('#modelo').val('55');
-            $('#serie').val('1');
-            $('#dataEmissao').val('2024-03-20');
-            $('#dataChegada').val('2024-03-21');
+            // Validação da Data de Saída
+            $('#dataSaida').on('change', function() {
+                const dataEmissaoString = document.getElementById('dataEmissao').value;
+                const dataSaidaString = document.getElementById('dataSaida').value;
+                const dataAtual = new Date();
+                dataAtual.setHours(0, 0, 0, 0);
 
-            // Preenche campos de produto
-            $('#qtdProduto').val('10');
-            $('#precoProduto').val('R$ 100,00').trigger('change');
-            $('#descontoProduto').val('10');
+                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
+                const dataSaida = dataSaidaString ? criarDataLocal(dataSaidaString) : null;
 
-            // Preenche valores adicionais e dispara eventos de change
-            $('#valorFrete').val('R$ 50,00').trigger('change');
-            $('#valorSeguro').val('R$ 25,00').trigger('change');
-            $('#outrasDespesas').val('R$ 15,00').trigger('change');
+                if (dataSaida) {
+                    if (dataSaida > dataAtual) {
+                        alert('A data de saída não pode ser maior que o dia atual.');
+                        document.getElementById('dataSaida').value = '';
+                        return;
+                    }
+
+                    if (dataEmissao && dataSaida < dataEmissao) {
+                        alert('A data de saída não pode ser anterior à data de emissão.');
+                        document.getElementById('dataSaida').value = '';
+                    }
+                }
+            });
+
+            // Validação da Data de Emissão
+            $('#dataEmissao').on('change', function() {
+                const dataEmissaoString = $('#dataEmissao').val();
+                const dataSaidaString = $('#dataSaida').val();
+                const dataAtual = new Date();
+                dataAtual.setHours(0, 0, 0, 0);
+
+                const dataEmissao = dataEmissaoString ? criarDataLocal(dataEmissaoString) : null;
+                const dataSaida = dataSaidaString ? criarDataLocal(dataSaidaString) : null;
+
+                if (dataEmissao) {
+                    if (dataEmissao > dataAtual) {
+                        alert('A data de emissão não pode ser maior que o dia atual.');
+                        $('#dataEmissao').val('');
+                        return;
+                    }
+
+                    if (dataSaida && dataSaida < dataEmissao) {
+                        alert('A data de saída não pode ser anterior à data de emissão.');
+                        $('#dataEmissao').val('');
+                    }
+                }
+            });
         }
 
         // Inicialização
         $(document).ready(function() {
-
+            // Inicia na primeira etapa
             liberarEtapa1();
 
-            // Inicialização das variáveis
+            // Inicializa variáveis globais
             produtosAdicionados.clear();
             parcelasGeradas.clear();
+            subTotal = 0;
             valorTotalProdutos = 0;
             valorFrete = 0;
             valorSeguro = 0;
             outrasDespesas = 0;
-
-            // Inicializa os dados das condições de pagamento
-            initializePaymentTerms();
+            descontoTotal = 0;
+            acrescimoTotal = 0;
 
             // Inicializa todas as funcionalidades
-            buscarDadosFornecedor();
+            buscarDadosCliente();
             verificarNotaFiscal();
             validaDatas();
             adicionarProduto();
             removeProdutos();
             atualizarValoresAdicionais();
-
-
-            // // APENAS PARA DEVS
-            // popularCamposTeste();
-
             limparDadosEtapa2();
-            limparDadosEtapa3()
-
+            limparDadosEtapa3();
             gerarParcelas();
             validarFormulario();
 
+            // Prosseguir para Etapa 3
             $('#prosseguirEstapa3').on('click', function() {
                 if (produtosAdicionados.size === 0) {
                     alert('Adicione ao menos 1 produto para prosseguir.');
@@ -1123,18 +1033,16 @@
                 liberarEtapa3();
             });
 
-            $('#purchaseForm').on('submit', function(e) {
-                // Remove o disabled de todos os campos antes do submit
+            // Habilita campos antes do submit
+            $('#saleForm').on('submit', function(e) {
                 const inputsE1 = elementosEtapa1.find('.elementsEtapa1');
                 const inputsE2 = elementosEtapa2.find('.elementsEtapa2');
                 const inputsE3 = elementosEtapa3.find('.elementsEtapa3');
 
-                // Habilita todos os campos
                 inputsE1.prop('disabled', false);
                 inputsE2.prop('disabled', false);
                 inputsE3.prop('disabled', false);
 
-                // O formulário será enviado normalmente após habilitar os campos
                 return true;
             });
 
@@ -1145,12 +1053,11 @@
                 e.target.value = formatarMoeda(parseFloat(value));
             });
 
-            // Limpa parcelas ao mudar a condição de pagamento
+            // Limpa parcelas ao mudar condição de pagamento
             $('#payment_term_id').on('change', function() {
                 $('#parcelaList').empty();
                 parcelasGeradas.clear();
             });
         });
     </script>
-
 @endsection

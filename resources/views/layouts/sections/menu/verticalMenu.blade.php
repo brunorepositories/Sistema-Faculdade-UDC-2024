@@ -3,7 +3,7 @@
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo">
         <a href="{{ url('/') }}" class="app-brand-link">
-            <span class="app-brand-logo demo">@include('_partials.macros', ['width' => 25, 'withbg' => 'var(--bs-primary)'])</span>
+            <span class="app-brand-logo demo">@include('_partials.macros', ['width' => 25, 'withbg' => '#F600B4'])</span>
             <span class="app-brand-text demo menu-text fw-bold ms-2">{{ config('variables.templateName') }}</span>
         </a>
 
@@ -56,7 +56,7 @@
                         @if (isset($menu->target) and !empty($menu->target)) target="_blank" @endif>
 
                         @isset($menu->icon)
-                            <i class="{{ $menu->icon }}"></i>
+                            <i class="{{ $menu->icon }} me-2"></i>
                         @endisset
 
                         <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>

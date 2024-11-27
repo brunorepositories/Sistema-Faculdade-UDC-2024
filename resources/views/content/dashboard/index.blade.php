@@ -13,8 +13,8 @@
                     <h4 class="mb-0">Resumo do Mês</h4>
 
                     <div>
-                        <form method="GET" action="{{ route('dashboard.index') }}" class="row align-items-center">
-                            <div class="col-md-8">
+                        <form method="GET" action="{{ route('dashboard.index') }}" class="d-flex align-items-center">
+                            <div class="">
                                 <input
                                     type="month"
                                     class="form-control"
@@ -23,7 +23,7 @@
                                     value="{{ request('mes', date('Y-m')) }}"
                                     max="{{ date('Y-m') }}">
                             </div>
-                            <div class="col-md-2">
+                            <div class="ms-4">
                                 <button type="submit" class="btn btn-primary d-block toUpperCase">Atualizar</button>
                             </div>
                         </form>

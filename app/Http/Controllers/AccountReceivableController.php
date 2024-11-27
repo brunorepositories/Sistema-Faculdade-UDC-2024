@@ -55,7 +55,7 @@ class AccountReceivableController extends Controller
 
       $receivables = $query->paginate($request->per_page ?? 10);
 
-      return view('account-receivable.index', compact('receivables'));
+      return view('content.account_receivable.index', compact('receivables'));
     } catch (QueryException $e) {
       Log::error('Erro ao listar recebimentos: ' . $e->getMessage());
       return back()->with('error', 'Erro ao carregar recebimentos');
@@ -85,10 +85,10 @@ class AccountReceivableController extends Controller
         ]);
       });
 
-      return back()->with('success', 'Recebimento registrado com sucesso');
-    } catch (QueryException $e) {
-      Log::error('Erro ao registrar recebimento: ' . $e->getMessage());
-      return back()->with('error', 'Erro ao registrar recebimento');
+      return to_route('account_receivable.index')->with('success', "Conta recebida com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao cancelar conta >>> ' . $ex->getMessage());
+      return to_route('account_receivable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
@@ -107,10 +107,10 @@ class AccountReceivableController extends Controller
         'dataCancelamento' => now()
       ]);
 
-      return back()->with('success', 'Recebimento cancelado com sucesso');
-    } catch (QueryException $e) {
-      Log::error('Erro ao cancelar recebimento: ' . $e->getMessage());
-      return back()->with('error', 'Erro ao cancelar recebimento');
+      return to_route('account_receivable.index')->with('success', "Conta cancelada com sucesso.");
+    } catch (QueryException $ex) {
+      Log::error('Erro ao cancelar conta >>> ' . $ex->getMessage());
+      return to_route('account_receivable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
@@ -153,7 +153,7 @@ class AccountReceivableController extends Controller
           ];
         });
 
-      return view('account-receivable.report', compact('totais', 'porCliente'));
+      return view('content.account_receivable.report', compact('totais', 'porCliente'));
     } catch (QueryException $e) {
       Log::error('Erro ao gerar relatório: ' . $e->getMessage());
       return back()->with('error', 'Erro ao gerar relatório');

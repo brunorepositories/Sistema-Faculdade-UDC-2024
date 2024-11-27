@@ -41,20 +41,16 @@ class SaleController extends Controller
     $data['valorFrete'] = $this->formatDecimalValue($data['valorFrete']);
     $data['valorSeguro'] = $this->formatDecimalValue($data['valorSeguro']);
     $data['outrasDespesas'] = $this->formatDecimalValue($data['outrasDespesas']);
-    $data['subTotal'] = $this->formatDecimalValue($data['subTotal']);
     $data['desconto'] = $this->formatDecimalValue($data['desconto']);
-    $data['acrescimo'] = $this->formatDecimalValue($data['acrescimo']);
     $data['totalProdutos'] = $this->formatDecimalValue($data['totalProdutos']);
     $data['totalPagar'] = $this->formatDecimalValue($data['totalPagar']);
 
     // Formata produtos
     if (isset($data['produtos']) && is_array($data['produtos'])) {
       foreach ($data['produtos'] as $key => $produto) {
-        $data['produtos'][$key]['precoVenda'] = $this->formatDecimalValue($produto['precoVenda']);
+        $data['produtos'][$key]['precoProduto'] = $this->formatDecimalValue($produto['precoProduto']);
         $data['produtos'][$key]['descontoProduto'] = $this->formatDecimalValue($produto['descontoProduto'] ?? 0);
-        $data['produtos'][$key]['acrescimoProduto'] = $this->formatDecimalValue($produto['acrescimoProduto'] ?? 0);
         $data['produtos'][$key]['qtdProduto'] = $this->formatDecimalValue($produto['qtdProduto']);
-        $data['produtos'][$key]['percentualComissao'] = $this->formatDecimalValue($produto['percentualComissao'] ?? 0);
       }
     }
 
@@ -106,14 +102,6 @@ class SaleController extends Controller
     return true;
   }
 
-  /**
-   * Calcula comissão do produto
-   */
-  private function calcularComissao($precoVenda, $custoMedio, $percentualComissao)
-  {
-    $lucro = $precoVenda - $custoMedio;
-    return round(($lucro * $percentualComissao) / 100, 2);
-  }
 
   /**
    * Store a newly created resource in storage.
@@ -135,13 +123,10 @@ class SaleController extends Controller
           'serie',
           'customer_id',
           'dataEmissao',
-          'dataSaida',
           'valorFrete',
           'valorSeguro',
           'outrasDespesas',
-          'subTotal',
           'desconto',
-          'acrescimo',
           'totalProdutos',
           'totalPagar',
           'payment_term_id',
@@ -154,13 +139,6 @@ class SaleController extends Controller
         foreach ($formattedData['produtos'] as $productData) {
           $product = Product::find($productData['product_id']);
 
-          // Calcula valor da comissão
-          $valorComissao = $this->calcularComissao(
-            $productData['precoVenda'],
-            $product->custoMedio,
-            $productData['percentualComissao'] ?? 0
-          );
-
           // Criação do relacionamento na tabela sale_products
           SaleProducts::create([
             'numeroNota' => $sale->numeroNota,
@@ -168,21 +146,17 @@ class SaleController extends Controller
             'serie' => $sale->serie,
             'customer_id' => $sale->customer_id,
             'product_id' => $productData['product_id'],
-            'precoVenda' => $productData['precoVenda'],
+            'precoProduto' => $productData['precoProduto'],
             'qtdProduto' => $productData['qtdProduto'],
             'descontoProduto' => $productData['descontoProduto'] ?? 0,
-            'acrescimoProduto' => $productData['acrescimoProduto'] ?? 0,
-            'custoMedio' => $product->custoMedio,
-            'custoUltVenda' => $productData['precoVenda'],
-            'valorComissao' => $valorComissao,
-            'percentualComissao' => $productData['percentualComissao'] ?? 0,
+            'precoUltVenda' => $productData['precoProduto'],
           ]);
 
           // Atualiza o produto no estoque
           $product->update([
             'estoque' => DB::raw("estoque - {$productData['qtdProduto']}"),
-            'custoUltimaVenda' => $productData['precoVenda'],
-            'dtUltimaVenda' => $sale->dataSaida,
+            'precoUltimaVenda' => $productData['precoProduto'],
+            'dtUltimaVenda' => $sale->dataEmissao,
           ]);
         }
 
@@ -274,11 +248,8 @@ class SaleController extends Controller
             'precoVenda',
             'qtdProduto',
             'descontoProduto',
-            'acrescimoProduto',
             'custoMedio',
-            'custoUltVenda',
-            'valorComissao',
-            'percentualComissao'
+            'precoUltVenda',
           ]);
         },
         'products.measure',
@@ -295,11 +266,7 @@ class SaleController extends Controller
         }),
         'totalDesconto' => $sale->products->sum(function ($product) {
           return ($product->pivot->precoVenda * $product->pivot->qtdProduto * $product->pivot->descontoProduto) / 100;
-        }),
-        'totalAcrescimo' => $sale->products->sum(function ($product) {
-          return ($product->pivot->precoVenda * $product->pivot->qtdProduto * $product->pivot->acrescimoProduto) / 100;
-        }),
-        'totalComissao' => $sale->products->sum('pivot.valorComissao'),
+        })
       ];
 
       return view('sale.show', compact('sale', 'totals'));

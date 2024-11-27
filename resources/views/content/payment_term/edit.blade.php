@@ -353,7 +353,8 @@
                 if (percentualTotal !== 100) {
                     e.preventDefault(); // Impede o envio do formulário
                     alert(
-                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.');
+                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.'
+                    );
                     return false;
                 }
                 return true;
@@ -370,10 +371,18 @@
                     return alert('Por favor, preencha todos os campos antes de adicionar uma parcela.');
                 }
 
+
+                console.log('percentualTotal')
+                console.log(percentualTotal)
+                console.log('percentualParcela')
+                console.log(percentualParcela)
+                console.log('percentualTotal to fixed')
+                console.log(percentualTotal.toFixed(2))
+
                 if (percentualTotal + parseFloat(percentualParcela) > 100) {
                     return alert(
                         'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
-                        );
+                    );
                 }
 
                 parcelaCount++;
@@ -411,11 +420,16 @@
                 parcelaCount--;
 
                 const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
-                .text());
+                    .text());
 
-                percentualTotal -= percentualParcela;
 
-                $('#percentualTotal').val(percentualTotal.toFixed(2));
+                if (parcelaCount !== 0) {
+                    percentualTotal -= percentualParcela;
+                    $('#percentualTotal').val(percentualTotal.toFixed(2));
+                } else {
+                    percentualTotal = 0;
+                    $('#percentualTotal').val(0);
+                }
 
                 $(this).closest('.parcela-item').remove();
 
@@ -446,149 +460,5 @@
             }
         });
     </script>
-
-    {{-- <script>
-        let parcelaCount = {{ count($paymentTerm->installments) }};
-        let percentualTotal = {{ $paymentTerm->installments->sum('percentual') }};
-
-        // Limita o tamanho dos campos
-        function limitInputLength(input, length) {
-            if (input.value.length > length) {
-                input.value = input.value.slice(0, length);
-            }
-        }
-
-        $(document).ready(function() {
-            // Atualiza o campo de percentual total inicialmente
-            $('#percentualTotal').val(percentualTotal);
-
-            // Adiciona validação no envio do formulário
-            $('form').on('submit', function(e) {
-                // Verifica se o percentual total é diferente de 100
-                if (percentualTotal !== 100) {
-                    e.preventDefault(); // Impede o envio do formulário
-                    alert(
-                        'O campo percentual total (%) deve ser igual a 100. Adicione parcelas para completar.'
-                    );
-                    return false;
-                }
-                return true;
-            });
-
-            $('#add-parcela').on('click', function() {
-                const parcela = $('#parcela').val();
-                const diasParcela = $('#dias').val();
-                const percentualParcela = $('#percentual').val();
-                const payment_form_id = $('#payment_form_id').val();
-                const formaPagamentoText = $('#payment_form_id option:selected').text();
-
-                if (!parcela || !diasParcela || !percentualParcela || !payment_form_id) {
-                    return alert(
-                        'Por favor, preencha todos os campos antes de adicionar uma parcela.'
-                    );
-                }
-
-                if (percentualTotal + parseFloat(percentualParcela) > 100) {
-                    return alert(
-                        'Percentual muito alto. A soma dos percentuais da parcela não pode ser maior que 100.'
-                    );
-                }
-
-                parcelaCount++;
-                percentualTotal += parseFloat(percentualParcela);
-
-                $('#parcelas-list').append(` <tr class="parcela-item" data-index="${parcelaCount}">
-                                        <td>${parcela}</td>
-                                        <td>${diasParcela}</td>
-                                        <td>${percentualParcela}</td>
-                                        <td>${formaPagamentoText}</td>
-                                        <td class="size-col-action">
-                                            <button type="button" class="btn btn-outline-danger rounded-pill border-0 remove-parcela">
-                                                <span class="tf-icons bx bx-trash bx-22px"></span>
-                                            </button>
-                                        </td>
-                                        <input type="hidden" name="parcelas[${parcelaCount}][parcela]" value="${parcela}">
-                                        <input type="hidden" name="parcelas[${parcelaCount}][dias]" value="${diasParcela}">
-                                        <input type="hidden" name="parcelas[${parcelaCount}][percentual]" value="${percentualParcela}">
-                                        <input type="hidden" name="parcelas[${parcelaCount}][payment_form_id]" value="${payment_form_id}">
-                                    </tr> `);
-
-                $('#parcela').val('');
-                $('#dias').val('');
-                $('#percentual').val('');
-                $('#payment_form_id').val('');
-
-                $('#percentualTotal').val(percentualTotal.toFixed(2));
-
-                reorderParcelas();
-            });
-
-            $(document).on('click', '.remove-parcela', function() {
-                parcelaCount--;
-
-                const percentualParcela = parseFloat($(this).closest('.parcela-item').find('td:eq(2)')
-                    .text());
-
-                percentualTotal -= percentualParcela;
-
-                $('#percentualTotal').val(percentualTotal.toFixed(2));
-
-                $(this).closest('.parcela-item').remove();
-
-                reorderParcelas();
-            });
-
-            $('#desconto').on('change', function() {
-                const desconto = parseFloat($('#desconto').val() || 0);
-
-                if (desconto > 100 || desconto < 0) {
-                    $('#desconto').val('');
-                    return alert('O desconto deve estar entre 0 e 100%.');
-                }
-            });
-
-            $('#multa').on('change', function() {
-                const multa = parseFloat($('#multa').val() || 0);
-
-                if (multa > 100 || multa < 0) {
-                    $('#multa').val('');
-                    return alert('A multa deve estar entre 0 e 100%.');
-                }
-            });
-
-            $('#juros').on('change', function() {
-                const juros = parseFloat($('#juros').val() || 0);
-
-                if (juros > 100 || juros < 0) {
-                    $('#juros').val('');
-                    return alert('O juros deve estar entre 0 e 100%.');
-                }
-
-            });
-
-            $('#percentual').on('change', function() {
-                const percentual = parseFloat($('#percentual').val() || 0);
-
-                if (percentual > 100 || percentual < 0) {
-                    $('#percentual').val('');
-                    return alert('O percentual deve estar entre 0 e 100%.');
-                }
-
-            });
-
-            function reorderParcelas() {
-                const rows = $('#parcelas-list .parcela-item').get();
-
-                rows.sort((a, b) => {
-                    const numA = parseInt($(a).find('td:eq(0)').text());
-                    const numB = parseInt($(b).find('td:eq(0)').text());
-                    return numA - numB;
-                });
-
-                $('#parcelas-list').empty().append(rows);
-            }
-        });
-    </script> --}}
-
 
 @endsection

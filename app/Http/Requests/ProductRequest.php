@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
       'custoUltimaCompra' => ['nullable', 'min:0'],
       'dtUltimaCompra' => ['nullable', 'date'],
       'precoVenda' => ['required', 'min:0'],
-      'custoUltimaVenda' => ['nullable', 'min:0'],
+      'precoUltimaVenda' => ['nullable', 'min:0'],
       'dtUltimaVenda' => ['nullable', 'date'],
       'measure_id' => ['required', 'exists:measures,id'], // Garantir que a medida exista,
       'supplier_id' => ['required', 'exists:suppliers,id'], // Garantir que a medida exista,
@@ -44,7 +44,7 @@ class ProductRequest extends FormRequest
       'precoCusto' => $this->formatDecimalValue($this->precoCusto),
       'precoVenda' => $this->formatDecimalValue($this->precoVenda),
       'custoUltimaCompra' => $this->formatDecimalValue($this->custoUltimaCompra),
-      'custoUltimaVenda' => $this->formatDecimalValue($this->custoUltimaVenda),
+      'precoUltimaVenda' => $this->formatDecimalValue($this->precoUltimaVenda),
       'nome' => strtoupper($this->nome),
     ]);
   }

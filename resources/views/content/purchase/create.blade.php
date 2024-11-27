@@ -248,8 +248,7 @@
                             <h5>Frete</h5>
                             <div class="d-flex">
                                 <div class="col-md-2 mb-3">
-                                    <label class="form-label toUpperCase" for="tipoFrete">Tipo Frete<span
-                                            class="labelRequired">*</span></label>
+                                    <label class="form-label toUpperCase" for="tipoFrete">Tipo Frete</label>
                                     <select required name="tipoFrete" class="form-select toUpperCase elementsEtapa2"
                                         id="tipoFrete">
                                         <option value="CIF" selected>CIF</option>
@@ -260,8 +259,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3 ms-4">
-                                    <label for="valorFrete" class="form-label toUpperCase preco">Valor Frete <span
-                                            class="labelRequired">*</span></label>
+                                    <label for="valorFrete" class="form-label toUpperCase preco">Valor Frete </label>
                                     <input
                                         type="text"
                                         name="valorFrete"
@@ -272,8 +270,7 @@
                                         value="{{ old('valorFrete') }}">
                                 </div>
                                 <div class="col-md-3 ms-4">
-                                    <label for="valorSeguro" class="form-label toUpperCase preco">Valor Seguro <span
-                                            class="labelRequired">*</span></label>
+                                    <label for="valorSeguro" class="form-label toUpperCase preco">Valor Seguro </label>
                                     <input
                                         type="text"
                                         name="valorSeguro"
@@ -284,8 +281,8 @@
                                         value="{{ old('valorSeguro') }}">
                                 </div>
                                 <div class="col-md-3 ms-4">
-                                    <label for="outrasDespesas" class="form-label toUpperCase preco">Outras despesas
-                                        <span class="labelRequired">*</span></label>
+                                    <label for="outrasDespesas" class="form-label toUpperCase preco">Outras
+                                        despesas</label>
                                     <input
                                         type="text"
                                         name="outrasDespesas"
@@ -315,7 +312,7 @@
                                         value="{{ old('qtdTotalProdutos') }}">
                                 </div>
                                 <div class="ms-4">
-                                    <label for="totalProdutos" class="form-label toUpperCase preco">valor
+                                    <label for="totalProdutos" class="form-label toUpperCase preco">Total
                                         produtos</label>
                                     <input
                                         disabled
@@ -329,7 +326,7 @@
                                     <input type="hidden" name="totalProdutos" id="totalProdutosHidden">
                                 </div>
                                 <div class="ms-4">
-                                    <label for="totalPagar" class="form-label toUpperCase preco">valor da nota</label>
+                                    <label for="totalPagar" class="form-label toUpperCase preco">Valor da nota</label>
                                     <input
                                         disabled
                                         type="text"
