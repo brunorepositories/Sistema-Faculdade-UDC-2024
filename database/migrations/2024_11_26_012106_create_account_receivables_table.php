@@ -41,8 +41,14 @@ return new class extends Migration
       $table->text('observacao')->nullable();
       $table->timestamps();
 
-      // Chave composta
-      $table->unique(['numeroNota', 'modelo', 'serie', 'customer_id', 'parcela'], 'unique_receivable');
+      // Cria um índice único para garantir que não haja duplicidade de parcelas
+      $table->unique(['numeroNota', 'modelo', 'serie', 'customer_id', 'parcela']);
+
+      // Adiciona a foreign key composta referenciando sales
+      $table->foreign(['numeroNota', 'modelo', 'serie', 'customer_id'])
+        ->references(['numeroNota', 'modelo', 'serie', 'customer_id'])
+        ->on('sales')
+        ->onDelete('restrict');
     });
   }
 

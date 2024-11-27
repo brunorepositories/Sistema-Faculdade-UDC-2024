@@ -130,7 +130,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
                                                         <label class="form-label">Valor a Receber</label>
-                                                        <input type="number" step="0.01" class="form-control"
+                                                        <input type="number" step="0.01" class="form-control preco"
                                                             name="valorPago"
                                                             value="{{ $accountReceivable->valorParcela }}" required>
                                                     </div>
@@ -153,10 +153,6 @@
                                                         <label class="form-label">Desconto</label>
                                                         <input type="number" step="0.01" class="form-control"
                                                             name="desconto" value="0">
-                                                    </div>
-                                                    <div class="col-12 mb-3">
-                                                        <label class="form-label">Observação</label>
-                                                        <textarea class="form-control" name="observacao" rows="3"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -217,4 +213,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.preco').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2).replace('.', ',');
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                e.target.value = 'R$ ' + value;
+            });
+        });
+    </script>
 @endsection

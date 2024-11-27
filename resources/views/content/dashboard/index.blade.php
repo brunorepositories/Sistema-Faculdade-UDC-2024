@@ -75,7 +75,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Financeiro - Recebimentos</h5>
+                    <h5 class="card-title mb-0">Recebimentos</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -118,7 +118,7 @@
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Financeiro - Pagamentos</h5>
+                    <h5 class="card-title mb-0">Pagamentos</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">

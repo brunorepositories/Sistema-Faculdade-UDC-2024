@@ -27,7 +27,7 @@ Route::get('/api/vendas/contadores', [DashboardController::class, 'getCounters']
 
 // Contas a receber
 Route::resource('account_receivable', AccountReceivableController::class);
-Route::put('/account_receivable/pay/{id}', [AccountReceivableController::class, 'receive'])->name('account_receivable.receive');
+Route::put('/account_receivable/receive/{id}', [AccountReceivableController::class, 'receive'])->name('account_receivable.receive');
 Route::put('/account_receivable/cancel/{id}', [AccountReceivableController::class, 'cancel'])->name('account_receivable.cancel');
 
 // Compras

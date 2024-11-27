@@ -65,47 +65,44 @@ class AccountReceivableController extends Controller
   /**
    * Registra recebimento de parcela
    */
-  public function receive(Request $request, AccountReceivable $receivable)
+  public function receive(Request $request, AccountReceivable $id)
   {
     try {
-      DB::transaction(function () use ($request, $receivable) {
-        $valorPago = $this->formatDecimalValue($request->valorPago);
-        $juros = $this->formatDecimalValue($request->juros);
-        $multa = $this->formatDecimalValue($request->multa);
-        $desconto = $this->formatDecimalValue($request->desconto);
+      if ($id->status !== 'pendente') {
+        return back()->with('failed', 'Esta conta não está pendente para recebimento.');
+      }
 
-        $receivable->update([
-          'valorPago' => $valorPago,
-          'juros' => $juros,
-          'multa' => $multa,
-          'desconto' => $desconto,
-          'dataPagamento' => now(),
-          'status' => 'pago',
-          'observacao' => $request->observacao
+      DB::transaction(function () use ($request, $id) {
+        $id->update([
+          'valorPago' => $request->valorPago,
+          'dataPagamento' => $request->dataPagamento,
+          'juros' => $request->juros ?? 0,
+          'multa' => $request->multa ?? 0,
+          'desconto' => $request->desconto ?? 0,
+          'status' => 'pago'
         ]);
       });
 
-      return to_route('account_receivable.index')->with('success', "Conta recebida com sucesso.");
+      return to_route('account_receivable.index')->with('success', "Recebimento registrado com sucesso.");
     } catch (QueryException $ex) {
-      Log::error('Erro ao cancelar conta >>> ' . $ex->getMessage());
+      Log::error('Erro ao registrar recebimento >>> ' . $ex->getMessage());
       return to_route('account_receivable.index')->with('failed', 'Ops, algo deu errado, tente novamente.');
     }
   }
 
-  /**
-   * Cancela recebimento
-   */
-  public function cancel(AccountReceivable $receivable)
+  public function cancel(Request $request, AccountReceivable $id)
   {
     try {
-      if ($receivable->status === 'pago') {
-        return back()->with('error', 'Não é possível cancelar um recebimento já efetivado');
+      if ($id->status !== 'pendente') {
+        return back()->with('failed', 'Apenas contas pendentes podem ser canceladas.');
       }
 
-      $receivable->update([
-        'status' => 'cancelado',
-        'dataCancelamento' => now()
-      ]);
+      DB::transaction(function () use ($request, $id) {
+        $id->update([
+          'dataCancelamento' => $request->dataCancelamento,
+          'status' => 'cancelado'
+        ]);
+      });
 
       return to_route('account_receivable.index')->with('success', "Conta cancelada com sucesso.");
     } catch (QueryException $ex) {

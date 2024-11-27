@@ -449,10 +449,6 @@ class PurchaseController extends Controller
       Log::error('Nota fiscal não encontrada: ' . $e->getMessage());
       return to_route('purchase.index')
         ->with('error', 'Nota fiscal não encontrada.');
-    } catch (\Exception $e) {
-      Log::error('Erro ao visualizar nota fiscal: ' . $e->getMessage());
-      return to_route('purchase.index')
-        ->with('error', 'Erro ao carregar dados da nota fiscal.');
     }
   }
 

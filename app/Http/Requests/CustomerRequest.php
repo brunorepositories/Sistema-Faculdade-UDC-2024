@@ -44,7 +44,7 @@ class CustomerRequest extends FormRequest
       'cep' => ['required', 'max:10'],
       'complemento' => ['max:255'],
       'sexo' => ['max:1'],
-      'email' => ['email', 'max:255'],
+      'email' => ['max:255'],
       'usuario' => ['max:50'],
       'telefone' => ['max:20'],
       'celular' => ['required', 'max:20'],

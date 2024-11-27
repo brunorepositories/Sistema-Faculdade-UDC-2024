@@ -30,7 +30,6 @@
                             <th>Série</th>
                             <th class="text-center">Data Emissão</th>
                             <th class="text-end">Valor da Nota</th>
-                            <th>Status</th>
                             <th class="centered-text size-col-action">Ações</th>
                         </tr>
                     </thead>
